@@ -1,0 +1,23 @@
+{
+  "name": "sailor-module-user",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^0.7.8",
+    "passport": "^0.2.0",
+    "validator": "^3.16.0"
+  },
+  "devDependencies": {
+    "passport-facebook": "^1.0.3",
+    "passport-github": "^0.1.5",
+    "passport-google": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.2"
+  }
+}
