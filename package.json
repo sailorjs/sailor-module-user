@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -b"
   },
   "author": "",
   "license": "MIT",
@@ -14,10 +14,16 @@
     "validator": "^3.16.0"
   },
   "devDependencies": {
+    "execSync": "^1.0.1-pre",
+    "mocha": "^1.20.1",
+    "multiline": "^0.3.4",
     "passport-facebook": "^1.0.3",
     "passport-github": "^0.1.5",
     "passport-google": "^0.3.0",
     "passport-local": "^1.0.0",
-    "passport-twitter": "^1.0.2"
+    "passport-twitter": "^1.0.2",
+    "sails": "git+ssh://git@bitbucket.org/sailorjs/sails.git",
+    "should": "^4.0.4",
+    "superagent": "^0.18.0"
   }
 }
