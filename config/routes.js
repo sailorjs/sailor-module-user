@@ -31,16 +31,16 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  // Custom routes here...
-  'get /login': 'AuthController.login',
-  'get /logout': 'AuthController.logout',
-  'get /register': 'AuthController.register',
+  // create
+  // TODO: Change URL to /user/ before
+  'post /auth/local': 'UserController.callback',
+  'post /auth/local/:action': 'UserController.callback',
 
-  'post /auth/local': 'AuthController.callback',
-  'post /auth/local/:action': 'AuthController.callback',
+  // delete
+  'delete /user/:identifier' : 'UsernController.destroy',
 
-  'get /auth/:provider': 'AuthController.provider',
-  'get /auth/:provider/callback': 'AuthController.callback'
+  'get /auth/:provider': 'UserController.provider',
+  'get /auth/:provider/callback': 'UserController.callback'
 
 
   // If a request to a URL doesn't match any of the custom routes above,

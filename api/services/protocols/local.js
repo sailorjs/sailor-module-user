@@ -118,11 +118,10 @@ exports.login = function (req, identifier, password, next) {
 
   User.findOne(user, function (err, user) {
 
-    if (err)
-      return next(err);
+    if (err) return next(err);
 
-    if (!user)
-      return next(sails.__('Error.Passport.User.NotFound'), user);
+    // TODO: Cambiar por sailor-stringfile
+    if (!user) return next(sails.__('Error.Passport.User.NotFound'), user);
 
     Passport.findOne({
       protocol : 'local',

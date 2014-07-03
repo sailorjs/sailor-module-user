@@ -1,10 +1,18 @@
-var sys = require('sys');
-var exec = require('child_process').exec;
-var fs = require('fs');
-var package = require('../package.json');
-var sh = require('execSync');
-var sailsrc = require('multiline')(function() {
-  /*
+/**
+ * Generate Testing Scaffolding
+ *
+ * TOOD: Integrate it in suite tests
+ * (and load plugins correctly)
+ */
+
+
+/**
+ * Module Dependencies
+ */
+var appHelper = require('./helpers/appHelper');
+var pkg       = require('../package.json');
+var sailsrc   = require('multiline')(function() {
+    /*
 {
   "generators": {
     "modules": {}
@@ -14,36 +22,24 @@ var sailsrc = require('multiline')(function() {
   ]
 }
 */
+  }),
+sailsrc  = require('util').format(sailsrc, pkg.name);
+var path = require('path');
+var exec = require('child_process').exec;
+var prc;
+
+/**
+ * Setup
+ */
+appHelper.build(function() {
+  // TODO: Link provisional version of sails that support plugins
+  console.log("Linked provisional version of sails...");
+  appHelper.sh('cd .. && rm testApp/node_modules/sails');
+  appHelper.sh('ln -s ../../node_modules/sails/ ../testApp/node_modules/sails');
+  appHelper.sh('ln -s ../../../' + pkg.name + '/ ../testApp/node_modules/' + pkg.name);
+  console.log("Writing .sailsrc for plugin...");
+  appHelper.writeFile('../testApp/.sailsrc', sailsrc, function(){
+    console.log("Running the server...");
+    appHelper.start();
+  });
 });
-sailsrc = require('util').format(sailsrc, package.name);
-
-var write_file = function(file, txt) {
-  fs.writeFileSync(file, txt);
-};
-
-test = module.exports = {
-
-  remove: function() {
-    sh.run('cd .. && rm -rf testApp/');
-  },
-
-  create: function() {
-    sh.run('cd .. && sails new testApp > /dev/null');
-    sh.run('cd .. && rm testApp/node_modules/sails');
-    sh.run('ln -s ../../node_modules/sails/ ../testApp/node_modules/sails');
-    sh.run('ln -s ../../../' + package.name + '/ ../testApp/node_modules/' + package.name);
-    write_file('../testApp/.sailsrc', sailsrc);
-  },
-
-  start: function() {
-    sh.run('cd ../testApp && ./node_modules/sails/bin/sails.js lift');
-  },
-
-  stop: function(){
-    sh.run("kill $(ps aux | grep '[s]ails' | awk '{print $2}')");
-  }
-};
-
-test.remove();
-test.create();
-test.start();

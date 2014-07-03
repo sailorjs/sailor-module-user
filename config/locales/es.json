@@ -1,0 +1,8 @@
+{
+  "Error.Passport.Password.Wrong": "Password Wrong! Try again",
+  "Error.Passport.Password.NotFound": "Need a password of the account",
+  "Error.Passport.Email.NotFound": "Need a email of the account",
+  "Error.Passport.User.NotFound": "User not found in the system",
+  "Error.Passport.Strategy.Already": "Strategy already associte with the user",
+  "Error.Passport.Strategy.NotSet": "Strategy is not already set up"
+}

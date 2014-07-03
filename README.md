@@ -2,10 +2,9 @@
 
 ## TODO
 
-* Implementar método logout.
-* Implementar método para borrar un usuario.
+* Implementar métodos CRUD básicos.
+* Integrar los tests
+* Integrar con sailor-stringfile.
 * Implementar más atributos de usuario.
-* Implementar método para actualizar atributos de usuario.
 * Probar hacer registro con más servicios.
-* Integrar generador de escenario de prueba con los tests.
-
+* Añadir tests al core de sails para probar el sistema de plugins

@@ -1,3 +1,5 @@
+var sortKeys = require('sort-keys');
+
 /**
 * User.js
 *
@@ -28,6 +30,12 @@ module.exports = {
     passports : {
       collection: 'Passport',
       via: 'user'
+    },
+
+    toJSON: function() {
+      var obj = this.toObject();
+      delete obj.passports;
+      return sortKeys(obj);
     }
   }
 };

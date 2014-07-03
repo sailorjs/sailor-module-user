@@ -1,3 +1,5 @@
+var validator = require('validator');
+
 /**
  * Authentication Controller
  *
@@ -50,7 +52,7 @@
    */
   logout: function (req, res) {
     req.logout();
-    res.redirect('/');
+    res.ok();
   },
 
   /**
@@ -62,6 +64,38 @@
   register: function (req, res) {
     res.view({
       errors: req.flash('error')
+    });
+  },
+
+
+  /**
+   * Localize and delete a user from the system.
+   * Is necessary the email or the username to proceed it.
+   * @param  {[type]} req [description]
+   * @param  {[type]} res [description]
+   * @return {[type]} staths [description]
+   */
+  destroy: function(req, res){
+    var identifier = req.param('id'),
+        isEmail = validator.isEmail(identifier),
+        user       = {};
+
+    if (isEmail)
+      user.email = identifier;
+    else
+      user.username = identifier;
+
+    User.findOne(user, function (err, user) {
+      if (err) return res.negotiate(err);
+
+      // TODO: Cambiar por sailor-stringfile
+      // sails.__('Error.Passport.User.NotFound'), user
+      if (!user) return res.badRequest("User not found");
+
+      User.destroy(user.id, function (err) {
+        if (err) return res.negotiate(err);
+        return res.ok(user);
+      });
     });
   },
 
