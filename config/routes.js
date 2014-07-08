@@ -32,9 +32,8 @@ module.exports.routes = {
   },
 
   // create
-  // TODO: Change URL to /user/ before
-  'post /auth/local': 'UserController.callback',
-  'post /auth/local/:action': 'UserController.callback',
+  'post /user/create/local': 'UserController.callback',
+  'post /user/create/local/:action': 'UserController.callback',
 
   // delete
   'delete /user/:identifier' : 'UsernController.destroy',

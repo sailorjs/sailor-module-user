@@ -36,10 +36,10 @@ Strategies can be:
 * Google
 
 ## remove
-### DELETE /user/<username>
-### DELETE /user/<email>
+### DELETE /user/\<username>
+### DELETE /user/\<email>
 
-<id> is extracted in the URL
+`username` and `email` parameter are extracted from the URL.
 
 ## login
 ## logout

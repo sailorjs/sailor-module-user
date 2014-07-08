@@ -6,7 +6,7 @@ var request    = require('superagent');
 var assert     = require('assert');
 var appHelper  = require('./helpers/appHelper');
 var url        = 'http://localhost:1342';
-var url_local  =  url + '/auth/local/register';
+var url_local  =  url + '/user/create/local/register';
 
 describe('Create ::', function() {
 
