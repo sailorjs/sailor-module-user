@@ -4,14 +4,23 @@
 var should     = require('should');
 var request    = require('superagent');
 var assert     = require('assert');
-var url        = 'http://localhost:1337';
+var appHelper  = require('./helpers/appHelper');
+var url        = 'http://localhost:1342';
 var url_local  =  url + '/auth/local/register';
+
+describe('Create ::', function() {
+
+/////////////
+/// SETUP ///
+/////////////
+
+  before(function(done) {
+    appHelper.buildAndLift(done);
+  });
 
 ///////////////
 /// TESTING ///
 ///////////////
-
-describe('Create ::', function() {
 
   describe('Local Strategy', function() {
 

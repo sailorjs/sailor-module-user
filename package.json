@@ -29,6 +29,6 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -b"
+    "test": "sh test/test.sh"
   }
 }

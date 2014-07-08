@@ -4,11 +4,10 @@ var _         = require('lodash');
 var exec      = require('child_process').exec;
 var path      = require('path');
 var sailsBin  = path.resolve('./node_modules/sails/bin/sails.js');
-var spawn     = require('child_process').spawn;
 var _ioClient = require('./sails.io')(require('socket.io-client'));
 var Sails     = require('../../node_modules/sails/lib/app');
-var sh        = require('execSync');
-var prc;
+var sailsLift = require('../../node_modules/sails/bin/sails-lift');
+var pkg       = require('../../package.json');
 
 // Make existsSync not crash on older versions of Node
 fs.existsSync = fs.existsSync || path.existsSync;
@@ -50,43 +49,66 @@ module.exports.writeFile = function(file, txt, done) {
   });
 };
 
-module.exports.sh = function(command) {
-  sh.run(command);
-};
-
-module.exports.clean = function(appName) {
-  appName = appName ? appName : 'testApp';
-  var dir = path.resolve('./../', appName);
+module.exports.clean = function() {
+  var dir = process.cwd();
+  // appName = appName ? appName : 'testApp';
+  // var dir = path.resolve('./../', appName);
   if (fs.existsSync(dir)) {
     wrench.rmdirSyncRecursive(dir);
   }
 };
 
-module.exports.start = function(done) {
+module.exports.start = function(options) {
+  sailsLift(options);
+};
 
-  console.log("Running process in: " + process.cwd());
+module.exports.linkPlugin = function(callback){
+  var origin = path.resolve(process.cwd(), '..');
+  var dist = path.resolve(process.cwd(), 'node_modules', pkg.name);
+  fs.symlink(origin, dist, callback);
+};
 
-  // SPAWN
+module.exports.lift = function(options, callback) {
 
-  prc = spawn('./../node_modules/sails/bin/sails.js', ['lift', ["--silly"]]);
+  delete process.env.NODE_ENV;
 
-  prc.stdout.setEncoding('utf8');
-  prc.stdout.on('data', function(data) {
-    console.log('stdout: ' + data);
+  if (typeof options == 'function') {
+    callback = options;
+    options = null;
+  }
+
+  options = options || {};
+  _.defaults(options, {
+    port: 1342
   });
 
-  prc.stderr.on('data', function(data) {
-    console.log('stderr: ' + data);
-  });
-
-  prc.on('close', function(code) {
-    console.log('child process exited with code ' + code);
+  Sails().lift(options, function(err, sails) {
+    if (err) return callback(err);
+    sails.kill = sails.lower;
+    return callback(null, sails);
   });
 
 };
 
-module.exports.stop = function() {
-
+module.exports.buildAndLift = function(done){
+  module.exports.build(function(){
+    module.exports.linkPlugin(function(){
+      module.exports.lift({
+          verbose: false,
+          log: {
+            level: 'silent'
+          },
+          // Lift method don't link rc file :-(
+          plugins: [pkg.name]
+        }, function(err, sails) {
+          if (err) {
+            throw new Error(err);
+          }
+          sailsprocess = sails;
+          setTimeout(done, 100);
+        });
+    });
+  });
 };
 
 module.exports.liftWithTwoSockets = function(options, callback) {

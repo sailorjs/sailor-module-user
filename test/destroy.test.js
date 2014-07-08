@@ -1,16 +1,25 @@
 /**
  * Dependencies
  */
-var should  = require('should');
-var request = require('superagent');
-var assert  = require('assert');
-var url     = 'http://localhost:1337';
+var should    = require('should');
+var request   = require('superagent');
+var assert    = require('assert');
+var appHelper = require('./helpers/appHelper');
+var url       = 'http://localhost:1342';
+
+describe('Remove ::', function() {
+
+/////////////
+/// SETUP ///
+/////////////
+
+  before(function(done) {
+    appHelper.buildAndLift(done);
+  });
 
 ///////////////
 /// TESTING ///
 ///////////////
-
-describe('Remove ::', function() {
 
   describe('Trying to remove user that don\'t exist', function() {
     it('should be 400 BadRequest', function(done) {

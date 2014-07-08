@@ -1,10 +1,21 @@
 ## Sailor module User
 
+## Installation
+
+Edit your `.sailsrc` file and add entry to support the plugin:
+
+```
+{
+  "generators": {
+    "modules": {}
+  },
+  "plugins": [
+  "sailor-module-user"
+  ]
+}
+```
+
 ## TODO
 
-* Implementar métodos CRUD básicos.
-* Integrar los tests
-* Integrar con sailor-stringfile.
-* Implementar más atributos de usuario.
-* Probar hacer registro con más servicios.
-* Añadir tests al core de sails para probar el sistema de plugins
+[Sailor module user on Trello](https://trello.com/b/BYRfRZ1P/sailor-module-user)
+

@@ -11,19 +11,6 @@
  */
 var appHelper = require('./helpers/appHelper');
 var pkg       = require('../package.json');
-var sailsrc   = require('multiline')(function() {
-    /*
-{
-  "generators": {
-    "modules": {}
-  },
-  "plugins": [
-    "%s"
-  ]
-}
-*/
-  }),
-sailsrc  = require('util').format(sailsrc, pkg.name);
 var path = require('path');
 var exec = require('child_process').exec;
 var prc;
@@ -40,6 +27,8 @@ appHelper.build(function() {
   console.log("Writing .sailsrc for plugin...");
   appHelper.writeFile('../testApp/.sailsrc', sailsrc, function(){
     console.log("Running the server...");
+    process.chdir('/Users/josefranciscoverdugambin/Downloads/sailor-module-user/testApp');
     appHelper.start();
+    appHelper.lift();
   });
 });
