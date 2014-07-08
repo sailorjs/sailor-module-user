@@ -6,6 +6,6 @@ function run_test {
 
 run_test \
 test/create.test.js \
-# test/destroy.test.js
+test/destroy.test.js
 
 # rm -rf testApp/
