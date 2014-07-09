@@ -21,7 +21,7 @@ fs.existsSync = fs.existsSync || path.existsSync;
  * about setting up the fixtures.
  */
 
-module.exports.build = function( /* [appName], done */ ) {
+var _build = function( /* [appName], done */ ) {
   var args = Array.prototype.slice.call(arguments),
     done = args.pop(),
     appName = 'testApp';
@@ -42,14 +42,7 @@ module.exports.build = function( /* [appName], done */ ) {
   });
 };
 
-module.exports.writeFile = function(file, txt, done) {
-  fs.writeFile(file, txt, function(err) {
-    if (err) return done(err);
-    return done();
-  });
-};
-
-module.exports.clean = function() {
+var _clean = function() {
   var dir = process.cwd();
   // appName = appName ? appName : 'testApp';
   // var dir = path.resolve('./../', appName);
@@ -58,17 +51,14 @@ module.exports.clean = function() {
   }
 };
 
-module.exports.start = function(options) {
-  sailsLift(options);
-};
 
-module.exports.linkPlugin = function(callback){
+var _linkPlugin = function(callback){
   var origin = path.resolve(process.cwd(), '..');
   var dist = path.resolve(process.cwd(), 'node_modules', pkg.name);
   fs.symlink(origin, dist, callback);
 };
 
-module.exports.lift = function(options, callback) {
+var _lift = function(options, callback) {
 
   delete process.env.NODE_ENV;
 
@@ -90,10 +80,10 @@ module.exports.lift = function(options, callback) {
 
 };
 
-module.exports.buildAndLift = function(done){
-  module.exports.build(function(){
-    module.exports.linkPlugin(function(){
-      module.exports.lift({
+var _buildAndLift = function(done){
+  _build(function(){
+    _linkPlugin(function(){
+      _lift({
           verbose: false,
           log: {
             level: 'silent'
@@ -111,12 +101,12 @@ module.exports.buildAndLift = function(done){
   });
 };
 
-module.exports.liftWithTwoSockets = function(options, callback) {
+var _liftWithTwoSockets = function(options, callback) {
   if (typeof options == 'function') {
     callback = options;
     options = null;
   }
-  module.exports.lift(options, function(err, sails) {
+  _lift(options, function(err, sails) {
     if (err) {
       return callback(err);
     }
@@ -134,12 +124,23 @@ module.exports.liftWithTwoSockets = function(options, callback) {
   });
 };
 
-module.exports.buildAndLiftWithTwoSockets = function(appName, options, callback) {
+var _buildAndLiftWithTwoSockets = function(appName, options, callback) {
   if (typeof options == 'function') {
     callback = options;
     options = null;
   }
-  module.exports.build(appName, function() {
-    module.exports.liftWithTwoSockets(options, callback);
+  _build(appName, function() {
+    _liftWithTwoSockets(options, callback);
   });
+};
+
+// Exports
+module.exports = {
+  build                      : _build,
+  clean                      : _clean,
+  linkPlugin                 : _linkPlugin,
+  lift                       : _lift,
+  buildAndLift               : _buildAndLift,
+  liftWithTwoSockets         : _liftWithTwoSockets,
+  buildAndLiftWithTwoSockets : _buildAndLiftWithTwoSockets
 };

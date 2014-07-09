@@ -38,6 +38,8 @@ module.exports.routes = {
   // delete
   'delete /user/:identifier' : 'UsernController.destroy',
 
+
+
   'get /auth/:provider': 'UserController.provider',
   'get /auth/:provider/callback': 'UserController.callback'
 

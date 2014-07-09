@@ -15,7 +15,7 @@ UPDATE:
 
 ## create
 
-### POST auth/\<strategy>/register
+### POST user/create/\<strategy>/register
 
 Object to `POST`:
 
@@ -30,10 +30,10 @@ password: "password"
 
 Strategies can be:
 
-* Local
-* Facebook
-* Twitter
-* Google
+* local
+* facebook
+* twitter
+* google
 
 ## remove
 ### DELETE /user/\<username>
