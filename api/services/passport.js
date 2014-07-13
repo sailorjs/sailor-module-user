@@ -1,11 +1,6 @@
-var passport, path, url;
-
-path = require("path");
-
-url = require("url");
-
-passport = require("passport");
-
+var path = require("path");
+var url = require("url");
+var passport = require("passport");
 
 /*
 Passport Service
@@ -176,19 +171,13 @@ passport.callback = function(req, res, next) {
   provider = req.param("provider", "local");
   action = req.param("action");
 
-  // DEBUG
-  sails.log.blank();
-  sails.log("Passport Callback");
-  sails.log("Action: " + action);
-  sails.log("Provider: " + provider);
-  sails.log.blank();
   if (provider === "local" && action !== undefined) {
     if (action === "register" && !req.user) {
       return this.protocols.local.register(req, res, next);
     } else if (action === "connect" && req.user) {
       return this.protocols.local.connect(req, res, next);
     } else {
-      return next(new Error("Invalid action"));
+      return next("Invalid action");
     }
   } else {
     return this.authenticate(provider, next)(req, res, req.next);

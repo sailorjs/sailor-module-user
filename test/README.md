@@ -1,10 +1,10 @@
-# Sailor module user - Testing
+# Sailor module user
 
 Resume of operations:
 
 ```
-CREATE: POST /user/auth/\<strategy>/register
-REMOVE: DELETE /user/
+CREATE: POST /user/auth/<strategy>/register
+REMOVE: DELETE /user/<identifier>
 LOGIN:
 LOGOUT:
 FIND:

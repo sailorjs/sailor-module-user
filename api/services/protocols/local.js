@@ -1,4 +1,5 @@
-var validator = require('validator');
+var validator  = require('validator');
+var stringfile = require('sailor-stringfile');
 
 /**
  * Local Authentication Protocol
@@ -26,14 +27,24 @@ exports.register = function (req, res, next) {
 
   var password = req.param('password'),
       username = req.param('username'),
-      email     = req.param('email');
+      email    = req.param('email');
 
+  // TODO: Use Waterline Error Factory
   if (!email){
-    return next(sails.__('Error.Passport.Email.NotFound'));
+    return next(stringfile.create({
+      type    : 'error',
+      message : 'User.Email.NotFound',
+      lang    : req.locale
+    }));
   }
 
-  if (!password){
-    return next(sails.__('Error.Passport.Password.NotFound'));
+  // TODO: Use Waterline Error Factory
+  if (!email){
+    return next(stringfile.create({
+      type    : 'error',
+      message : 'User.Password.NotFound',
+      lang    : req.locale
+    }));
   }
 
   var user = {
@@ -41,16 +52,26 @@ exports.register = function (req, res, next) {
     username : username
   };
 
-  User.create(user, function (err, user) {
-    if (err) {
-      return next(err, user);
-    }
+  User.create(user)
+  .exec(function (err, user) {
+    // TODO: Use Waterline Error Factory
+    if (err) return next(err, user);
 
     Passport.create({
       protocol : 'local',
       password : password,
       user     : user.id
-    }, function (err, passport) {
+    })
+    .exec(function (err, passport) {
+      // TODO: How Websockets in Sails works?
+      if (req._sails.hooks.pubsub) {
+        if (req.isSocket) {
+          User.subscribe(req, user);
+          User.introduce(user);
+        }
+        User.publishCreate(user, !req.options.mirror && req);
+      }
+      // TODO: Use Waterline Error Factory
       next(err, user);
     });
   });

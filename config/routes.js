@@ -32,16 +32,22 @@ module.exports.routes = {
   },
 
   // create
-  'post /user/create/local': 'UserController.callback',
   'post /user/create/local/:action': 'UserController.callback',
 
-  // delete
+  // remove
   'delete /user/:identifier' : 'UsernController.destroy',
 
+  // login
+  'post /user/login/local': 'UserController.callback',
+
+  // logout
+  'get /user/logout': 'UserController.logout',
+
+  // find
+  // findOne
+  // update
 
 
-  'get /auth/:provider': 'UserController.provider',
-  'get /auth/:provider/callback': 'UserController.callback'
 
 
   // If a request to a URL doesn't match any of the custom routes above,

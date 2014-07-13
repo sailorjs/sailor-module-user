@@ -80,13 +80,23 @@ var _lift = function(options, callback) {
 
 };
 
-var _buildAndLift = function(done){
+/**
+ * [_buildAndLift description]
+ * @param  {[type]}   logLevel [description]
+ * @param  {Function} done     [description]
+ * @return {[type]}            [description]
+ */
+var _buildAndLift = function(logLevel, done){
+
+  if (arguments.length === 1)
+    logLevel = "silent";
+
   _build(function(){
     _linkPlugin(function(){
       _lift({
           verbose: false,
           log: {
-            level: 'silent'
+            level: logLevel
           },
           // Lift method don't link rc file :-(
           plugins: [pkg.name]

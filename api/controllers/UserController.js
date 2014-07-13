@@ -10,33 +10,6 @@ var validator = require('validator');
  module.exports = {
 
   /**
-   * Render the login page
-   *
-   * @param {Object} req
-   * @param {Object} res
-   */
-  login: function (req, res) {
-    var strategies = sails.config.passport,
-        providers  = {};
-
-    // Get a list of available providers for use in your templates.
-    Object.keys(strategies).forEach(function (key) {
-      if (key === 'local') return;
-
-      providers[key] = {
-        name : strategies[key].name,
-        slug : key
-      };
-    });
-
-    // Render the `auth/login.ext` view
-    res.view({
-      providers : providers,
-      errors    : req.flash('error')
-    });
-  },
-
-  /**
    * Log out a user and return them to the homepage
    *
    * Passport exposes a logout() function on req (also aliased as logOut()) that
