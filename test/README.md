@@ -3,8 +3,8 @@
 Resume of operations:
 
 ```
-CREATE: POST /user/auth/<strategy>/register
-REMOVE: DELETE /user/<identifier>
+CREATE: POST /user/create/:strategy
+REMOVE: DELETE /user/:identifier
 LOGIN:
 LOGOUT:
 FIND:
@@ -15,7 +15,7 @@ UPDATE:
 
 ## create
 
-### POST user/create/\<strategy>/register
+### POST user/create/:strategy
 
 Object to `POST`:
 
@@ -30,7 +30,7 @@ password: "password"
 
 Strategies can be:
 
-* local
+* local (can be exclude from the route)
 * facebook
 * twitter
 * google

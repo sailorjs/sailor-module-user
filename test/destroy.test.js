@@ -5,6 +5,8 @@ var should    = require('should');
 var request   = require('superagent');
 var assert    = require('assert');
 var appHelper = require('./helpers/appHelper');
+
+var create       = 'http://localhost:1342';
 var url       = 'http://localhost:1342';
 
 describe('Remove ::', function() {

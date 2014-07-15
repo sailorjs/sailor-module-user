@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 function welcome {
 echo "   _____  ___  _____ _     ___________ "
@@ -17,15 +17,17 @@ echo "    \_/ \____/\____/  \_/  \___/\_| \_/\____/"
 echo "                                             "
 }
 
-
 function run_test {
-  mocha -b "$@"
+  mocha -b \
+        --compilers coffee:coffee-script/register \
+        "$@"
 };
 
 ## Main
 welcome
 run_test \
-test/create.test.js \
-test/destroy.test.js
+test/create.test.coffee \
+# test/destroy.test.js
+
 
 # rm -rf testApp/
