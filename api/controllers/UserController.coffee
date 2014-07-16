@@ -82,27 +82,3 @@ module.exports =
       req.login user, (err) ->
         return res.badRequest err if err
         res.ok()
-
-  findOne: (req, res) ->
-
-    identifier = req.param("identifier")
-    isEmail    = validator.isEmail(identifier)
-    user = {}
-
-    if isEmail
-      user.email = identifier
-    else
-      user.username = identifier
-
-    User.findOne(user).exec (err, user) ->
-      return res.negotiate(err)  if err
-      res.ok user
-
-  # find: (req, res) ->
-
-
-  test: (req, res) ->
-    # console.log req.param("identifier")
-    # console.log req.allParams()
-
-    res.ok("Hello World")

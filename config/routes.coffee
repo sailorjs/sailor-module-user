@@ -28,9 +28,8 @@ module.exports.routes =
   "/": view: "homepage"
 
   # create
-  # TODO: use only one route
-  # "post /user/create": "UserController.callback"
-  # "post /user/create/:strategy": "UserController.callback"
+  "POST /user/create"           : "UserController.callback"
+  "POST /user/create/:strategy" : "UserController.callback"
 
   # findOne
   # "get /user/:identifier" : "UserController.findOne"

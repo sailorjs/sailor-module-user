@@ -1,5 +1,5 @@
-validator  = require("validator")
-stringfile = require("sailor-stringfile")
+validator         = require "validator"
+stringfile        = require "sailor-stringfile"
 
 ###
 Local Authentication Protocol
@@ -32,11 +32,17 @@ exports.register = (req, res, next) ->
   # TODO: Use Waterline Error Factory
   # The email is validate in the model, but not the password in local strategy
   unless password
-    return next(stringfile.create(
-      type: "error"
-      message: "User.Password.NotFound"
-      lang: req.locale
-    ))
+
+    error = stringfile.newError(
+      model : "User"
+      lang  : req.locale
+      attributes: [
+        rule: "rule"
+        message: "User.Password.NotFound"
+      ]
+    )
+
+    return next(error)
 
   user =
     email: email
