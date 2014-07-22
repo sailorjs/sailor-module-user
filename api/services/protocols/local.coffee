@@ -1,5 +1,5 @@
 validator         = require "validator"
-stringfile        = require "sailor-stringfile"
+errorify          = require "sailor-errorify"
 
 ###
 Local Authentication Protocol
@@ -33,15 +33,24 @@ exports.register = (req, res, next) ->
   # The email is validate in the model, but not the password in local strategy
   unless password
 
-    error = stringfile.newError(
-      model : "User"
-      lang  : req.locale
-      attributes: [
-        rule: "rule"
-        message: "User.Password.NotFound"
-      ]
-    )
+    ## Testing normal error
+    # error = errorify.error()
 
+    ## Testing validation error
+    attr1 =
+      name: "test"
+      rule: "rule"
+      message: "User.Password.NotFound"
+
+    attr2 =
+      name: "test_2"
+      rule: "rule_2"
+      message: "@Kikobeats"
+
+    error = errorify.errorValidation(
+      model : "User"
+      attributes: [attr1, attr2]
+    )
     return next(error)
 
   user =
