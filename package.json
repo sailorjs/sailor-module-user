@@ -3,28 +3,20 @@
   "version": "0.0.1",
   "dependencies": {
     "bcrypt": "^0.7.8",
+    "coffee-script": "*",
     "passport": "^0.2.0",
-    "sort-keys": "^0.1.0",
-    "validator": "^3.16.0"
-  },
-  "devDependencies": {
-    "execSync": "^1.0.1-pre",
-    "fs-extra": "^0.9.1",
-    "lodash": "^2.4.1",
-    "mocha": "^1.20.1",
-    "multiline": "^0.3.4",
     "passport-facebook": "^1.0.3",
     "passport-github": "^0.1.5",
     "passport-google": "^0.3.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.2",
-    "request": "^2.36.0",
-    "sails": "git+https://bitbucket.org/sailorjs/sails.git",
-    "should": "^4.0.4",
-    "socket.io": "~0.9.14",
-    "socket.io-client": "~0.9.16",
-    "superagent": "^0.18.0",
-    "wrench": "^1.5.8"
+    "sort-keys": "^0.1.0",
+    "validator": "^3.16.0"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "superagent": "*"
   },
   "license": "MIT",
   "main": "index.js",

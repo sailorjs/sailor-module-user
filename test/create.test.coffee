@@ -1,16 +1,30 @@
 ###
 Dependencies
 ###
-should    = require("should")
-request   = require("superagent")
-assert    = require("assert")
-app       = require("./helpers/appHelper")
-url       = require("./helpers/urlHelper")
+should    = require 'should'
+request   = require 'superagent'
+sailor    = require 'sailorjs'
+scripts   = sailor.scripts
+pkg       = require '../package.json'
+url       = require './helpers/urlHelper'
+
+
+MODULE = process.cwd()
+LINK   = "#{process.cwd()}/testApp/node_modules/sailor-module-user"
 
 describe "Create ::", ->
 
   ## Setup
-  before (done) -> app.buildAndLift done
+  before (done) ->
+    scripts.newBase ->
+      scripts.link MODULE, LINK, ->
+        opts =
+          log: level: "silent"
+          plugins: [pkg.name]
+        scripts.lift opts, done
+
+  after (done) ->
+    scripts.clean done
 
   ## Testing
   describe "Local Strategy", ->
