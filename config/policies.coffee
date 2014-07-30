@@ -16,6 +16,7 @@ http://sailsjs.org/#!documentation/
 # Default policy for all controllers and actions
 # (`true` allows public access)
 module.exports.policies = "*": ["passport"]
+# module.exports.policies = "*": ["passport", "i18n"]
 
 # Here's an example of mapping some policies to run before
 # a controller and its actions

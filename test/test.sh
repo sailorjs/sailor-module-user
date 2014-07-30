@@ -22,4 +22,5 @@ run() {
 
 ## Main
 welcome && run \
-test/create.test.coffee
+test/create.test.coffee \
+test/login.test.coffee

@@ -10,11 +10,12 @@ User.js
 module.exports =
 
   # Enforce model schema in the case of schemaless databases
+  # https://github.com/balderdashy/waterline-docs/blob/master/models.md
   schema: true
   attributes:
     username:
       type: "string"
-      unique: true
+      notNull: true
 
     email:
       type: "email"

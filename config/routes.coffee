@@ -25,11 +25,14 @@ module.exports.routes =
   # default view engine) your home page.
   #
   # (Alternatively, remove this and add an `index.html` file in your `assets` directory)
-  "/": view: "homepage"
 
   # create
-  "POST /user/create"           : "UserController.callback"
-  "POST /user/create/:strategy" : "UserController.callback"
+  # create/local
+  "POST /:lang/user/:action"           : "UserController.callback"
+
+  # create/local
+  # login/local
+  "POST /:lang/user/:action/:strategy" : "UserController.callback"
 
   # findOne
   # "get /user/:identifier" : "UserController.findOne"
@@ -39,9 +42,6 @@ module.exports.routes =
 
   # remove
   # "delete /user/:identifier": "UsernController.destroy"
-
-  # login
-  # "post /user/login/local": "UserController.callback"
 
   # logout
   # "get /user/logout": "UserController.logout"

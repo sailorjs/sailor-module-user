@@ -1,0 +1,107 @@
+{
+  "data": {
+    "passport": [
+      {
+        "protocol": "local",
+        "password": "$2a$10$jnNi6JCQLXaL1UPO0i2rr.Lx9XN.YADJZjCTrkRX9SjxmLeGWQB..",
+        "user": 1,
+        "createdAt": "2014-07-30T16:35:09.765Z",
+        "updatedAt": "2014-07-30T16:35:09.765Z",
+        "id": 1
+      },
+      {
+        "protocol": "local",
+        "password": "$2a$10$Sgl758r.6XfT8uHvnFUrhuTdwilmtPSFYy41si3AHPFE4bDhDrSE2",
+        "user": 2,
+        "createdAt": "2014-07-30T16:35:09.917Z",
+        "updatedAt": "2014-07-30T16:35:09.917Z",
+        "id": 2
+      }
+    ],
+    "user": [
+      {
+        "email": "user1@sailor.com",
+        "username": null,
+        "createdAt": "2014-07-30T16:35:09.670Z",
+        "updatedAt": "2014-07-30T16:35:09.670Z",
+        "id": 1
+      },
+      {
+        "email": "user2@sailor.com",
+        "username": "user2",
+        "createdAt": "2014-07-30T16:35:09.829Z",
+        "updatedAt": "2014-07-30T16:35:09.829Z",
+        "id": 2
+      }
+    ]
+  },
+  "schema": {
+    "passport": {
+      "protocol": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "strategy": {
+        "type": "string"
+      },
+      "identifier": {
+        "type": "string"
+      },
+      "tokens": {
+        "type": "json"
+      },
+      "user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "user": {
+      "username": {
+        "type": "string",
+        "notNull": true
+      },
+      "email": {
+        "type": "string",
+        "unique": true
+      },
+      "avatar": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "passport": {
+      "id": 2
+    },
+    "user": {
+      "id": 2
+    }
+  }
+}

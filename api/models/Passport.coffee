@@ -4,7 +4,7 @@ bcrypt = require("bcrypt")
 Passport Model
 
 The Passport model handles associating authenticators with users. An authen-
-ticator can be either local (password) or third-party (provider). A single
+ticator can be either local (password) or third-party (strategy). A single
 user can have multiple passports, allowing them to connect and use several
 third-party strategies in optional conjunction with a password.
 
@@ -16,7 +16,7 @@ the user, but not the authentication data, to and from the session.
 ###
 Passport =
   attributes:
-    
+
     # Required field: Protocol
     #
     # Defines the protocol to use for the passport. When employing the local
@@ -27,7 +27,7 @@ Passport =
       type: "alphanumeric"
       required: true
 
-    
+
     # Local field: Password
     #
     # When the local strategy is employed, a password will be used as the
@@ -36,19 +36,19 @@ Passport =
       type: "string"
       minLength: 8
 
-    
-    # Provider fields: Provider, identifer and tokens
+
+    # strategy fields: strategy, identifer and tokens
     #
-    # "provider" is the name of the third-party auth service in all lowercase
-    # (e.g. 'github', 'facebook') whereas "identifier" is a provider-specific
+    # "strategy" is the name of the third-party auth service in all lowercase
+    # (e.g. 'github', 'facebook') whereas "identifier" is a strategy-specific
     # key, typically an ID. These two fields are used as the main means of
     # identifying a passport and tying it to a local user.
     #
     # The "tokens" field is a JSON object used in the case of the OAuth stan-
     # dards. When using OAuth 1.0, a `token` as well as a `tokenSecret` will
-    # be issued by the provider. In the case of OAuth 2.0, an `accessToken`
+    # be issued by the strategy. In the case of OAuth 2.0, an `accessToken`
     # and a `refreshToken` will be issued.
-    provider:
+    strategy:
       type: "alphanumericdashed"
 
     identifier:
@@ -57,7 +57,7 @@ Passport =
     tokens:
       type: "json"
 
-    
+
     # Associations
     #
     # Associate every passport with one, and only one, user. This requires an
@@ -69,10 +69,10 @@ Passport =
       model: "User"
       required: true
 
-    
+
     ###
     Validate password used by the local strategy.
-    
+
     @param {string}   password The password to validate
     @param {Function} next
     ###
@@ -80,10 +80,10 @@ Passport =
       bcrypt.compare password, @password, next
       return
 
-  
+
   ###
   Callback to be run before creating a Passport.
-  
+
   @param {Object}   passport The soon-to-be-created Passport
   @param {Function} next
   ###
@@ -98,10 +98,10 @@ Passport =
       next null, passport
     return
 
-  
+
   ###
   Callback to be run before updating a Passport.
-  
+
   @param {Object}   passport Values to be updated
   @param {Function} next
   ###

@@ -1,4 +1,4 @@
-validator  = require 'validator'
+sailor   = require 'sailorjs'
 
 ###
 Authentication Controller
@@ -36,7 +36,7 @@ module.exports =
   ###
   destroy: (req, res) ->
     identifier = req.param("identifier")
-    isEmail = validator.isEmail(identifier)
+    isEmail = sailor.validator.isEmail(identifier)
     user = {}
 
     if isEmail
@@ -82,3 +82,6 @@ module.exports =
       req.login user, (err) ->
         return res.badRequest err if err
         res.ok()
+
+  test: (req, res) ->
+    res.ok(req.path)

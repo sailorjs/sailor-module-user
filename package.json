@@ -10,10 +10,15 @@
     "passport-google": "^0.3.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.2",
-    "sort-keys": "^0.1.0",
-    "validator": "^3.16.0"
+    "sort-keys": "^0.1.0"
   },
   "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-js2coffee": "^0.2.1",
+    "grunt-translate-compile": "^0.1.6",
+    "load-grunt-tasks": "*",
     "mocha": "*",
     "should": "*",
     "superagent": "*"

@@ -9,9 +9,8 @@ For more information on bootstrapping your app, check out:
 http://links.sailsjs.org/docs/config/bootstrap
 ###
 module.exports.bootstrap = (cb) ->
-  
+
   # It's very important to trigger this callack method when you are finished
   # with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   sails.services.passport.loadStrategies()
   cb()
-  return

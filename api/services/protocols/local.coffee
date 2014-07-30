@@ -1,6 +1,4 @@
-validator         = require "validator"
-# sailor            = require 'sailorjs'
-# errorify          = require "sailor-errorify"
+sailor    = require 'sailorjs'
 
 ###
 Local Authentication Protocol
@@ -24,43 +22,38 @@ and assign the newly created user a local Passport.
 @param {Object}   res
 @param {Function} next
 ###
-exports.register = (req, res, next) ->
 
+### TODO:
+Write sailor-translate for make easy access to translate file!
+################
+exports.register = (req, res, next) ->
   password = req.param("password")
   username = req.param("username")
   email    = req.param("email")
 
-  # TODO: Use Waterline Error Factory
-  # The email is validate in the model, but not the password in local strategy
   unless password
-
-    # Testing validation error
-    # attr1 =
-    #   name: "test"
-    #   rule: "rule"
-    #   message: "User.Password.NotFound"
-
-    # error = sailor.errorValidation(
-    #   model : "User"
-    #   attributes: [attr1, attr2]
-    # )
-    return next("Password not found")
+    return next(sailor.errorify.errorValidation(
+      model : "User"
+      attributes: [
+        name: "Password"
+        rule: "minLength"
+        message: "Password.Not.Found"
+      ]
+    ))
 
   user =
     email: email
     username: username
 
   User.create(user).exec (err, user) ->
-    # TODO: Use Waterline Error Factory
     return next(err, user)  if err
 
     strategy =
       protocol: "local"
       password: password
-      user: user.id
+      user:     user.id
 
     Passport.create(strategy).exec (err, passport) ->
-      # TODO: Use Waterline Error Factory
       next err, user
 
 ###
@@ -75,28 +68,29 @@ third-party service and therefore never set a password.
 @param {Function} next
 ###
 exports.connect = (req, res, next) ->
-  user = req.user
+  user     = req.user
   password = req.param("password")
-  Passport.findOne
+
+  user =
     protocol: "local"
     user: user.id
-  , (err, passport) ->
+
+  Passport.findOne(user).exec (err, passport) ->
     return next(err)  if err
+
     unless passport
-      Passport.create
+
+      passport =
         protocol: "local"
         password: password
         user: user.id
-      , (err, passport) ->
-        console.log "Se queda aqui"
+
+      Passport.create(passport).exec (err, passport) ->
         next err, user
-        return
 
     else
-      next sails.__("Error.Passport.Strategy.Already"), user
-    return
+      next null, user
 
-  return
 
 
 ###
@@ -112,36 +106,51 @@ found, its password is checked against the password supplied in the form.
 @param {Function} next
 ###
 exports.login = (req, identifier, password, next) ->
-  isEmail = validator.isEmail(identifier)
-  user = {}
+
+  isEmail = sailor.validator.isEmail(identifier)
+  user    = {}
+
   if isEmail
     user.email = identifier
   else
     user.username = identifier
-  User.findOne user, (err, user) ->
-    return next(err)  if err
 
-    # TODO: Cambiar por sailor-stringfile
-    return next(sails.__("Error.Passport.User.NotFound"), user)  unless user
-    Passport.findOne
+  User.findOne(user).exec (err, user) ->
+    return next(err)  if err
+    unless user
+      return next(sailor.errorify.errorValidation(
+        model : "User"
+        attributes: [
+          name: "User"
+          rule: "Don't Found"
+          message: "Error.user.dont.found"
+        ]))
+
+    passport =
       protocol: "local"
       user: user.id
-    , (err, passport) ->
-      next err  if err
+
+    Passport.findOne(passport).exec (err, passport) ->
+      return next(err) if err
+
       if passport
         passport.validatePassword password, (err, res) ->
           return next(err)  if err
           unless res
-            errMessage = sails.__("Error.Passport.Password.Wrong")
-            next errMessage
+            return next(sailor.errorify.errorValidation(
+              model : "User"
+              attributes: [
+                name: "User"
+                rule: "Don't Found"
+                message: "Error.user.dont.found"
+              ]))
           else
-            next null, user
-
+            return next null, user
       else
-        errMessage = sails.__("Error.Passport.Password.NotSet")
-        next errMessage
-      return
-
-    return
-
-  return
+        return next(sailor.errorify.errorValidation(
+          model : "User"
+          attributes: [
+            name: "User"
+            rule: "Don't Found"
+            message: "Error.user.dont.found"
+          ]))
