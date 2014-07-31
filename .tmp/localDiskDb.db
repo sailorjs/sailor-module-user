@@ -3,18 +3,18 @@
     "passport": [
       {
         "protocol": "local",
-        "password": "$2a$10$jnNi6JCQLXaL1UPO0i2rr.Lx9XN.YADJZjCTrkRX9SjxmLeGWQB..",
+        "password": "$2a$10$Z8DchuMK1Be1umiR1xfpueYOUCZg0HidWyDNeXsK.hCHa48RDeS2.",
         "user": 1,
-        "createdAt": "2014-07-30T16:35:09.765Z",
-        "updatedAt": "2014-07-30T16:35:09.765Z",
+        "createdAt": "2014-07-31T08:21:08.806Z",
+        "updatedAt": "2014-07-31T08:21:08.807Z",
         "id": 1
       },
       {
         "protocol": "local",
-        "password": "$2a$10$Sgl758r.6XfT8uHvnFUrhuTdwilmtPSFYy41si3AHPFE4bDhDrSE2",
+        "password": "$2a$10$p/1VS3GmzweXOMaYBQyGZOH.AUFA7jWKMTlN7WPjyvDrYopa8NXeu",
         "user": 2,
-        "createdAt": "2014-07-30T16:35:09.917Z",
-        "updatedAt": "2014-07-30T16:35:09.917Z",
+        "createdAt": "2014-07-31T08:21:08.960Z",
+        "updatedAt": "2014-07-31T08:21:08.960Z",
         "id": 2
       }
     ],
@@ -22,15 +22,15 @@
       {
         "email": "user1@sailor.com",
         "username": null,
-        "createdAt": "2014-07-30T16:35:09.670Z",
-        "updatedAt": "2014-07-30T16:35:09.670Z",
+        "createdAt": "2014-07-31T08:21:08.715Z",
+        "updatedAt": "2014-07-31T08:21:08.715Z",
         "id": 1
       },
       {
         "email": "user2@sailor.com",
         "username": "user2",
-        "createdAt": "2014-07-30T16:35:09.829Z",
-        "updatedAt": "2014-07-30T16:35:09.829Z",
+        "createdAt": "2014-07-31T08:21:08.871Z",
+        "updatedAt": "2014-07-31T08:21:08.871Z",
         "id": 2
       }
     ]

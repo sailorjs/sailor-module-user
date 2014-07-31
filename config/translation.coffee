@@ -1,13 +1,10 @@
 module.exports.en = User:
   Username:
     Already: 'Username already exist.'
-    Wrong: 'Wrong Username'
-    NotFound: 'Username not found.'
+    NotFound: 'Username doesn\'t found.'
 
   Password:
     DontMatch: 'Passwords don\'t match'
-    Wrong: 'Wrong password'
-    NotFound: 'Password doesn\'t found'
 
   Strategy:
     Already: 'Strategy already exist'
@@ -45,17 +42,14 @@ module.exports.en = User:
 module.exports.es = User:
   Username:
     Already: 'Usuario ya registrado.'
-    Wrong: 'Wrong Username'
-    NotFound: 'Username not found.'
+    NotFound: 'Usuario no encontrado.'
 
   Password:
     DontMatch: 'La contraseña no coincide'
-    Wrong: 'La con'
-    NotFound: 'Contraseña no encontrada'
 
   Strategy:
-    Already: 'Strategy already exist'
-    NotSet: 'Strategy don\'t set already'
+    Already: 'La estrategia ya existe'
+    NotSet: 'La estrategia no ha sido establecida'
 
   Email:
     Already: 'Email already exist'

@@ -1,4 +1,3 @@
-sailor    = require 'sailorjs'
 
 ###
 Local Authentication Protocol
@@ -36,8 +35,8 @@ exports.register = (req, res, next) ->
       model : "User"
       attributes: [
         name: "Password"
-        rule: "minLength"
-        message: "Password.Not.Found"
+        rule: "DontMatch"
+        message: sailor.translate.get('User.Password.DontMatch')
       ]
     ))
 
@@ -122,8 +121,8 @@ exports.login = (req, identifier, password, next) ->
         model : "User"
         attributes: [
           name: "User"
-          rule: "Don't Found"
-          message: "Error.user.dont.found"
+          rule: "Doesn't Found"
+          message: sailor.translate.get('User.Username.NotFound')
         ]))
 
     passport =
@@ -140,9 +139,9 @@ exports.login = (req, identifier, password, next) ->
             return next(sailor.errorify.errorValidation(
               model : "User"
               attributes: [
-                name: "User"
-                rule: "Don't Found"
-                message: "Error.user.dont.found"
+                name: "Strategy"
+                rule: "Doesn't Match"
+                message: sailor.translate.get('User.Password.DontMatch')
               ]))
           else
             return next null, user
@@ -150,7 +149,7 @@ exports.login = (req, identifier, password, next) ->
         return next(sailor.errorify.errorValidation(
           model : "User"
           attributes: [
-            name: "User"
-            rule: "Don't Found"
-            message: "Error.user.dont.found"
+            name: "Strategy"
+            rule: "Doesn't Set"
+            message: sailor.translate.get('User.Strategy.NotSet')
           ]))

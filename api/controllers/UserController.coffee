@@ -82,6 +82,3 @@ module.exports =
       req.login user, (err) ->
         return res.badRequest err if err
         res.ok()
-
-  test: (req, res) ->
-    res.ok(req.path)

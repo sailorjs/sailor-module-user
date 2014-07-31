@@ -11,31 +11,22 @@ User
 		Already
 			1:Username already exist.
 			2:Usuario ya registrado.
-		Wrong
-			1:Wrong Username
-			2:Wrong Username
 		NotFound
-			1:Username not found.
-			2:Username not found.
+			1:Username doesn't found.
+			2:Usuario no encontrado.
 
 	Password
 		DontMatch
 			1:Passwords don't match
 			2:La contraseña no coincide
-		Wrong
-			1:Wrong password
-			2:La con
-		NotFound
-			1:Password doesn't found
-			2:Contraseña no encontrada
 
 	Strategy
 		Already
 			1:Strategy already exist
-			2:Strategy already exist
+			2:La estrategia ya existe
 		NotSet
 			1:Strategy don't set already
-			2:Strategy don't set already
+			2:La estrategia no ha sido establecida
 
 	Email
 		Already
