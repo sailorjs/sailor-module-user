@@ -46,7 +46,7 @@ exports.register = (req, res, next) ->
     username: username
 
   User.create(user).exec (err, user) ->
-    return next(err, user)  if err
+    return next(err, user) if err
 
     strategy =
       protocol: "local"
@@ -55,6 +55,22 @@ exports.register = (req, res, next) ->
 
     Passport.create(strategy).exec (err, passport) ->
       next err, user
+
+exports.update = (req, res) ->
+
+
+exports.destroy = (req, res) ->
+  id = req.param("id")
+  return res.notFound() if not id
+
+  User.findOne(id).populateAll().exec (err, user) ->
+    return res.serverError(err) if (err)
+    return res.notFound() if not user
+
+
+    User.update(pk, req.params.all()).exec (error, user) ->
+      return res.negotiate(err)  if err
+      res.ok()
 
 ###
 Assign local Passport to user
@@ -76,7 +92,7 @@ exports.connect = (req, res, next) ->
     user: user.id
 
   Passport.findOne(user).exec (err, passport) ->
-    return next(err)  if err
+    return next(err) if err
 
     unless passport
 

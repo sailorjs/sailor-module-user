@@ -34,6 +34,9 @@ module.exports.routes =
   # login/local
   "POST /:lang/user/:action/:strategy" : "UserController.callback"
 
+
+
+
   # findOne
   # "get /user/:identifier" : "UserController.findOne"
 
