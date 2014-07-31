@@ -1,8 +1,8 @@
 ###
 Dependencies
 ###
-global.sailor = require 'sailorjs'
-User          = require './translation'
+sailor = require 'sailorjs'
+User   = require './translation'
 
 
 ###

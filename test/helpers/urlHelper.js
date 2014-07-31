@@ -5,12 +5,9 @@ var paths = {
   root    : path,
   local: {
     create  : path + "/en/user/create/local",
-    delete  : path + "/en/user/create",
     login   : path + "/en/user/login/local",
-    logout  : path + "/en/user/create",
-    find    : path + "/en/user/create",
-    findone : path + "/en/user/create",
-    update  : path + "/en/user/create",
+    logout  : path + "/en/user/logout",
+    find    : path + "/en/user/find",
   }
 };
 

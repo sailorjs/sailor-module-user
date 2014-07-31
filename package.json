@@ -1,9 +1,10 @@
 {
   "name": "sailor-module-user",
+  "description": "Module User for Sailor",
   "version": "0.0.1",
   "dependencies": {
-    "bcrypt": "^0.7.8",
     "coffee-script": "*",
+    "bcrypt": "^0.7.8",
     "passport": "^0.2.0",
     "passport-facebook": "^1.0.3",
     "passport-github": "^0.1.5",
@@ -24,7 +25,6 @@
     "superagent": "*"
   },
   "license": "MIT",
-  "main": "index.js",
   "scripts": {
     "test": "sh test/test.sh"
   }

@@ -1,3 +1,7 @@
+###
+Dependencies
+###
+sailor = require 'sailorjs'
 
 ###
 Local Authentication Protocol
@@ -22,9 +26,6 @@ and assign the newly created user a local Passport.
 @param {Function} next
 ###
 
-### TODO:
-Write sailor-translate for make easy access to translate file!
-################
 exports.register = (req, res, next) ->
   password = req.param("password")
   username = req.param("username")
