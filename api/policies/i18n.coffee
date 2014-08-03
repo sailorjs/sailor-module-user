@@ -15,11 +15,6 @@ i18n
 ###
 module.exports = (req, res, next) ->
 
-  lang = req.param("lang")
-  lang = 'en' if lang?
 
-  req.language = lang
-  req.region   = lang
-  sailor.translate.lang(lang)
 
   next()

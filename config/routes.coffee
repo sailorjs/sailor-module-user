@@ -5,7 +5,7 @@ Route Mappings
 Your routes map URLs to views and controllers.
 
 If Sails receives a URL that doesn't match any of the routes below,
-it will check for matching files (images, scripts, stylesheets, etc.)
+it will check for matchtching files (images, scripts, stylesheets, etc.)
 in your assets directory.  e.g. `http://localhost:1337/images/foo.jpg`
 might match an image file: `/assets/images/foo.jpg`
 
@@ -27,12 +27,15 @@ module.exports.routes =
   # (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
   # create
-  # create/local
-  "POST /:lang/user/:action"           : "UserController.callback"
+  "POST /:lang/user/:strategy?" : "UserController.callback"
+
+  # update
+  "PUT /:lang/user/:identifier?"         : "UserController.update"
 
   # create/local
   # login/local
-  "POST /:lang/user/:action/:strategy" : "UserController.callback"
+  # "POST /:lang/user/:action/:strategy" : "UserController.callback"
+
 
 
 

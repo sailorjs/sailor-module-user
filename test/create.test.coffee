@@ -25,55 +25,57 @@ before (done) ->
           scripts.lift opts, done
   else
     scripts.clean "#{MODULE}/.tmp/"
+    scripts.clean "#{MODULE}/testApp/.tmp/"
     scripts.lift opts, done
 
 # after (done) ->
   # scripts.clean done
 
 ## Testing
-describe "Create ::", ->
-  describe "Local Strategy", ->
-
-    describe "Register user without parameters", ->
+describe "Create :: /POST user", ->
+  describe "Local Strategy ", ->
+    describe "register user without parameters", ->
       it "should be 400 BadRequest", (done) ->
-        request.post(url.local.create).send({}).end (res) ->
+        request.post(url.create).send({}).end (res) ->
           res.status.should.equal 400
           done()
 
-    describe "Register user without password", ->
+    describe "register user without password", ->
       it "should be 400 BadRequest", (done) ->
-        request.post(url.local.create).send(email: "user1@sailor.com").end (res) ->
+        request.post(url.create).send(email: "user1@sailor.com").end (res) ->
           res.status.should.equal 400
           done()
 
-    describe "Register user without email", ->
+    describe "register user without email", ->
       it "should be 400 BadRequest", (done) ->
-        request.post(url.local.create).send(password: "password").end (res) ->
+        request.post(url.create).send(password: "password").end (res) ->
           res.status.should.equal 400
           done()
 
-    describe "Register user without username", ->
+    describe "register user without username", ->
       it "should be 200 OK", (done) ->
-        request.post(url.local.create).send(
+        request.post(url.create).send(
           email: "user1@sailor.com"
           password: "password"
         ).end (res) ->
           res.status.should.equal 200
           done()
 
-    describe "Register user with email, username and password", ->
+    describe "register user with email, username and password and respond the new user", ->
       it "should be 200 OK", (done) ->
-        request.post(url.local.create).send(
+        request.post(url.create).send(
           username: "user2"
           email: "user2@sailor.com"
           password: "password"
         ).end (res) ->
           res.status.should.equal 200
+          res.body.email.should.equal 'user2@sailor.com'
+          res.body.username.should.equal 'user2'
           done()
 
-    describe "Register that is already registered", ->
+    describe "register that is already registered", ->
       it "should be 400 BadRequest", ->
-        request.post(url.local.create).send(
+        request.post(url.create).send(
           username: "user2"
           email: "user2@sailor.com"
           password: "password"

@@ -5,15 +5,13 @@ should    = require("should")
 request   = require("superagent")
 url       = require("./helpers/urlHelper")
 
-describe "Find ::", ->
+describe "Find :: /GET user", ->
 
   describe 'all', ->
     it 'should be 200 OK', (done) ->
-      request.get(url.local.find).end (res) ->
+      request.get(url.find).end (res) ->
         user_one = res.body[0]
         user_two = res.body[1]
-
-        res.status.should.equal 200
 
         user_one.id.should.equal 1
         user_one.email.should.equal 'user1@sailor.com'
@@ -22,11 +20,15 @@ describe "Find ::", ->
         user_two.email.should.equal 'user2@sailor.com'
         user_two.username.should.equal 'user2'
 
+        res.status.should.equal 200
+
         done()
 
   describe 'by id', ->
     it 'should be 200 OK', (done) ->
-      request.get(url.local.find+'/1').end (res) ->
+      request.get(url.find)
+      .query(id: "1")
+      .end (res) ->
         res.status.should.equal 200
         res.body.id.should.equal 1
         res.body.email.should.equal 'user1@sailor.com'
@@ -35,7 +37,7 @@ describe "Find ::", ->
   describe 'by username', ->
     it 'should be 200 OK', (done) ->
       request
-      .get(url.local.find)
+      .get(url.find)
       .query(username: "user2")
       .end (res) ->
         res.status.should.equal 200
@@ -46,7 +48,7 @@ describe "Find ::", ->
   describe 'by email', ->
     it 'should be 200 OK', (done) ->
       request
-      .get(url.local.find)
+      .get(url.find)
       .query(email: "user1@sailor.com")
       .end (res) ->
         res.status.should.equal 200

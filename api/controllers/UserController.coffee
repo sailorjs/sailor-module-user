@@ -27,29 +27,6 @@ module.exports =
     req.logout()
     res.ok()
 
-  ###
-  Localize and delete a user from the system.
-  Is necessary the email or the username to proceed it.
-  @param  {[type]} req [description]
-  @param  {[type]} res [description]
-  @return {[type]} staths [description]
-  ###
-  destroy: (req, res) ->
-    identifier = req.param("identifier")
-    isEmail = sailor.validator.isEmail(identifier)
-    user = {}
-
-    if isEmail
-      user.email = identifier
-    else
-      user.username = identifier
-
-    User.findOne user, (err, user) ->
-      return res.negotiate(err)  if err
-      return res.badRequest("User not found")  unless user
-      User.destroy user.id, (err) ->
-        return res.negotiate(err)  if err
-        res.ok user
 
   ###
   Create a third-party authentication endpoint
@@ -81,4 +58,4 @@ module.exports =
       return res.badRequest(err)  if err
       req.login user, (err) ->
         return res.badRequest err if err
-        res.ok()
+        res.ok(user)

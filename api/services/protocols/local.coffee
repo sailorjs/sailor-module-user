@@ -56,22 +56,6 @@ exports.register = (req, res, next) ->
     Passport.create(strategy).exec (err, passport) ->
       next err, user
 
-exports.update = (req, res) ->
-
-
-exports.destroy = (req, res) ->
-  id = req.param("id")
-  return res.notFound() if not id
-
-  User.findOne(id).populateAll().exec (err, user) ->
-    return res.serverError(err) if (err)
-    return res.notFound() if not user
-
-
-    User.update(pk, req.params.all()).exec (error, user) ->
-      return res.negotiate(err)  if err
-      res.ok()
-
 ###
 Assign local Passport to user
 
