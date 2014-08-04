@@ -5,6 +5,7 @@ module.exports.en = User:
 
   Password:
     DontMatch: 'Passwords don\'t match'
+    NotFound: 'Password doesn\'t found'
 
   Strategy:
     Already: 'Strategy already exist'
@@ -46,6 +47,7 @@ module.exports.es = User:
 
   Password:
     DontMatch: 'La contraseña no coincide'
+    NotFound: 'Contraseña no encontrada'
 
   Strategy:
     Already: 'La estrategia ya existe'

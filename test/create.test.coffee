@@ -61,7 +61,7 @@ describe "Create :: /POST user", ->
           res.status.should.equal 200
           done()
 
-    describe "register user with email, username and password and respond the new user", ->
+    describe "register user with email, username and password", ->
       it "should be 200 OK", (done) ->
         request.post(url.create).send(
           username: "user2"
@@ -69,8 +69,18 @@ describe "Create :: /POST user", ->
           password: "password"
         ).end (res) ->
           res.status.should.equal 200
-          res.body.email.should.equal 'user2@sailor.com'
-          res.body.username.should.equal 'user2'
+          done()
+
+    describe "register user and respond the new user", ->
+      it "should be 200 OK", (done) ->
+        request.post(url.create).send(
+          username: "user3"
+          email: "user3@sailor.com"
+          password: "password"
+        ).end (res) ->
+          res.status.should.equal 200
+          res.body.email.should.equal 'user3@sailor.com'
+          res.body.username.should.equal 'user3'
           done()
 
     describe "register that is already registered", ->

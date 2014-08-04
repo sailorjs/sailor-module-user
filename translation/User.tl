@@ -19,6 +19,9 @@ User
 		DontMatch
 			1:Passwords don't match
 			2:La contraseña no coincide
+		NotFound
+			1:Password doesn't found
+			2:Contraseña no encontrada
 
 	Strategy
 		Already

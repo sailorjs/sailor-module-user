@@ -143,16 +143,10 @@ passport.callback = (req, res, next) ->
     action   = 'create'
     strategy = req.param('strategy', 'local')
 
-  if method is 'PUT'
-    action = 'update'
-
-  sails.log.debug "Passport.callback:: Method [#{action}] Action [#{action}], Strategy [#{strategy}]"
+  sails.log.debug "Passport.callback :: Method [#{action}] Action [#{action}], Strategy [#{strategy}]"
 
   if action is 'create' and strategy is 'local'
     return @protocols.local.register req, res, next
-
-  if action is 'update'
-
 
   else
     @authenticate(strategy, next) req, res, req.next

@@ -27,10 +27,23 @@ module.exports.routes =
   # (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
   # create
-  "POST /:lang/user/:strategy?" : "UserController.callback"
+  "POST /:lang?/user/:strategy?"  : "UserController.callback"
+
+  # find
+  # "GET //user/:strategy?"  : "UserController.callback"
+  # "GET /:lang?/user/"     : {blueprint: 'find'}
+  # "GET /:lang?/user/:id"  : {blueprint: 'findOne'}
+
+
+
+  # find
+  #"POST /:lang?/user/:id?"  : {blueprint: 'find'}
+
+  # destroy
+  #"DEL /:lang/user/:id?" : {blueprint: 'destroy'}
 
   # update
-  "PUT /:lang/user/:identifier?"         : "UserController.update"
+  # "PUT /:lang/user/:identifier?"         : "UserController.update"
 
   # create/local
   # login/local

@@ -27,19 +27,16 @@ and assign the newly created user a local Passport.
 ###
 
 exports.register = (req, res, next) ->
+
+  msg_err = sailor.translate.get("User.Password.NotFound")
+  req.checkBody('password', msg_err).notEmpty()
+
+  if req.validationErrors()
+    return next(sailor.errorify.serialize(req))
+
   password = req.param("password")
   username = req.param("username")
   email    = req.param("email")
-
-  unless password
-    return next(sailor.errorify.errorValidation(
-      model : "User"
-      attributes: [
-        name: "Password"
-        rule: "DontMatch"
-        message: sailor.translate.get('User.Password.DontMatch')
-      ]
-    ))
 
   user =
     email: email
@@ -91,8 +88,6 @@ exports.connect = (req, res, next) ->
     else
       next null, user
 
-
-
 ###
 Validate a login request
 
@@ -117,14 +112,10 @@ exports.login = (req, identifier, password, next) ->
 
   User.findOne(user).exec (err, user) ->
     return next(err)  if err
+
     unless user
-      return next(sailor.errorify.errorValidation(
-        model : "User"
-        attributes: [
-          name: "User"
-          rule: "Doesn't Found"
-          message: sailor.translate.get('User.Username.NotFound')
-        ]))
+      msg_err = sailor.translate.get("User.Username.NotFound")
+      return next(msg_err)
 
     passport =
       protocol: "local"
@@ -136,21 +127,12 @@ exports.login = (req, identifier, password, next) ->
       if passport
         passport.validatePassword password, (err, res) ->
           return next(err)  if err
+
           unless res
-            return next(sailor.errorify.errorValidation(
-              model : "User"
-              attributes: [
-                name: "Strategy"
-                rule: "Doesn't Match"
-                message: sailor.translate.get('User.Password.DontMatch')
-              ]))
-          else
-            return next null, user
-      else
-        return next(sailor.errorify.errorValidation(
-          model : "User"
-          attributes: [
-            name: "Strategy"
-            rule: "Doesn't Set"
-            message: sailor.translate.get('User.Strategy.NotSet')
-          ]))
+            msg_err = sailor.translate.get("User.Password.DontMatch")
+            return next(msg_err)
+
+          next null, user
+
+      msg_err = sailor.translate.get("User.Strategy.NotSet")
+      return next(msg_err)
