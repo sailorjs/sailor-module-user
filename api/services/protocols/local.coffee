@@ -114,8 +114,8 @@ exports.login = (req, identifier, password, next) ->
     return next(err)  if err
 
     unless user
-      msg_err = sailor.translate.get("User.Username.NotFound")
-      return next(msg_err)
+      err = msg: translate.get("User.NotFound")
+      return next(errorify.serialize(err))
 
     passport =
       protocol: "local"
@@ -129,10 +129,10 @@ exports.login = (req, identifier, password, next) ->
           return next(err)  if err
 
           unless res
-            msg_err = sailor.translate.get("User.Password.DontMatch")
-            return next(msg_err)
+            err = msg: translate.get("User.Password.DontMatch")
+            return next(errorify.serialize(err))
 
           next null, user
 
-      msg_err = sailor.translate.get("User.Strategy.NotSet")
-      return next(msg_err)
+      err = msg: translate.get("User.Strategy.NotSet")
+      return next(errorify.serialize(err))

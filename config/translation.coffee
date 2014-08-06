@@ -1,4 +1,6 @@
 module.exports.en = User:
+  Name: 'User'
+  NotFound: 'User doesn\'t found.'
   Username:
     Already: 'Username already exist.'
     NotFound: 'Username doesn\'t found.'
@@ -41,9 +43,11 @@ module.exports.en = User:
     Failed: 'Bad login'
 
 module.exports.es = User:
+  Name: 'Usuario'
+  NotFound: 'Usuario no encontrado.'
   Username:
-    Already: 'Usuario ya registrado.'
-    NotFound: 'Usuario no encontrado.'
+    Already: 'Nombre de usuario ya registrado.'
+    NotFound: 'Nombre de usuario no encontrado.'
 
   Password:
     DontMatch: 'La contraseña no coincide'

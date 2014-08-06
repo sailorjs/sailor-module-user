@@ -4,16 +4,24 @@ LANGUAGES
 
 User
 
-	PRIMITIVE
-	=========
+	PRIMITIVES
+	==========
+	Name
+		1:User
+		2:Usuario
+	NotFound
+		1:User doesn't found.
+		2:Usuario no encontrado.
 
+	ATTRIBUTES
+	==========
 	Username
 		Already
 			1:Username already exist.
-			2:Usuario ya registrado.
+			2:Nombre de usuario ya registrado.
 		NotFound
 			1:Username doesn't found.
-			2:Usuario no encontrado.
+			2:Nombre de usuario no encontrado.
 
 	Password
 		DontMatch

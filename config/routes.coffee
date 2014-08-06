@@ -29,6 +29,12 @@ module.exports.routes =
   # create
   "POST /:lang?/user/:strategy?"  : "UserController.callback"
 
+
+
+
+  # destroy
+  # "DEL /:lang/user/:id?" : {blueprint: 'destroy'}
+
   # find
   # "GET //user/:strategy?"  : "UserController.callback"
   # "GET /:lang?/user/"     : {blueprint: 'find'}
@@ -39,8 +45,7 @@ module.exports.routes =
   # find
   #"POST /:lang?/user/:id?"  : {blueprint: 'find'}
 
-  # destroy
-  #"DEL /:lang/user/:id?" : {blueprint: 'destroy'}
+
 
   # update
   # "PUT /:lang/user/:identifier?"         : "UserController.update"

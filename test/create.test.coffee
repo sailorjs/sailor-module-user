@@ -33,27 +33,12 @@ before (done) ->
 
 ## Testing
 describe "Create :: /POST user", ->
+
   describe "Local Strategy ", ->
-    describe "register user without parameters", ->
-      it "should be 400 BadRequest", (done) ->
-        request.post(url.create).send({}).end (res) ->
-          res.status.should.equal 400
-          done()
 
-    describe "register user without password", ->
-      it "should be 400 BadRequest", (done) ->
-        request.post(url.create).send(email: "user1@sailor.com").end (res) ->
-          res.status.should.equal 400
-          done()
+    describe '200 OK', ->
 
-    describe "register user without email", ->
-      it "should be 400 BadRequest", (done) ->
-        request.post(url.create).send(password: "password").end (res) ->
-          res.status.should.equal 400
-          done()
-
-    describe "register user without username", ->
-      it "should be 200 OK", (done) ->
+      it "register user without username", (done) ->
         request.post(url.create).send(
           email: "user1@sailor.com"
           password: "password"
@@ -61,8 +46,7 @@ describe "Create :: /POST user", ->
           res.status.should.equal 200
           done()
 
-    describe "register user with email, username and password", ->
-      it "should be 200 OK", (done) ->
+      it "register user with email, username and password", (done) ->
         request.post(url.create).send(
           username: "user2"
           email: "user2@sailor.com"
@@ -71,8 +55,7 @@ describe "Create :: /POST user", ->
           res.status.should.equal 200
           done()
 
-    describe "register user and respond the new user", ->
-      it "should be 200 OK", (done) ->
+      it "register user and respond the new user", (done) ->
         request.post(url.create).send(
           username: "user3"
           email: "user3@sailor.com"
@@ -83,8 +66,7 @@ describe "Create :: /POST user", ->
           res.body.username.should.equal 'user3'
           done()
 
-    describe "register that is already registered", ->
-      it "should be 400 BadRequest", ->
+      it "register that is already registered", ->
         request.post(url.create).send(
           username: "user2"
           email: "user2@sailor.com"
@@ -92,6 +74,22 @@ describe "Create :: /POST user", ->
         ).end (res) ->
           res.status.should.equal 400
 
+    describe '400 BadRequest', ->
+
+      it "register user without parameters", (done) ->
+        request.post(url.create).send({}).end (res) ->
+          res.status.should.equal 400
+          done()
+
+      it "register user without password", (done) ->
+        request.post(url.create).send(email: "user1@sailor.com").end (res) ->
+          res.status.should.equal 400
+          done()
+
+      it "register user without email", (done) ->
+        request.post(url.create).send(password: "password").end (res) ->
+          res.status.should.equal 400
+          done()
 
   # TODO
   describe "Facebook Strategy", ->
