@@ -1,49 +1,63 @@
 ###
 Dependencies
 ###
-pkg       = require '../package.json'
-url       = require './helpers/urlHelper'
-should    = require 'should'
-request   = require 'superagent'
+should    = require("should")
+request   = require("superagent")
+url       = require("./helpers/urlHelper")
 
-## Testing
 describe "Update :: /PUT user", ->
-  describe "trying to updated a user that doesn't exist", ->
-    it "should be 400 BadRequest", (done) ->
-      request.put(url.local.update).send(
-        username: "user21"
-        password: "passsword"
-      ).end (res) ->
-        res.status.should.equal 400
+
+  describe '200 OK', ->
+
+    it 'user by id that exists', (done) ->
+      request.del(url.destroy)
+      .query(id: '1')
+      .end (res) ->
+        res.status.should.equal 200
+        res.body.id.should.equal 1
+        res.body.email.should.equal 'user1@sailor.com'
         done()
 
-  describe 'by id', ->
-      it 'should be 200 OK', (done) ->
-        request.get(url.local.find+'/1').end (res) ->
-          res.status.should.equal 200
-          res.body.id.should.equal 1
-          res.body.email.should.equal 'user1@sailor.com'
-          done()
+    it 'user by username that exists', (done) ->
+      request
+      .del(url.destroy)
+      .query(username: "user2")
+      .end (res) ->
+        res.status.should.equal 200
+        res.body.id.should.equal 2
+        res.body.email.should.equal 'user2@sailor.com'
+        done()
 
-    describe 'by username', ->
-      it 'should be 200 OK', (done) ->
-        request
-        .get(url.local.find)
-        .query(username: "user2")
-        .end (res) ->
-          res.status.should.equal 200
-          res.body[0].id.should.equal 2
-          res.body[0].email.should.equal 'user2@sailor.com'
-          done()
+    it 'user by email that exists', (done) ->
+      request
+      .del(url.destroy)
+      .query(email: "user3@sailor.com")
+      .end (res) ->
+        res.status.should.equal 200
+        res.body.id.should.equal 3
+        res.body.email.should.equal 'user3@sailor.com'
+        done()
 
-    describe 'by email', ->
-      it 'should be 200 OK', (done) ->
-        request
-        .get(url.local.find)
-        .query(email: "user1@sailor.com")
-        .end (res) ->
-          res.status.should.equal 200
-          res.body[0].id.should.equal 1
-          res.body[0].email.should.equal 'user1@sailor.com'
-          done()
 
+  describe '404 notFound', ->
+
+    it 'user by id that does\'t exist', (done) ->
+      request.del(url.destroy)
+      .query(id: '999')
+      .end (res) ->
+        res.status.should.equal 404
+        done()
+
+    it 'user by username that doesn\'t exist', (done) ->
+      request.del(url.destroy)
+      .query(username: 'kikomola')
+      .end (res) ->
+        res.status.should.equal 404
+        done()
+
+    it 'user by email that doesn\'t exist', (done) ->
+      request.del(url.destroy)
+      .query(email: 'trollme@github.com')
+      .end (res) ->
+        res.status.should.equal 404
+        done()

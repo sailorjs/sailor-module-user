@@ -36,9 +36,7 @@ module.exports =  (req, res) ->
 
   # Lookup for records that match the specified criteria
   query = Model.find().where(actionUtil.parseCriteria(req)).limit(actionUtil.parseLimit(req)).skip(actionUtil.parseSkip(req)).sort(actionUtil.parseSort(req))
-
-  # TODO: .populateEach(req.options);
-  query = actionUtil.populateEach(query, req)
+  query = query.populateAll()
   query.exec (err, matchingRecords) ->
     return res.serverError(err)  if err
 

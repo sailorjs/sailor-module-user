@@ -20,8 +20,7 @@ module.exports = (req, res) ->
   user.username = req.param('username') if req.param('username')
   user.email    = req.param('email') if req.param('email')
 
-  query = Model.findOne(user)
-  query = actionUtil.populateEach(query, req)
+  query = Model.findOne(user).populateAll()
 
   query.exec (err, matchingRecords) ->
 

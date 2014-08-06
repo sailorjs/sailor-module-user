@@ -25,8 +25,7 @@ module.exports = (req, res) ->
 
   Model = actionUtil.parseModel(req)
   pk    = actionUtil.requirePk(req)
-  query = Model.findOne(pk)
-  query = actionUtil.populateEach(query, req)
+  query = Model.findOne(pk).populateAll()
 
   query.exec (err, matchingRecord) ->
     return res.serverError(err)  if err

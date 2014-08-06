@@ -5,7 +5,7 @@ should    = require("should")
 request   = require("superagent")
 url       = require("./helpers/urlHelper")
 
-describe "Update :: /PUT user", ->
+describe "Destroy :: /DEL user", ->
 
   describe '200 OK', ->
 
