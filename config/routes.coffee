@@ -31,10 +31,6 @@ module.exports.routes =
 
 
 
-
-  # destroy
-  # "DEL /:lang/user/:id?" : {blueprint: 'destroy'}
-
   # find
   # "GET //user/:strategy?"  : "UserController.callback"
   # "GET /:lang?/user/"     : {blueprint: 'find'}
