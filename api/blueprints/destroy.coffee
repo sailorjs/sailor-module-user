@@ -14,13 +14,8 @@ Destroy the user and the Model associated with the User
 module.exports = (req, res) ->
 
   Model = actionUtil.parseModel(req)
-
-  user          = {}
-  user.id       = req.param('id') if req.param('id')
-  user.username = req.param('username') if req.param('username')
-  user.email    = req.param('email') if req.param('email')
-
-  query = Model.findOne(user).populateAll()
+  pk = actionUtil.requirePk(req)
+  query = Model.findOne(pk).populateAll()
 
   query.exec (err, matchingRecords) ->
 
@@ -31,12 +26,13 @@ module.exports = (req, res) ->
       err = msg: translate.get("#{name}.NotFound")
       return res.notFound(sailor.errorify.serialize(err))
 
+    # destroy passports objects
     _.forEach matchingRecords.passports, (passport) ->
       Passport.destroy(passport.id).exec (err)->
 
     return res.negotiate(err)  if err
 
-    Model.destroy(matchingRecords.id).exec (err) ->
+    Model.destroy(pk).exec (err) ->
 
       return res.negotiate(err)  if err
 

@@ -2,6 +2,7 @@ sort = require("sort-keys")
 
 ###
 User.js
+Based on http://jsonresume.org/
 
 @description :: TODO: You might write a short summary of how this model works and what it represents here.
 @docs        :: http://sailsjs.org/#!documentation/models
@@ -12,6 +13,7 @@ module.exports =
   # Enforce model schema in the case of schemaless databases
   # https://github.com/balderdashy/waterline-docs/blob/master/models.md
   schema: true
+
   attributes:
     username:
       type: "string"
@@ -26,15 +28,20 @@ module.exports =
       collection: "Passport"
       via: "user"
 
-    # Additional information
-    # # TODO: http://jsonresume.org/
-    # Avatar
-    # Admin
-    # Online
-    # fullname Function
+    label:
+      type: "string"
 
-    avatar: type: 'string'
+    picture:
+      type: "string"
 
+    phone:
+      type: "string"
+
+    website:
+      type: "string"
+
+    summary:
+      type: "string"
 
     toJSON: ->
       obj = @toObject()

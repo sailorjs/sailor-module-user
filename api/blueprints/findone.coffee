@@ -33,7 +33,7 @@ module.exports = (req, res) ->
     unless matchingRecord
       name = sailor.capitalize(Model.identity)
       err = msg: translate.get("#{name}.NotFound")
-      return res.notFound(errorify.serialize(err))
+      return res.ok(errorify.serialize(err))
 
     if sails.hooks.pubsub and req.isSocket
       Model.subscribe req, matchingRecord

@@ -61,16 +61,4 @@ module.exports = (req, res) ->
         Model.publishUpdate pk, _.cloneDeep(values), not req.options.mirror and req,
           previous: matchingRecord.toJSON()
 
-
-      # Do a final query to populate the associations of the record.
-      #
-      # (Note: again, this extra query could be eliminated, but it is
-      #  included by default to provide a better interface for integrating
-      #  front-end developers.)
-      Q = Model.findOne(updatedRecord[Model.primaryKey])
-      Q = actionUtil.populateEach(Q, req)
-      Q.exec  (err, populatedRecord) ->
-        return res.serverError(err)  if err
-        return res.serverError("Could not find record after updating!")  unless populatedRecord
-        res.ok populatedRecord
-
+      res.ok updatedRecord

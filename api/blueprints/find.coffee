@@ -53,6 +53,6 @@ module.exports =  (req, res) ->
     if matchingRecords.length is 0
       name = sailor.capitalize(Model.identity)
       err = msg: translate.get("#{name}.NotFound")
-      res.notFound(sailor.errorify.serialize(err))
+      res.ok(sailor.errorify.serialize(err))
     else
       res.ok matchingRecords
