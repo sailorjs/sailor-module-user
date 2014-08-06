@@ -32,7 +32,10 @@ module.exports = (req, res) ->
       err = msg: translate.get("#{name}.NotFound")
       return res.notFound(sailor.errorify.serialize(err))
 
-    console.log matchingRecords
+    _.forEach matchingRecords.passports, (passport) ->
+      Passport.destroy(passport.id).exec (err)->
+
+    return res.negotiate(err)  if err
 
     Model.destroy(matchingRecords.id).exec (err) ->
 
