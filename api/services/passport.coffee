@@ -1,3 +1,6 @@
+###
+Dependencies
+###
 path     = require("path")
 url      = require("url")
 passport = require("passport")
@@ -138,28 +141,32 @@ passport.endpoint = (req, res) ->
 #
 passport.callback = (req, res, next) ->
   method   = req.method
+  strategy = req.param('strategy', 'local')
+  action   = req.param('action', 'create')
 
-  if method is 'POST'
-    action   = 'create'
-    strategy = req.param('strategy', 'local')
+  sails.log.debug "Passport.callback :: Method [#{method}] Action [#{action}], Strategy [#{strategy}]"
 
-  sails.log.debug "Passport.callback :: Method [#{action}] Action [#{action}], Strategy [#{strategy}]"
-
-  if action is 'create' and strategy is 'local'
-    return @protocols.local.register req, res, next
-
-  else
-    @authenticate(strategy, next) req, res, req.next
-
-  # if action is undefined
+  # if action is 'create' and strategy is 'local'
+  #   @protocols.local.register req, res, next
+  # else
   #   @authenticate(strategy, next) req, res, req.next
 
-  # if strategy is 'local'
-  #   if action is 'create' and not req.user
-  #     @protocols.local.register req, res, next
-  #   else if action is 'connect' and req.user
-  #     @protocols.local.connect req, res, next
-  #   else next(new Error("Invalid action"))
+  # Passport.js wasn't really built for local user registration, but it's nice
+  # having it tied into everything else.
+  if strategy is "local" and action isnt `undefined`
+    if action is "create" and not req.user
+      @protocols.local.register req, res, next
+    else if action is "connect" and req.user
+      @protocols.local.connect req, res, next
+    else
+      next new Error("Invalid action")
+  else
+
+    # The strategy will redirect the user to this URL after approval. Finish
+    # the authentication process by attempting to obtain an access token. If
+    # access was granted, the user will be logged in. Otherwise, authentication
+    # has failed.
+    @authenticate(strategy, next) req, res, req.next
 
 #
 # Load all strategies defined in the Passport configuration
@@ -186,6 +193,7 @@ passport.loadStrategies = ->
   strategies = undefined
   self = this
   strategies = sails.config.passport
+
   Object.keys(strategies).forEach (key) ->
     Strategy = undefined
     baseUrl = undefined
@@ -194,6 +202,7 @@ passport.loadStrategies = ->
     protocol = undefined
     options = passReqToCallback: true
     Strategy = undefined
+
     if key is "local"
       _.extend options,
         usernameField: "identifier"
@@ -207,6 +216,7 @@ passport.loadStrategies = ->
       callback = path.join("auth", key, "callback")  unless callback
       Strategy = strategies[key].strategy
       baseUrl = sails.getBaseurl()
+
       switch protocol
         when "oauth", "oauth2"
           options.callbackURL = url.resolve(baseUrl, callback)
@@ -214,9 +224,9 @@ passport.loadStrategies = ->
           options.returnURL = url.resolve(baseUrl, callback)
           options.realm = baseUrl
           options.profile = true
+
       _.extend options, strategies[key].options
       self.use new Strategy(options, self.protocols[protocol])
-
 
 passport.serializeUser (user, next) ->
   next null, user.id

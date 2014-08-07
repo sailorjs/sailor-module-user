@@ -27,50 +27,11 @@ module.exports.routes =
   # (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
   # create
-  "POST /:lang?/user/:strategy?"  : "UserController.callback"
-
-
-
-  # find
-  # "GET //user/:strategy?"  : "UserController.callback"
-  # "GET /:lang?/user/"     : {blueprint: 'find'}
-  # "GET /:lang?/user/:id"  : {blueprint: 'findOne'}
-
-
-
-  # find
-  #"POST /:lang?/user/:id?"  : {blueprint: 'find'}
-
-
-
-  # update
-  # "PUT /:lang/user/:identifier?"         : "UserController.update"
-
-  # create/local
-  # login/local
-  # "POST /:lang/user/:action/:strategy" : "UserController.callback"
-
-
-
-
-
-  # findOne
-  # "get /user/:identifier" : "UserController.findOne"
-
-  # find
-  # "get /user/:identifier" : "UserController.findOne"
-
-  # remove
-  # "delete /user/:identifier": "UsernController.destroy"
+  # login
+  "POST /:lang?/user/:action?/:strategy?"  : "UserController.callback"
 
   # logout
   # "get /user/logout": "UserController.logout"
-
-  # find
-
-# find
-# findOne
-# update
 
 # If a request to a URL doesn't match any of the custom routes above,
 # it is matched against Sails route blueprints.  See `config/blueprints.js`
