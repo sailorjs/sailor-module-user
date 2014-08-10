@@ -27,11 +27,10 @@ module.exports.routes =
   # (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
   # create
-  # login
   "POST /:lang?/user/:action?/:strategy?"  : "UserController.callback"
 
   # logout
-  # "get /user/logout": "UserController.logout"
+  "get /:lang?/user/logout": "UserController.logout"
 
 # If a request to a URL doesn't match any of the custom routes above,
 # it is matched against Sails route blueprints.  See `config/blueprints.js`

@@ -24,9 +24,10 @@ module.exports =
   @param {Object} res
   ###
   logout: (req, res) ->
+    user = req.user
     req.logout()
+    return res.ok(user) if user?
     res.ok()
-
 
   ###
   Create a third-party authentication endpoint
