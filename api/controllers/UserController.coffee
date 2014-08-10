@@ -57,5 +57,6 @@ module.exports =
     passport.callback req, res, (err, user) ->
       return res.badRequest(err)  if err
       req.login user, (err) ->
+        console.log("DEBUG: "+ err)
         return res.badRequest err if err
         res.ok(user)
