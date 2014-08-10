@@ -1,7 +1,10 @@
 ###
 Dependencies
 ###
-sailor = require 'sailorjs'
+sailor    = require 'sailorjs'
+translate = sailor.translate
+errorify  = sailor.errorify
+validator = sailor.validator
 
 ###
 Local Authentication Protocol
@@ -28,11 +31,11 @@ and assign the newly created user a local Passport.
 
 exports.register = (req, res, next) ->
 
-  msg_err = sailor.translate.get("User.Password.NotFound")
+  msg_err = translate.get("User.Password.NotFound")
   req.checkBody('password', msg_err).notEmpty()
 
   if req.validationErrors()
-    return next(sailor.errorify.serialize(req))
+    return next(errorify.serialize(req))
 
   password = req.param("password")
   username = req.param("username")
@@ -100,10 +103,19 @@ found, its password is checked against the password supplied in the form.
 @param {string}   password
 @param {Function} next
 ###
-exports.login = (req, identifier, password, next) ->
+exports.login = (req, res, next) ->
 
-  isEmail = sailor.validator.isEmail(identifier)
-  user    = {}
+  msg_err = sailor.translate.get("User.Password.NotFound")
+  req.checkBody('identifier', "Identificador necesario").notEmpty()
+  req.checkBody('password', "Password necesario").notEmpty()
+
+  if req.validationErrors()
+    return next(sailor.errorify.serialize(req))
+
+  user       = {}
+  password   = req.param("password")
+  identifier = req.param("identifier")
+  isEmail    = validator.isEmail(identifier)
 
   if isEmail
     user.email = identifier
@@ -125,14 +137,13 @@ exports.login = (req, identifier, password, next) ->
       return next(err) if err
 
       if passport
-        passport.validatePassword password, (err, res) ->
+        passport.validatePassword password, (err, valid) ->
           return next(err)  if err
-
-          unless res
+          unless valid
             err = msg: translate.get("User.Password.DontMatch")
             return next(errorify.serialize(err))
-
-          next null, user
-
-      err = msg: translate.get("User.Strategy.NotSet")
-      return next(errorify.serialize(err))
+          else
+            return next null, user
+      else
+        err = msg: translate.get("User.Strategy.NotSet")
+        return next(errorify.serialize(err))

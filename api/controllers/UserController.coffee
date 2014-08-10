@@ -55,6 +55,9 @@ module.exports =
   ###
   callback: (req, res) ->
     passport.callback req, res, (err, user) ->
+      if err
+        console.log 'estamos en controller'
+        console.log err
       return res.badRequest(err)  if err
       req.login user, (err) ->
         console.log("DEBUG: "+ err)

@@ -78,8 +78,6 @@ Passport =
     ###
     validatePassword: (password, next) ->
       bcrypt.compare password, @password, next
-      return
-
 
   ###
   Callback to be run before creating a Passport.
@@ -92,11 +90,8 @@ Passport =
       bcrypt.hash passport.password, 10, (err, hash) ->
         passport.password = hash
         next err, passport
-        return
-
     else
       next null, passport
-    return
 
 
   ###
@@ -110,10 +105,7 @@ Passport =
       bcrypt.hash passport.password, 10, (err, hash) ->
         passport.password = hash
         next err, passport
-        return
-
     else
       next null, passport
-    return
 
 module.exports = Passport

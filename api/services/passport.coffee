@@ -149,22 +149,31 @@ passport.callback = (req, res, next) ->
   # Passport.js wasn't really built for local user registration, but it's nice
   # having it tied into everything else.
 
-  if strategy is "local" and action isnt `undefined`
-    if action is "create" and not req.user
-      @protocols.local.register req, res, next
-    else if action is "connect" and req.user
-      @protocols.local.connect req, res, next
+  if strategy is 'local'
+    if action is "create"
+      return @protocols.local.register req, res, next
+    else if action is 'connect'
+      return @protocols.local.register req, res, next
     else if action is "login"
-      @authenticate(strategy, next) req, res, req.next
+      return @protocols.local.login req, res, next
     else
       next new Error("Invalid action")
   else
+    @authenticate(strategy, next) req, res, req.next
+
+  #   if action is "create" and not req.user
+  #     @protocols.local.register req, res, next
+  #   else if action is "connect" and req.user
+  #     @protocols.local.connect req, res, next
+  #   else
+  #     next new Error("Invalid action")
+
 
     # The strategy will redirect the user to this URL after approval. Finish
     # the authentication process by attempting to obtain an access token. If
     # access was granted, the user will be logged in. Otherwise, authentication
     # has failed.
-    @authenticate(strategy, next) req, res, req.next
+    # @authenticate(strategy, next) req, res, req.next
 
 #
 # Load all strategies defined in the Passport configuration
@@ -219,6 +228,8 @@ passport.loadStrategies = ->
       self.use new Strategy(options, self.protocols[protocol])
 
 passport.serializeUser (user, next) ->
+  console.log 'user serializer is '
+  console.log user
   next null, user.id
 
 passport.deserializeUser (id, next) ->
