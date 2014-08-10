@@ -146,18 +146,16 @@ passport.callback = (req, res, next) ->
 
   sails.log.debug "Passport.callback :: Method [#{method}] Action [#{action}], Strategy [#{strategy}]"
 
-  # if action is 'create' and strategy is 'local'
-  #   @protocols.local.register req, res, next
-  # else
-  #   @authenticate(strategy, next) req, res, req.next
-
   # Passport.js wasn't really built for local user registration, but it's nice
   # having it tied into everything else.
+
   if strategy is "local" and action isnt `undefined`
     if action is "create" and not req.user
       @protocols.local.register req, res, next
     else if action is "connect" and req.user
       @protocols.local.connect req, res, next
+    else if action is "login"
+      @authenticate(strategy, next) req, res, req.next
     else
       next new Error("Invalid action")
   else
@@ -189,19 +187,11 @@ passport.callback = (req, res, next) ->
 # http://passportjs.org/guide/strategys/
 #
 passport.loadStrategies = ->
-  self = undefined
-  strategies = undefined
-  self = this
+  self       = this
   strategies = sails.config.passport
 
   Object.keys(strategies).forEach (key) ->
-    Strategy = undefined
-    baseUrl = undefined
-    callback = undefined
-    options = undefined
-    protocol = undefined
     options = passReqToCallback: true
-    Strategy = undefined
 
     if key is "local"
       _.extend options,
