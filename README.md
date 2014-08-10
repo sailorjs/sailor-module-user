@@ -64,11 +64,22 @@ DEL /lang/user/1
 
 #### POST /lang/user/login
 
-Login a user using his email or username:
+You can login a user with his username:
 
 ```json
 {
-	identifier: "<email or username>",
+	identifier: "user2",
+	password: "yourpassword"
+}
+```
+
+
+or with the email:
+
+
+```json
+{
+	identifier: "user2@sailor.com",
 	password: "yourpassword"
 }
 ```
