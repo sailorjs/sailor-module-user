@@ -88,8 +88,6 @@ or with the email:
 
 #### GET /lang/user/logout
 
-TODO
-
 ## TODO
 
 * WebTokens
