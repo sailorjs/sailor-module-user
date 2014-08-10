@@ -1,16 +1,17 @@
 ###
 Dependencies
 ###
-should    = require("should")
-request   = require("superagent")
-url       = require("./helpers/urlHelper")
+should    = require 'should'
+request   = require 'superagent'
+url       = require './helpers/urlHelper'
 
 describe "Update :: /PUT user", ->
 
   describe '200 OK', ->
 
     it 'user by id that exists', (done) ->
-      request.put("#{url.update}/3")
+      request
+      .put "#{url.update}/3"
       .send
         label: 'beatbox'
       .end (res) ->
@@ -19,7 +20,8 @@ describe "Update :: /PUT user", ->
         done()
 
     it 'user by id that exists but the key doesn\'t exist', (done) ->
-      request.put("#{url.update}/3")
+      request
+      .put "#{url.update}/3"
       .send
         randomKey: 'hello world'
       .end (res) ->
@@ -29,7 +31,8 @@ describe "Update :: /PUT user", ->
   describe '404 NotFound', ->
 
     it 'user by id doesn\'t exist', (done) ->
-      request.put("#{url.update}/999")
+      request
+      .put "# {url.update}/999"
       .end (res) ->
         res.status.should.equal 404
         done()

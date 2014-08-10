@@ -34,8 +34,7 @@ exports.register = (req, res, next) ->
   msg_err = translate.get("User.Password.NotFound")
   req.checkBody('password', msg_err).notEmpty()
 
-  if req.validationErrors()
-    return next(errorify.serialize(req))
+  return next(errorify.serialize(req)) if req.validationErrors()
 
   password = req.param("password")
   username = req.param("username")
@@ -105,19 +104,18 @@ found, its password is checked against the password supplied in the form.
 ###
 exports.login = (req, res, next) ->
 
-  msg_err = sailor.translate.get("User.Password.NotFound")
-  req.checkBody('identifier', "Identificador necesario").notEmpty()
-  req.checkBody('password', "Password necesario").notEmpty()
+  msg_pwd = translate.get("User.Password.NotFound")
+  msg_id = translate.get("User.Identifier.NotFound")
+  req.checkBody('identifier', msg_pwd).notEmpty()
+  req.checkBody('password', msg_id).notEmpty()
 
-  if req.validationErrors()
-    return next(sailor.errorify.serialize(req))
+  return next(sailor.errorify.serialize(req)) if req.validationErrors()
 
   user       = {}
   password   = req.param("password")
   identifier = req.param("identifier")
-  isEmail    = validator.isEmail(identifier)
 
-  if isEmail
+  if validator.isEmail(identifier)
     user.email = identifier
   else
     user.username = identifier
@@ -136,14 +134,14 @@ exports.login = (req, res, next) ->
     Passport.findOne(passport).exec (err, passport) ->
       return next(err) if err
 
-      if passport
-        passport.validatePassword password, (err, valid) ->
-          return next(err)  if err
-          unless valid
-            err = msg: translate.get("User.Password.DontMatch")
-            return next(errorify.serialize(err))
-          else
-            return next null, user
-      else
+      unless password
         err = msg: translate.get("User.Strategy.NotSet")
         return next(errorify.serialize(err))
+
+      passport.validatePassword password, (err, valid) ->
+        return next(err)  if err
+        unless valid
+          err = msg: translate.get("User.Password.DontMatch")
+          return next(errorify.serialize(err))
+
+        next null, user

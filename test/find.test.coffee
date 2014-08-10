@@ -1,9 +1,9 @@
 ###
 Dependencies
 ###
-should    = require("should")
-request   = require("superagent")
-url       = require("./helpers/urlHelper")
+should    = require 'should'
+request   = require 'superagent'
+url       = require './helpers/urlHelper'
 
 describe "Find :: /GET user", ->
 
@@ -26,8 +26,10 @@ describe "Find :: /GET user", ->
         done()
 
     it 'user by id that exists', (done) ->
-      request.get(url.find)
-      .query(id: '1')
+      request
+      .get url.find
+      .query
+        id: '1'
       .end (res) ->
         res.status.should.equal 200
         res.body.id.should.equal 1
@@ -36,8 +38,9 @@ describe "Find :: /GET user", ->
 
     it 'user by username that exists', (done) ->
       request
-      .get(url.find)
-      .query(username: "user2")
+      .get url.find
+      .query
+        username: "user2"
       .end (res) ->
         res.status.should.equal 200
         res.body[0].id.should.equal 2
@@ -46,8 +49,9 @@ describe "Find :: /GET user", ->
 
     it 'user by email that exists', (done) ->
       request
-      .get(url.find)
-      .query(email: "user1@sailor.com")
+      .get url.find
+      .query
+        email: "user1@sailor.com"
       .end (res) ->
         res.status.should.equal 200
         res.body[0].id.should.equal 1
@@ -55,22 +59,26 @@ describe "Find :: /GET user", ->
         done()
 
     it 'user by id that does\'t exist', (done) ->
-      request.get(url.find)
-      .query(id: '999')
+      request
+      .get url.find
+      .query
+        id: '999'
       .end (res) ->
         res.status.should.equal 200
         done()
 
     it 'user by username that doesn\'t exist', (done) ->
-      request.get(url.find)
-      .query(username: 'kikomola')
+      request.get url.find
+      .query
+        username: 'kikomola'
       .end (res) ->
         res.status.should.equal 200
         done()
 
     it 'user by email that doesn\'t exist', (done) ->
-      request.get(url.find)
-      .query(email: 'trollme@github.com')
+      request.get url.find
+      .query
+        email: 'trollme@github.com'
       .end (res) ->
         res.status.should.equal 200
         done()

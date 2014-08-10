@@ -28,7 +28,3 @@ test/update.test.coffee \
 test/login.test.coffee
 # test/logout.test.coffee \
 # test/destroy.test.coffee
-
-
-
-

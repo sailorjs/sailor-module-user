@@ -5,6 +5,9 @@ module.exports.en = User:
     Already: 'Username already exist.'
     NotFound: 'Username doesn\'t found.'
 
+  Identifier:
+    NotFound: 'Identifier doesn\'t found'
+
   Password:
     DontMatch: 'Passwords don\'t match'
     NotFound: 'Password doesn\'t found'
@@ -48,6 +51,9 @@ module.exports.es = User:
   Username:
     Already: 'Nombre de usuario ya registrado.'
     NotFound: 'Nombre de usuario no encontrado.'
+
+  Identifier:
+    NotFound: 'Identificador no encontrado'
 
   Password:
     DontMatch: 'La contraseña no coincide'

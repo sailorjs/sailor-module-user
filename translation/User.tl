@@ -23,6 +23,11 @@ User
 			1:Username doesn't found.
 			2:Nombre de usuario no encontrado.
 
+	Identifier
+		NotFound
+			1:Identifier doesn't found
+			2:Identificador no encontrado
+
 	Password
 		DontMatch
 			1:Passwords don't match

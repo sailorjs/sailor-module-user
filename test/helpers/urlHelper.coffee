@@ -7,7 +7,7 @@ paths =
   find:    path + "/en/user"
   destroy: path + "/en/user"
   # CUSTOM
-  login:   path + "/en/user/login/local"
+  login:   path + "/en/user/login"
   logout:  path + "/en/user/logout"
 
 

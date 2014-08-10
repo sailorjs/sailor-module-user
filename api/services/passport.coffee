@@ -228,8 +228,6 @@ passport.loadStrategies = ->
       self.use new Strategy(options, self.protocols[protocol])
 
 passport.serializeUser (user, next) ->
-  console.log 'user serializer is '
-  console.log user
   next null, user.id
 
 passport.deserializeUser (id, next) ->
