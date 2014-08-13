@@ -43,7 +43,16 @@ module.exports =
     summary:
       type: "string"
 
+    admin:
+      type: "boolean"
+      defaultsTo: false
+
+    online:
+      type: "boolean"
+      defaultsTo: false
+
     toJSON: ->
       obj = @toObject()
       delete obj.passports
+      delete obj._csrf
       sort obj

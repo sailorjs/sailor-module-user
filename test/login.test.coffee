@@ -18,6 +18,7 @@ describe "Login :: /GET user/login", ->
       .end (res) ->
         res.status.should.equal 200
         res.body.username.should.equal 'user2'
+        res.body.online.should.equal true
         done()
 
     it "email and password", (done) ->

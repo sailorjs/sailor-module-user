@@ -54,13 +54,17 @@ exports.register = (req, res, next) ->
 
     Passport.create(strategy).exec (err, passport) ->
 
-      if req._sails.hooks.pubsub
-        if req.isSocket
-          User.subscribe req, user
-          User.introduce user
-        User.publishCreate user, not req.options.mirror and req
+      user.online = true
+      user.save (err, user) ->
+        return next(err) if (err)
 
-      next err, user
+        if req._sails.hooks.pubsub
+          if req.isSocket
+            User.subscribe req, user
+            User.introduce user
+          User.publishCreate user, not req.options.mirror and req
+
+        next err, user
 
 ###
 Assign local Passport to user
@@ -151,4 +155,7 @@ exports.login = (req, res, next) ->
           err = msg: translate.get("User.Password.DontMatch")
           return next(errorify.serialize(err))
 
-        next null, user
+        user.online = true
+        user.save (err, user) ->
+          return next(err) if (err)
+          next null, user

@@ -26,6 +26,10 @@ module.exports.routes =
   #
   # (Alternatively, remove this and add an `index.html` file in your `assets` directory)
 
+  # session
+  # create
+  "GET /:lang?/user/session"  : "UserController.session"
+
   # create
   "POST /:lang?/user/:action?/:strategy?"  : "UserController.callback"
 

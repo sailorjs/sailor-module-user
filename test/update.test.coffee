@@ -11,7 +11,7 @@ describe "Update :: /PUT user", ->
 
     it 'user by id that exists', (done) ->
       request
-      .put "#{url.update}/3"
+      .put "#{url.update}/2"
       .send
         label: 'beatbox'
       .end (res) ->
@@ -21,7 +21,7 @@ describe "Update :: /PUT user", ->
 
     it 'user by id that exists but the key doesn\'t exist', (done) ->
       request
-      .put "#{url.update}/3"
+      .put "#{url.update}/2"
       .send
         randomKey: 'hello world'
       .end (res) ->

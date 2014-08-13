@@ -5,7 +5,7 @@ url       = require './helpers/urlHelper'
 should    = require 'should'
 request   = require 'superagent'
 
-describe "Logout ::", ->
+describe "Logout :: /GET user/logout", ->
 
   describe '200 OK', ->
     it 'user that is logged', (done) ->

@@ -25,9 +25,17 @@ module.exports =
   ###
   logout: (req, res) ->
     user = req.user
-    req.logout()
-    return res.ok(user) if user?
-    res.ok()
+    return res.ok() unless user
+
+    user.online = false
+    user.save (err, user) ->
+      return next(err) if (err)
+      req.logout()
+      return res.ok(user)
+
+  session: (req, res) ->
+    return res.ok(req.user) if req.user?
+    res.badRequest()
 
   ###
   Create a third-party authentication endpoint
