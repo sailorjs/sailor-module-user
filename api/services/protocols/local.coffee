@@ -53,6 +53,13 @@ exports.register = (req, res, next) ->
       user:     user.id
 
     Passport.create(strategy).exec (err, passport) ->
+
+      if req._sails.hooks.pubsub
+        if req.isSocket
+          User.subscribe req, user
+          User.introduce user
+        User.publishCreate user, not req.options.mirror and req
+
       next err, user
 
 ###

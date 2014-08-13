@@ -5,6 +5,7 @@ sailor     = require 'sailorjs'
 actionUtil = sailor.actionUtil
 translate  = sailor.translate
 validator  = sailor.validator
+errorify   = sailor.errorify
 
 ###
 Find Records
@@ -53,6 +54,6 @@ module.exports =  (req, res) ->
     if matchingRecords.length is 0
       name = sailor.capitalize(Model.identity)
       err = msg: translate.get("#{name}.NotFound")
-      res.ok(sailor.errorify.serialize(err))
+      res.ok(errorify.serialize(err))
     else
       res.ok matchingRecords
