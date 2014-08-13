@@ -49,14 +49,13 @@ describe "Create :: /POST user", ->
           done()
 
       it "register user with email, username and password and return the user", (done) ->
-        request.post(url.create).send(
+        request.post(url.create).send
           username: "user2"
           email: "user2@sailor.com"
           password: "password"
-        ).end (res) ->
+        .end (res) ->
           res.status.should.equal 200
           res.body.email.should.equal 'user2@sailor.com'
-          res.body.username.should.equal 'user2'
           res.body.online.should.equal true
           done()
 
