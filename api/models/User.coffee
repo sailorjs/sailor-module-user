@@ -54,5 +54,4 @@ module.exports =
     toJSON: ->
       obj = @toObject()
       delete obj.passports
-      delete obj._csrf
       sort obj
