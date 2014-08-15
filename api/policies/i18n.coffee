@@ -1,7 +1,8 @@
 ###
 Dependencies
 ###
-sailor = require 'sailorjs'
+sailor    = require 'sailorjs'
+translate = sailor.translate
 
 ###
 i18n Middleware
@@ -17,21 +18,29 @@ module.exports = (req, res, next) ->
 
   sails    = req._sails
   locales  = sails.config.i18n.locales
-  _default = sailor.translate.get()
-  lang     = req.param("lang")
+  lang     = req.param 'lang'
+
+  # console.log "DEBUG ::"
+  # console.log sails
+  # console.log _default
+  # console.log locales
+  # console.log lang
 
   unless lang?
     # try to recover the lang from the path
     path = req.route.path.split("/")[1]
     valid = true for local in locales when "/#{path}/" is local
-    if valid then lang = path else lang = _default
+    # if is not possible try to set the best language for the user
+    if valid
+      lang = path
+    else
+      lang = req.language or translate.default()
 
+  # updated the language in `req` and `translate`
   req.language = lang
   req.region   = lang
-  sailor.translate.lang(lang)
-
+  translate.lang lang
   req.params.lang ?= lang
 
   sails.log.debug "i18n Middleware :: Language is #{lang}"
-
   next()
