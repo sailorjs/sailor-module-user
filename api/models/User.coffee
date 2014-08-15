@@ -1,4 +1,4 @@
-sort = require("sort-keys")
+sort = require 'sort-keys'
 
 ###
 User.js
