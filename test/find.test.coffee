@@ -58,28 +58,28 @@ describe "Find :: /GET user", ->
         res.body[0].email.should.equal 'user1@sailor.com'
         done()
 
-  describe '404 notFound', ->
-    it 'user by id that does\'t exist', (done) ->
-      request
-      .get url.find
-      .query
-        id: '999'
-      .end (res) ->
-        res.status.should.equal 404
-        done()
-
     it 'user by username that doesn\'t exist', (done) ->
       request.get url.find
       .query
         username: 'kikomola'
       .end (res) ->
-        res.status.should.equal 404
+        res.status.should.equal 200
         done()
 
     it 'user by email that doesn\'t exist', (done) ->
       request.get url.find
       .query
         email: 'trollme@github.com'
+      .end (res) ->
+        res.status.should.equal 200
+        done()
+
+  describe '404 notFound', ->
+    it 'user by id that does\'t exist', (done) ->
+      request
+      .get url.find
+      .query
+        id: '999'
       .end (res) ->
         res.status.should.equal 404
         done()
