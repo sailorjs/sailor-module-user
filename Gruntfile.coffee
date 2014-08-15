@@ -15,28 +15,21 @@ module.exports = (grunt) ->
     translate_compile:
       main:
         options:
-          multipleObjects : true
+        #   multipleObjects : true
+          translationVar  :'translations'
+          asJson          : false
           moduleExports   : true
+          coffee          : true
 
         files: '<%= js %>': ['<%= orig %>']
-
-    js2coffee:
-      main:
-        options:
-          single_quotes: true
-
-        src:  '<%= js %>'
-        dest: '<%= coffee %>'
-
-    clean: ['<%= js %>']
 
     watch:
       translations:
         files: ['<%= orig %>']
-        tasks: ['translate_compile', 'js2coffee', 'clean']
+        tasks: ['translate_compile']
 
   # =============
   # REGISTER
   # =============
-  grunt.registerTask 'default', ['translate_compile', 'js2coffee', 'clean', 'watch']
+  grunt.registerTask 'default', ['translate_compile']
   grunt.registerTask 'dev', ['translate_compile', 'watch']

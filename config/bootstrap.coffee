@@ -1,8 +1,9 @@
 ###
 Dependencies
 ###
-sailor = require 'sailorjs'
-User   = require './translation'
+sailor    = require 'sailorjs'
+translate = sailor.translate
+User      = require './translation'
 
 
 ###
@@ -17,13 +18,19 @@ http://links.sailsjs.org/docs/config/bootstrap
 ###
 module.exports.bootstrap = (cb) ->
 
+  console.log 'bootstrap module ::'
+
   # It's very important to trigger this callack method when you are finished
   # with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  sails.services.passport.loadStrategies()
+  # sails.services.passport.loadStrategies()
 
-
+  # TODO: Call bootstrap method in the plugins
   # Added files to i18n
+
   sailor.translate.add(User)
+
+
+  # console.log translate.get_list()
 
 
   cb()
