@@ -3,6 +3,7 @@
   "description": "Module User for Sailor",
   "version": "0.4.0",
   "dependencies": {
+    "sailorjs": "git://github.com/sailorjs/sailorjs",
     "coffee-script": "*",
     "bcrypt": "*",
     "passport": "*",
