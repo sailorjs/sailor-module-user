@@ -1,10 +1,10 @@
 ###
 Dependencies
 ###
-sailor    = require 'sailorjs'
-translate = sailor.translate
-errorify  = sailor.errorify
-validator = sailor.validator
+sailor       = require 'sailorjs'
+translate    = sailor.translate
+errorify     = sailor.errorify
+validator    = sailor.validator
 
 ###
 Local Authentication Protocol

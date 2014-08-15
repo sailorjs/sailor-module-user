@@ -15,7 +15,6 @@ module.exports = (grunt) ->
     translate_compile:
       main:
         options:
-        #   multipleObjects : true
           translationVar  :'translations'
           asJson          : false
           moduleExports   : true
