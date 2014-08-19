@@ -1,7 +1,7 @@
 {
   "name": "sailor-module-user",
   "description": "Module User for Sailor",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "dependencies": {
     "sailorjs": "git://github.com/sailorjs/sailorjs",
     "coffee-script": "*",
