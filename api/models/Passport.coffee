@@ -35,6 +35,7 @@ Passport =
     password:
       type: "string"
       minLength: 5
+      required: true
 
 
     # strategy fields: strategy, identifer and tokens

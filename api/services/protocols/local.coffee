@@ -54,7 +54,6 @@ exports.register = (req, res, next) ->
       user:     user.id
 
     Passport.create(strategy).exec (err, passport) ->
-
       user.online = true
       user.save (err, user) ->
         return next(err) if (err)
