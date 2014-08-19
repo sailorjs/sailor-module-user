@@ -1,4 +1,4 @@
-path = "http://localhost:1342"
+path = "http://localhost:1337"
 
 paths =
   # CRUD
