@@ -35,6 +35,12 @@ User
 		NotFound
 			1:Password doesn't found
 			2:Contraseña no encontrada
+		MinLength
+			1:Password doesn't be shorter than 5 characters
+			2:La contraseña no puede ser más corta de 5 caracteres
+		Invalid
+			1:Password invalid. Only numbers and letters
+			2:Contraseña incorrecta. Solamente números y letras
 
 	Strategy
 		Already

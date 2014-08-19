@@ -31,8 +31,9 @@ and assign the newly created user a local Passport.
 
 exports.register = (req, res, next) ->
 
-  msg_err = translate.get("User.Password.NotFound")
-  req.checkBody('password', msg_err).notEmpty()
+  req.checkBody('password', translate.get("User.Password.NotFound")).notEmpty()
+  req.checkBody('password', translate.get("User.Password.Invalid")).isAlphanumeric()
+  req.checkBody('password', translate.get("User.Password.MinLength")).isLength(5)
 
   return next(errorify.serialize(req)) if req.validationErrors()
 

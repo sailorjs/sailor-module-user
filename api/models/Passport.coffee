@@ -34,7 +34,7 @@ Passport =
     # means of authentication along with either a username or an email.
     password:
       type: "string"
-      minLength: 8
+      minLength: 5
 
 
     # strategy fields: strategy, identifer and tokens

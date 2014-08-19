@@ -13,6 +13,8 @@ module.exports.translations =
       Password:
         DontMatch: "Passwords don't match"
         NotFound: "Password doesn't found"
+        MinLength: "Password doesn't be shorter than 5 characters"
+        Invalid: "Password invalid. Only numbers and letters"
 
       Strategy:
         Already: "Strategy already exist"
@@ -61,6 +63,8 @@ module.exports.translations =
       Password:
         DontMatch: "La contraseña no coincide"
         NotFound: "Contraseña no encontrada"
+        MinLength: "La contraseña no puede ser más corta de 5 caracteres"
+        Invalid: "Contraseña incorrecta. Solamente números y letras"
 
       Strategy:
         Already: "La estrategia ya existe"
