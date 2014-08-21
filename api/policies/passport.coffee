@@ -22,13 +22,10 @@ http://passportjs.org/guide/configure/
 @param {Function} next
 ###
 module.exports = (req, res, next) ->
-
   # Initialize Passport
   passport.initialize() req, res, ->
-
     # Use the built-in sessions
     passport.session() req, res, ->
-
       # Make the user available throughout the frontend
       res.locals.user = req.user
       next()
