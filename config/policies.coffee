@@ -14,4 +14,4 @@ http://sailsjs.org/#!documentation/
 ###
 
 # Default policy for all controllers and actions
-module.exports.policies = "*": ["i18n", "passport"]
+module.exports.policies = "*": ["passport"]
