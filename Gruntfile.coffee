@@ -32,4 +32,4 @@ module.exports = (grunt) ->
   # =============
   grunt.registerTask 'default', ['translate_compile']
   grunt.registerTask 'dev', ['translate_compile', 'watch']
-  grunt.registerTask 'prod', ['translate_compile']
+  grunt.registerTask 'prod', 'translate_compile'
