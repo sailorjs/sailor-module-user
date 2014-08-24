@@ -1,4 +1,4 @@
-bcrypt = require("bcrypt")
+bcrypt = require 'bcrypt'
 
 ###
 Passport Model

@@ -1,8 +1,7 @@
 ###
 Dependencies
 ###
-sailor    = require 'sailorjs'
-translate = sailor.translate
+translate = require 'sailor-translate'
 
 module.exports = (sails) ->
   initialize: (cb) ->

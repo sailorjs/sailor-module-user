@@ -6,8 +6,7 @@ url       = require './helpers/urlHelper'
 fs        = require 'fs'
 should    = require 'should'
 request   = require 'superagent'
-sailor    = require 'sailorjs'
-scripts   = sailor.scripts
+scripts   = require 'sailor-scripts'
 
 opts =
   log: level: "silent"

@@ -1,5 +1,3 @@
-sailor   = require 'sailorjs'
-
 ###
 Authentication Controller
 

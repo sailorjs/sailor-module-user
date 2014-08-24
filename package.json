@@ -1,7 +1,7 @@
 {
   "name": "sailor-module-user",
   "description": "Module User for Sailor",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "dependencies": {
     "bcrypt": "*",
     "coffee-script": "*",
@@ -15,10 +15,14 @@
     "passport-google": "*",
     "passport-local": "*",
     "passport-twitter": "*",
-    "sailorjs": "git://github.com/sailorjs/sailorjs",
-    "sort-keys": "*"
+    "sailor-errorify": "git://github.com/sailorjs/sailor-errorify",
+    "sailor-translate": "git://github.com/sailorjs/sailor-translate",
+    "sailor-validator": "git://github.com/sailorjs/sailor-validator",
+    "sort-keys": "*",
+    "validator": "*"
   },
   "devDependencies": {
+    "sailor-scripts": "git://github.com/sailorjs/sailor-scripts",
     "mocha": "*",
     "should": "*",
     "superagent": "*"

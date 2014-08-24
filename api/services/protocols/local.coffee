@@ -1,10 +1,11 @@
 ###
 Dependencies
 ###
-sailor       = require 'sailorjs'
-translate    = sailor.translate
-errorify     = sailor.errorify
-validator    = sailor.validator
+translate    = require 'sailor-translate'
+errorify     = require 'sailor-errorify'
+validator    = require 'sailor-validator'
+
+
 
 ###
 Local Authentication Protocol
@@ -120,7 +121,7 @@ exports.login = (req, res, next) ->
   req.checkBody('identifier', msg_pwd).notEmpty()
   req.checkBody('password', msg_id).notEmpty()
 
-  return next(sailor.errorify.serialize(req)) if req.validationErrors()
+  return next(errorify.serialize(req)) if req.validationErrors()
 
   user       = {}
   password   = req.param("password")
