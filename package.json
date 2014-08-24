@@ -1,13 +1,10 @@
 {
   "name": "sailor-module-user",
   "description": "Module User for Sailor",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "dependencies": {
     "bcrypt": "*",
     "coffee-script": "*",
-    "grunt": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-translate-compile": "git://github.com/Kikobeats/translate-compile",
     "load-grunt-tasks": "*",
     "passport": "*",
     "passport-facebook": "*",
@@ -22,6 +19,9 @@
     "validator": "*"
   },
   "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-translate-compile": "git://github.com/Kikobeats/translate-compile",
     "sailor-scripts": "git://github.com/sailorjs/sailor-scripts",
     "mocha": "*",
     "should": "*",
