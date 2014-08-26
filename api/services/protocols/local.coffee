@@ -6,7 +6,6 @@ errorify     = require 'sailor-errorify'
 validator    = require 'sailor-validator'
 
 
-
 ###
 Local Authentication Protocol
 
@@ -32,10 +31,11 @@ and assign the newly created user a local Passport.
 
 exports.register = (req, res, next) ->
 
-  req.checkBody('password', translate.get("User.Password.NotFound")).notEmpty()
-  req.checkBody('password', translate.get("User.Password.Invalid")).isAlphanumeric()
-  req.checkBody('password', translate.get("User.Password.MinLength")).isLength(5)
-
+  passwordLength = Passport._attributes.password.minLength
+  req.checkBody('email', translate.get "User.Email.NotFound").notEmpty()
+  req.checkBody('password', translate.get "User.Password.NotFound").notEmpty()
+  req.checkBody('password', translate.get "User.Password.Invalid").isAlphanumeric()
+  req.checkBody('password', translate.get "User.Password.MinLength").isLength(passwordLength)
   return next(errorify.serialize(req)) if req.validationErrors()
 
   password = req.param("password")
@@ -55,17 +55,12 @@ exports.register = (req, res, next) ->
       user:     user.id
 
     Passport.create(strategy).exec (err, passport) ->
-      user.online = true
-      user.save (err, user) ->
-        return next(err) if (err)
 
-        if req._sails.hooks.pubsub
-          if req.isSocket
-            User.subscribe req, user
-            User.introduce user
-          User.publishCreate user, not req.options.mirror and req
+      if err
+        user.destroy (destroyErr) ->
+          next destroyErr or err
 
-        next err, user
+      next null, user
 
 ###
 Assign local Passport to user
@@ -116,11 +111,8 @@ found, its password is checked against the password supplied in the form.
 ###
 exports.login = (req, res, next) ->
 
-  msg_pwd = translate.get("User.Password.NotFound")
-  msg_id = translate.get("User.Identifier.NotFound")
-  req.checkBody('identifier', msg_pwd).notEmpty()
-  req.checkBody('password', msg_id).notEmpty()
-
+  req.checkBody('identifier', translate.get "User.Identifier.NotFound").notEmpty()
+  req.checkBody('password', translate.get "User.Password.NotFound").notEmpty()
   return next(errorify.serialize(req)) if req.validationErrors()
 
   user       = {}
@@ -156,7 +148,4 @@ exports.login = (req, res, next) ->
           err = msg: translate.get("User.Password.DontMatch")
           return next(errorify.serialize(err))
 
-        user.online = true
-        user.save (err, user) ->
-          return next(err) if (err)
-          next null, user
+        next null, user

@@ -86,13 +86,12 @@ Passport =
   @param {Function} next
   ###
   beforeCreate: (passport, next) ->
-    if passport.hasOwnProperty("password")
+    if passport.hasOwnProperty("password") and passport.password
       bcrypt.hash passport.password, 10, (err, hash) ->
         passport.password = hash
         next err, passport
     else
       next null, passport
-
 
   ###
   Callback to be run before updating a Passport.
@@ -101,7 +100,7 @@ Passport =
   @param {Function} next
   ###
   beforeUpdate: (passport, next) ->
-    if passport.hasOwnProperty("password")
+    if passport.hasOwnProperty("password") and passport.password
       bcrypt.hash passport.password, 10, (err, hash) ->
         passport.password = hash
         next err, passport

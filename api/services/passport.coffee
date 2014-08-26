@@ -205,23 +205,47 @@ passport.loadStrategies = ->
       callback = strategies[key].callback
       callback = path.join("auth", key, "callback")  unless callback
       Strategy = strategies[key].strategy
-      baseUrl = sails.getBaseurl()
+      baseUrl  = sails.getBaseurl()
 
       switch protocol
         when "oauth", "oauth2"
           options.callbackURL = url.resolve(baseUrl, callback)
         when "openid"
           options.returnURL = url.resolve(baseUrl, callback)
-          options.realm = baseUrl
-          options.profile = true
+          options.realm     = baseUrl
+          options.profile   = true
 
       _.extend options, strategies[key].options
       self.use new Strategy(options, self.protocols[protocol])
+
+###
+Disconnect a passport from a user
+
+@param  {Object} req
+@param  {Object} res
+###
+passport.disconnect = (req, res, next) ->
+  user     = req.user
+  strategy = req.param("strategy")
+
+  objt =
+    strategy: strategy
+    user: user.id
+
+  Passport.findOne objt, (err, passport) ->
+    return next(err)  if err
+    Passport.destroy passport.id, (error) ->
+      return next(err)  if err
+      next null, user
 
 passport.serializeUser (user, next) ->
   next null, user.id
 
 passport.deserializeUser (id, next) ->
-  User.findOne id, next
+  User.findOne id, (err, user) ->
+    next(err, user)
 
+###
+Exports
+###
 module.exports = passport

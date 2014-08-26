@@ -23,8 +23,5 @@ run() {
 ## Main
 welcome && run \
 test/create.test.coffee \
-test/find.test.coffee \
-test/update.test.coffee \
-test/login.test.coffee \
-test/logout.test.coffee \
-test/destroy.test.coffee
+test/login.test.coffee
+

@@ -23,17 +23,13 @@ module.exports =
   ###
   logout: (req, res) ->
     user = req.user
-    return res.ok() unless user
-
-    user.online = false
-    user.save (err, user) ->
-      return next(err) if (err)
-      req.logout()
-      return res.ok(user)
+    return res.invalid() unless user
+    req.logout()
+    res.ok(user)
 
   session: (req, res) ->
     return res.ok(req.user) if req.user?
-    res.badRequest()
+    res.invalid()
 
   ###
   Create a third-party authentication endpoint
@@ -43,6 +39,15 @@ module.exports =
   ###
   strategy: (req, res) ->
     passport.endpoint req, res
+
+  ###
+  Disconnect a passport from a user
+
+  @param {Object} req
+  @param {Object} res
+  ###
+  disconnect: (req, res) ->
+    passport.disconnect req, res
 
   ###
   Create a authentication callback endpoint
@@ -63,6 +68,6 @@ module.exports =
   callback: (req, res) ->
     passport.callback req, res, (err, user) ->
       return res.badRequest(err)  if err
-      req.login user, (err) ->
-        return res.badRequest err if err
+      req.logIn user, (err) ->
+        return res.badRequest(err)  if err
         res.ok(user)

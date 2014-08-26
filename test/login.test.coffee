@@ -32,6 +32,21 @@ describe "Login :: /GET user/login", ->
         res.body.email.should.equal 'user2@sailor.com'
         done()
 
+    it "server store the session of the user", (done) ->
+      request
+      .post url.login
+      .send
+        identifier: 'user2@sailor.com'
+        password: 'password'
+      .end (res) ->
+        request
+        .get url.session
+        .end (re) ->
+          re.status.should.equal 200
+          re.body.email.should.equal 'user2@sailor.com'
+          done()
+
+
   describe '400 BadRequest', ->
 
     it "without parameters", (done) ->

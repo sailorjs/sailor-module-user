@@ -1,31 +1,57 @@
+_extendReq = (req) ->
+
+  req.login = req.logIn = (user, options, done) ->
+
+    if typeof options is "function"
+      done = options
+      options = {}
+
+    options = options or {}
+    property = "user"
+    property = req._passport.instance._userProperty or "user"  if req._passport and req._passport.instance
+    session = (if (options.session is `undefined`) then true else options.session)
+    req[property] = user
+    return done and done()  unless session
+
+    throw new Error("passport.initialize() middleware not in use")  unless req._passport
+    throw new Error("req#login requires a callback function")  unless typeof done is "function"
+
+    user.setOnline (err, user) ->
+      req._passport.instance.serializeUser user, req, (err, obj) ->
+        if err
+          req[property] = null
+          return done(err)
+        req._passport.session.user = obj
+        done()
+
+  req.logout = req.logOut = ->
+    req.user.setOffline (err, user) ->
+      property = "user"
+      property = req._passport.instance._userProperty or "user"  if req._passport and req._passport.instance
+      req[property] = null
+      delete req._passport.session.user  if req._passport and req._passport.session
+      req.session.destroy()
+
+  req.isAuthenticated = ->
+    property = 'user'
+    property = req._passport.instance._userProperty || 'user' if (req._passport && req._passport.instance)
+    (req[property]) ? true : false
+
+  req.isUnauthenticated = ->
+    !req.isAuthenticated()
+
+  req
+
+
 ###
-Passport Middleware
-
-Policy for Sails that initializes Passport.js and as well as its built-in
-session support.
-
-In a typical web application, the credentials used to authenticate a user
-will only be transmitted during the login request. If authentication
-succeeds, a session will be established and maintained via a cookie set in
-the user's browser.
-
-Each subsequent request will not contain credentials, but rather the unique
-cookie that identifies the session. In order to support login sessions,
-Passport will serialize and deserialize user instances to and from the
-session.
-
-For more information on the Passport.js middleware, check out:
-http://passportjs.org/guide/configure/
-
-@param {Object}   req
-@param {Object}   res
-@param {Function} next
+Exports
 ###
 module.exports = (req, res, next) ->
+  req = _extendReq(req)
   # Initialize Passport
-  passport.initialize() req, res, ->
+  passport.initialize() req, res, (err) ->
+    return res.negotiate(err) if (err)
     # Use the built-in sessions
-    passport.session() req, res, ->
-      # Make the user available throughout the frontend
-      res.locals.user = req.user
+    passport.session() req, res, (err) ->
+      return res.negotiate(err) if (err)
       next()

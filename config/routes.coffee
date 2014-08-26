@@ -23,6 +23,6 @@ module.exports.routes =
   # create
   "POST /:lang?/user/:action?/:strategy?"  : "UserController.callback"
   # logout
-  "get /:lang?/user/logout"                : "UserController.logout"
+  "GET /:lang?/user/logout"                : "UserController.logout"
   # session
   "GET /:lang?/user/session"               : "UserController.session"

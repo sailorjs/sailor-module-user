@@ -51,7 +51,17 @@ module.exports =
       type: "boolean"
       defaultsTo: false
 
-    toJSON: ->
+    toJSON: (done) ->
       obj = @toObject()
       delete obj.passports
       sort obj
+
+    setOnline: (done) ->
+      @online = true
+      @save (err, user) ->
+        done(err, user)
+
+    setOffline: (done) ->
+      @online = false
+      @save (err, user) ->
+        done(err, user)
