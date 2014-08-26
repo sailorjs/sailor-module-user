@@ -1,7 +1,7 @@
 {
   "name": "sailor-module-user",
   "description": "Module User for Sailor",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "dependencies": {
     "bcrypt": "*",
     "coffee-script": "*",
