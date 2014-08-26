@@ -68,6 +68,6 @@ module.exports =
   callback: (req, res) ->
     passport.callback req, res, (err, user) ->
       return res.badRequest(err)  if err
-      req.logIn user, (err) ->
+      req.login user, (err) ->
         return res.badRequest(err)  if err
         res.ok(user)
