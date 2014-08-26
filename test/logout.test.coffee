@@ -1,9 +1,9 @@
 ###
 Dependencies
 ###
-url       = require './helpers/urlHelper'
 should    = require 'should'
 request   = require 'superagent'
+url       = require './helpers/urlHelper'
 
 describe "Logout :: /GET user/logout", ->
 
