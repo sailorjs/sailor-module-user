@@ -69,4 +69,6 @@ module.exports = (sails) ->
           return res.negotiate(err)  if err
           passport.session() req, res, (err) ->
             return res.negotiate(err)  if err
+            # Make the user available throughout the frontend
+            res.locals.user = req.user
             next()
