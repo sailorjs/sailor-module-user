@@ -1,4 +1,21 @@
-bcrypt = require 'bcrypt'
+###
+Dependencies
+###
+bcrypt = require 'bcryptjs'
+
+###
+Hash a passport password.
+
+@param {Object}   password
+@param {Function} next
+###
+hashPassword = (passport, next) ->
+  if passport.password
+    bcrypt.hash passport.password, 10, (err, hash) ->
+      passport.password = hash
+      next err, passport
+  else
+    next null, passport
 
 ###
 Passport Model
@@ -86,12 +103,7 @@ Passport =
   @param {Function} next
   ###
   beforeCreate: (passport, next) ->
-    if passport.hasOwnProperty("password") and passport.password
-      bcrypt.hash passport.password, 10, (err, hash) ->
-        passport.password = hash
-        next err, passport
-    else
-      next null, passport
+    hashPassword(passport, next)
 
   ###
   Callback to be run before updating a Passport.
@@ -100,11 +112,6 @@ Passport =
   @param {Function} next
   ###
   beforeUpdate: (passport, next) ->
-    if passport.hasOwnProperty("password") and passport.password
-      bcrypt.hash passport.password, 10, (err, hash) ->
-        passport.password = hash
-        next err, passport
-    else
-      next null, passport
+    hashPassword(passport, next)
 
 module.exports = Passport
