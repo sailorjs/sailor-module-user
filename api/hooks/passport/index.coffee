@@ -6,7 +6,6 @@ translate = require 'sailor-translate'
 ###
 Utils
 ###
-
 _extendReq = (req) ->
 
   req.login = req.logIn = (user, options, done) ->
