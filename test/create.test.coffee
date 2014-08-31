@@ -27,8 +27,7 @@ before (done) ->
     scripts.clean "#{MODULE}/testApp/.tmp/"
     scripts.lift opts, done
 
-# after (done) ->
-  # scripts.clean done
+# after (done) -> scripts.clean done
 
 ## Testing
 describe "Create :: /POST user", ->
