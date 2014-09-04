@@ -1,9 +1,10 @@
-###
-Dependencies
-###
+## -- Dependencies -----------------------------------------------------------------------
+
 should    = require 'should'
 request   = require 'superagent'
 url       = require './helpers/urlHelper'
+
+## -- Test ------------------------------------------------------------------------------
 
 describe "Find :: /GET user", ->
 

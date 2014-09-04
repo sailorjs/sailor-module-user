@@ -1,35 +1,11 @@
-###
-Dependencies
-###
-pkg       = require '../package.json'
-url       = require './helpers/urlHelper'
-fs        = require 'fs'
+## -- Dependencies -----------------------------------------------------------------------
+
 should    = require 'should'
 request   = require 'superagent'
-scripts   = require 'sailor-scripts'
+url       = require './helpers/urlHelper'
 
-opts =
-  log: level: "silent"
-  plugins: [pkg.name]
+## -- Test ------------------------------------------------------------------------------
 
-MODULE = process.cwd()
-LINK   = "#{process.cwd()}/testApp/node_modules/sailor-module-user"
-
-## Setup
-before (done) ->
-  if (!fs.existsSync("#{MODULE}/testApp"))
-    scripts.newBase ->
-      scripts.link MODULE, LINK, ->
-        scripts.writePluginFile pkg.name, ->
-          scripts.lift opts, done
-  else
-    scripts.clean "#{MODULE}/.tmp/"
-    scripts.clean "#{MODULE}/testApp/.tmp/"
-    scripts.lift opts, done
-
-# after (done) -> scripts.clean done
-
-## Testing
 describe "Create :: /POST user", ->
 
   describe "Local Strategy ", ->
