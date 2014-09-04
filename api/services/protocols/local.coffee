@@ -1,9 +1,9 @@
 ###
 Dependencies
 ###
-translate    = require 'sailor-translate'
-errorify     = require 'sailor-errorify'
-validator    = require 'sailor-validator'
+translate = require 'sailor-translate'
+errorify  = require 'sailor-errorify'
+validator = require 'sailor-validator'
 
 
 ###
@@ -148,4 +148,6 @@ exports.login = (req, res, next) ->
           err = msg: translate.get("User.Password.DontMatch")
           return next(errorify.serialize(err))
 
+        # generate the token for the user
+        user.token = JWTService.encode(id: user.id)
         next null, user
