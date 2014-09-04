@@ -58,8 +58,8 @@ User
 			1:Wrong Email
 			2:Wrong Email
 		NotFound
-			1:Email not found
-			2:Email not found
+			1:Email doesn't found
+			2:Email no encontrado
 
 	METHODS
 	=========

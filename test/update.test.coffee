@@ -32,7 +32,7 @@ describe "Update :: /PUT user", ->
 
     it 'user by id doesn\'t exist', (done) ->
       request
-      .put "# {url.update}/999"
+      .put "#{url.update}/999"
       .end (res) ->
         res.status.should.equal 404
         done()

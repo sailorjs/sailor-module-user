@@ -1,15 +1,15 @@
-path = "http://localhost:1337"
+path = "http://localhost:1337/"
 
 paths =
   # CRUD
-  create:  path + "/en/user"
-  update:  path + "/en/user"
-  find:    path + "/en/user"
-  destroy: path + "/en/user"
+  create:  path + "user"
+  update:  path + "user"
+  find:    path + "user"
+  destroy: path + "user"
   # CUSTOM
-  session: path + "/en/user/session"
-  login:   path + "/en/user/login"
-  logout:  path + "/en/user/logout"
+  session: path + "user/session"
+  login:   path + "user/login"
+  logout:  path + "user/logout"
 
 
 

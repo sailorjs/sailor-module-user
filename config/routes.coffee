@@ -21,8 +21,8 @@ http://links.sailsjs.org/docs/config/routes
 ###
 module.exports.routes =
   # create
-  "POST /:lang?/user/:action?/:strategy?"  : "UserController.callback"
+  "POST /user/:action?/:strategy?"  : "UserController.callback"
   # logout
-  "GET /:lang?/user/logout"                : "UserController.logout"
+  "GET /user/logout"                : "UserController.logout"
   # session
-  "GET /:lang?/user/session"               : "UserController.session"
+  "GET /user/session"               : "UserController.session"

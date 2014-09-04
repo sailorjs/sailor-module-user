@@ -23,7 +23,7 @@ module.exports.translations =
       Email:
         Already: "Email already exist"
         Wrong: "Wrong Email"
-        NotFound: "Email not found"
+        NotFound: "Email doesn't found"
 
       Signup:
         Sucessful: "Signup successful"
@@ -73,7 +73,7 @@ module.exports.translations =
       Email:
         Already: "Email already exist"
         Wrong: "Wrong Email"
-        NotFound: "Email not found"
+        NotFound: "Email no encontrado"
 
       Signup:
         Sucessful: "Signup successful"
