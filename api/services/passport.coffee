@@ -141,8 +141,8 @@ passport.endpoint = (req, res) ->
 #
 passport.callback = (req, res, next) ->
   method   = req.method
-  strategy = req.param('strategy', 'local')
-  action   = req.param('action', 'create')
+  strategy = if req.param 'strategy' then req.param 'strategy' else 'local'
+  action   = if req.param 'action' then req.param 'action' else 'create'
 
   sails.log.debug "Passport.callback :: Method [#{method}] Action [#{action}], Strategy [#{strategy}]"
 
