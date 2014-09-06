@@ -1,4 +1,6 @@
-## Sailor Module User
+<center>![](http://i.imgur.com/0W8wQDR.png)</center>
+
+# Sailor Module User
 
 [![Build Status](http://img.shields.io/travis/sailorjs/sailor-module-user/master.svg?style=flat)](https://travis-ci.org/sailorjs/sailor-module-user)
 [![Dependency status](http://img.shields.io/david/sailorjs/sailor-module-user.svg?style=flat)](https://david-dm.org/Kikobeats/sailor-module-user)

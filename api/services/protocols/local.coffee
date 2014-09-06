@@ -32,10 +32,10 @@ and assign the newly created user a local Passport.
 exports.register = (req, res, next) ->
 
   passwordLength = Passport._attributes.password.minLength
-  req.checkBody('email', translate.get "User.Email.NotFound").notEmpty()
-  req.checkBody('password', translate.get "User.Password.NotFound").notEmpty()
-  req.checkBody('password', translate.get "User.Password.Invalid").isAlphanumeric()
-  req.checkBody('password', translate.get "User.Password.MinLength").isLength(passwordLength)
+  req.assert('email', translate.get "User.Email.NotFound").notEmpty()
+  req.assert('password', translate.get "User.Password.NotFound").notEmpty()
+  req.assert('password', translate.get "User.Password.Invalid").isAlphanumeric()
+  req.assert('password', translate.get "User.Password.MinLength").isLength(passwordLength)
   return next(errorify.serialize(req)) if req.validationErrors()
 
   password = req.param("password")
@@ -111,8 +111,8 @@ found, its password is checked against the password supplied in the form.
 ###
 exports.login = (req, res, next) ->
 
-  req.checkBody('identifier', translate.get "User.Identifier.NotFound").notEmpty()
-  req.checkBody('password', translate.get "User.Password.NotFound").notEmpty()
+  req.assert('identifier', translate.get "User.Identifier.NotFound").notEmpty()
+  req.assert('password', translate.get "User.Password.NotFound").notEmpty()
   return next(errorify.serialize(req)) if req.validationErrors()
 
   user       = {}
