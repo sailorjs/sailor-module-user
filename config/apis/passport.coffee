@@ -13,7 +13,8 @@ Also, authentication scopes can be set through the `scope` property.
 For more information on the available providers, check out:
 http://passportjs.org/guide/providers/
 ###
-module.exports.passport =
+module.exports =
+
   local:
     strategy: require("passport-local").Strategy
 
