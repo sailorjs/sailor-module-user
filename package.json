@@ -25,6 +25,7 @@
     "superagent": "*"
   },
   "license": "MIT",
+  "repository": "sailorjs/sailor-module-user",
   "scripts": {
     "test": "sh test/test.sh"
   }
