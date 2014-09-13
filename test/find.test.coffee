@@ -11,7 +11,8 @@ describe "Find :: /GET user", ->
   describe '200 OK', ->
 
     it 'all users', (done) ->
-      request.get(url.find).end (res) ->
+      request
+      .get(url.find).end (res) ->
         user_one = res.body[0]
         user_two = res.body[1]
 
