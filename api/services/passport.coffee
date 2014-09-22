@@ -64,12 +64,18 @@ passport.protocols = require("./protocols")
 # @param {Function} next
 #
 passport.connect = (req, query, profile, next) ->
-  strategies     = sails.config.passport
-  config         = strategies[profile.strategy]
-  user           = {}
+  user     = {}
 
-  # Set the authentication provider.
-  query.strategy = req.param("strategy")
+  # Get the authentication strategy from the query.
+  query.strategy = req.param "strategy"
+
+  # Use profile.strategy or fallback to the query.strategy if it is undefined
+  # as is the case for OpenID, for example
+  strategy = profile.strategy or query.strategy
+
+  # If the strategy cannot be identified we cannot match it to a passport so
+  # throw an error and let whoever's next in line take care of it.
+  return next(new Error("No authentication strategy was identified.")) unless strategy
 
   # If the profile object contains a list of emails, grab the first one and
   # add it to the user.
@@ -83,11 +89,12 @@ passport.connect = (req, query, profile, next) ->
   # whoever's next in the line take care of it.
   return next(new Error("Neither a username nor email was available")) if not user.username and not user.email
 
-  Passport.findOne
+  obj =
     strategy: profile.strategy
     identifier: query.identifier.toString()
-  , (err, passport) ->
-    return next(err)  if err
+
+  Passport.findOne obj, (err, passport) ->
+    return next(err) if err
     unless req.user
       unless passport
         User.create user, (err, user) ->
@@ -228,11 +235,11 @@ passport.disconnect = (req, res, next) ->
   user     = req.user
   strategy = req.param("strategy")
 
-  objt =
+  obj =
     strategy: strategy
     user: user.id
 
-  Passport.findOne objt, (err, passport) ->
+  Passport.findOne obj, (err, passport) ->
     return next(err)  if err
     Passport.destroy passport.id, (error) ->
       return next(err)  if err
