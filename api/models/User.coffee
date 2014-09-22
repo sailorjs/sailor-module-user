@@ -68,3 +68,9 @@ module.exports =
       @online = false
       @save (err, user) ->
         done(err, user)
+
+    onLogin: (done) ->
+      @setOnline(done)
+
+    onLogout: (done) ->
+      @setOffline(done)

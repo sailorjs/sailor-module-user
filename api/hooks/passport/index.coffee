@@ -24,7 +24,7 @@ _extendReq = (req) ->
     throw new Error("passport.initialize() middleware not in use")  unless req._passport
     throw new Error("req#login requires a callback function")  unless typeof done is "function"
 
-    user.setOnline (err, user) ->
+    user.onLogin (err, user) ->
       req._passport.instance.serializeUser user, req, (err, obj) ->
         if err
           req[property] = null
@@ -33,7 +33,7 @@ _extendReq = (req) ->
         done()
 
   req.logout = req.logOut = ->
-    req.user.setOffline (err, user) ->
+    req.user.onLogout (err, user) ->
       property = "user"
       property = req._passport.instance._userProperty or "user"  if req._passport and req._passport.instance
       req[property] = null
