@@ -5,7 +5,6 @@ translate = require 'sailor-translate'
 errorify  = require 'sailor-errorify'
 validator = require 'sailor-validator'
 
-
 ###
 Local Authentication Protocol
 
@@ -148,6 +147,8 @@ exports.login = (req, res, next) ->
           err = msg: translate.get("User.Password.DontMatch")
           return next(errorify.serialize(err))
 
-        # generate the token for the user
-        user.token = JWTService.encode(id: user.id)
+        # NOTE
+        # in pure REST, only transfer the token and the client need to do another
+        # findOne request to get the user, but provide both in the same request.
+        _.assign(user, JWTService.encode(id: user.id))
         next null, user
