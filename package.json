@@ -4,8 +4,6 @@
   "version": "0.6.0",
   "dependencies": {
     "bcryptjs": "*",
-    "coffee-script": "*",
-    "load-grunt-tasks": "*",
     "passport": "*",
     "passport-facebook": "*",
     "passport-github": "*",
@@ -16,6 +14,8 @@
     "validator": "*"
   },
   "devDependencies": {
+    "coffee-script": "*",
+    "load-grunt-tasks": "*",
     "grunt": "*",
     "grunt-contrib-watch": "*",
     "grunt-translate-compile": "git://github.com/Kikobeats/translate-compile",
