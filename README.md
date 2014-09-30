@@ -18,11 +18,15 @@ Install as dependency in your sailor base application:
 npm install sailor-module-user --save
 ```
 
+
+
 ## API
 
-## Create a new User
+### New User
 
-#### POST /lang/user
+```
+POST /user
+```
 
 The minimum information to create a new user is:
 
@@ -34,11 +38,20 @@ The minimum information to create a new user is:
 }
 ```
 
-check the User Model for know the required, optional and the restriction of each field.
+Check the User Model for know the required, optional and the restriction of each field.
 
-## Find a User
 
-#### GET /lang/user/
+### Find all
+
+```
+GET /user
+```
+
+### Find One
+
+```
+GET /user/:id
+```
 
 You can specified the user that you want to recover in the url by id:
 
@@ -52,19 +65,18 @@ or create a more specified query using url params:
 GET /lang/user/?username=user2&email=user2@sailor.com
 ```
 
-## Destroy User
-
-#### DEL /lang/user
-
-Destroy a user by id:
+### Destroy
 
 ```
-DEL /lang/user/1
+DEL /user/:id
 ```
 
-## Login a User
 
-#### POST /lang/user/login
+### Login 
+
+```
+POST /user/login
+```
 
 You can login a user with his username:
 
@@ -86,7 +98,17 @@ or with the email:
 }
 ```
 
-## Logout a User
+### Logout
 
-#### GET /lang/user/logout
+```
+GET /user/logout
+```
+
+### Session
+
+### Info
+
+### Follow
+
+### Following
 

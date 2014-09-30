@@ -14,13 +14,14 @@
     "validator": "*"
   },
   "devDependencies": {
+    "async": "*",
     "coffee-script": "*",
-    "load-grunt-tasks": "*",
     "grunt": "*",
     "grunt-contrib-watch": "*",
     "grunt-translate-compile": "git://github.com/Kikobeats/translate-compile",
-    "sailor-scripts": "git://github.com/sailorjs/sailor-scripts",
+    "load-grunt-tasks": "*",
     "mocha": "*",
+    "sailor-scripts": "git://github.com/sailorjs/sailor-scripts",
     "should": "*",
     "superagent": "*"
   },

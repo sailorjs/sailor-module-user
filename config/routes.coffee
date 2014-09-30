@@ -21,8 +21,15 @@ http://links.sailsjs.org/docs/config/routes
 ###
 module.exports.routes =
   # create
-  "POST /user/:action?/:strategy?"  : "UserController.callback"
+  "POST /user/:action?/:strategy?" : "UserController.callback"
   # logout
-  "GET /user/logout"                : "UserController.logout"
+  "GET /user/logout"               : "UserController.logout"
   # session
-  "GET /user/session"               : "UserController.session"
+  "GET /user/session"              : "UserController.session"
+  # info
+  "GET /user/info"                 : "UserController.info"
+  # followers
+  "GET /user/followers"            : "UserController.getFollowers"
+  "GET /user/followers/me"         : "UserController.isFollowerMe"
+  "POST /user/followers"           : "UserController.addFollowers"
+  "DEL /user/followers"            : "UserController.removeFollowers"

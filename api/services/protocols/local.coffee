@@ -54,11 +54,9 @@ exports.register = (req, res, next) ->
       user:     user.id
 
     Passport.create(strategy).exec (err, passport) ->
-
       if err
         user.destroy (destroyErr) ->
           next destroyErr or err
-
       next null, user
 
 ###

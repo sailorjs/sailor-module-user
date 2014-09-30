@@ -1,63 +1,40 @@
-###
-Dependencies
-###
+## -- Dependencies -------------------------------------------------------------
+
 sort = require 'sort-keys'
 
-###
-User.js
-Based on http://jsonresume.org/
-
-@description :: TODO: You might write a short summary of how this model works and what it represents here.
-@docs        :: http://sailsjs.org/#!documentation/models
-###
+## -- Exports -------------------------------------------------------------
+# Based on http://jsonresume.org/
 
 module.exports =
-
-  # Enforce model schema in the case of schemaless databases
-  # https://github.com/balderdashy/waterline-docs/blob/master/models.md
   schema: true
 
   attributes:
-    username:
-      type: "string"
-      notNull: true
+    # essential
+    username  : type: 'string', notNull: true
+    email     : type: 'email', unique: true, required: true
+    picture   : type: 'string'
+    rol       : type: 'string', enum: ['user', 'admin'], defaultsTo: 'user'
+    label     : type: 'string'
+    online    : type: 'boolean', defaultsTo: false
 
-    email:
-      type: "email"
-      unique: true
-      required: true
+    # complementary
+    firstName : type: 'string'
+    lastName  : type: 'string'
+    age       : type: 'string'
+    birthDate : type: 'date'
+    phone     : type: 'string'
+    website   : type: 'string'
+    summary   : type: 'string'
+    country   : type: 'string'
 
-    passports:
-      collection: "Passport"
-      via: "user"
+    website   : type: "string", url: true
+    facebook  : type: "string", url: true
+    twitter   : type: "string", url: true
+    linkedin  : type: "string", url: true
 
-    label:
-      type: "string"
-
-    picture:
-      type: "string"
-
-    phone:
-      type: "string"
-
-    website:
-      type: "string"
-
-    summary:
-      type: "string"
-
-    admin:
-      type: "boolean"
-      defaultsTo: false
-
-    online:
-      type: "boolean"
-      defaultsTo: false
-
-    toJSON: (done) ->
-      obj = @toObject()
-      delete obj.passports
-      sort obj
+    passports : collection: 'Passport', via: 'user'
+    following : collection: 'User'
+    followers : collection: 'User'
 
     setOnline: (done) ->
       @online = true
@@ -74,3 +51,19 @@ module.exports =
 
     onLogout: (done) ->
       @setOffline(done)
+
+    toJSON: (done) ->
+      obj = @toObject()
+      obj.followers = @followersCount()
+      obj.following = @followingCount()
+      delete obj.passports
+      sort obj
+
+    followersCount: ->
+      @followers.length
+
+    followingCount: ->
+      @following.length
+
+    fullName:  ->
+     "#{@firstName} #{@lastName}"

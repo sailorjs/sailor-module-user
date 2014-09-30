@@ -67,7 +67,9 @@ module.exports =
   ###
   callback: (req, res) ->
     passport.callback req, res, (err, user) ->
-      return res.badRequest(err)  if err
+      return res.badRequest(err) if err
       req.login user, (err) ->
-        return res.badRequest(err)  if err
-        res.ok(user)
+        return res.badRequest(err) if err
+        User.findOne(user.id).populateAll().exec (err, user) ->
+          return res.badRequest(err) if err
+          res.ok(user)

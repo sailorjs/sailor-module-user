@@ -27,4 +27,5 @@ test/create.test.coffee \
 test/login.test.coffee \
 test/find.test.coffee \
 test/update.test.coffee \
+test/relations.test.coffee \
 test/destroy.test.coffee
