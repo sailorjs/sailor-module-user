@@ -150,5 +150,5 @@ exports.login = (req, res, next) ->
         # NOTE
         # in pure REST, only transfer the token and the client need to do another
         # findOne request to get the user, but provide both in the same request.
-        _.assign(user, JWTService.encode(id: user.id))
+        # _.assign(user, JWTService.encode(id: user.id))
         next null, user
