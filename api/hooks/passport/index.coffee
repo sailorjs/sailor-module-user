@@ -1,7 +1,8 @@
 ###
 Dependencies
 ###
-translate = require 'sailor-translate'
+sailor  = require 'sailorjs'
+translate = sailor.translate
 
 ###
 Utils

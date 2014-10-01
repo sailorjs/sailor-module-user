@@ -6,8 +6,7 @@
     "bcryptjs": "*",
     "passport": "*",
     "passport-local": "*",
-    "sort-keys": "*",
-    "validator": "*"
+    "sort-keys": "*"
   },
   "devDependencies": {
     "async": "*",
