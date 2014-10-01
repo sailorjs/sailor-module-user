@@ -2,13 +2,15 @@
 
 fs        = require 'fs'
 pkg       = require '../package.json'
-sailorjs  = require 'sailorjs'
-scripts   = sailorjs.scripts
+sailor    = require 'sailorjs'
+scripts   = sailor.scripts
+
+
 
 ## -- Setup ------------------------------------------------------------------------------
 
 opts =
-  log: level: "silent"
+  log: level: "silly"
 
 SCOPE =
   MODULE       : process.cwd()
