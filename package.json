@@ -5,11 +5,7 @@
   "dependencies": {
     "bcryptjs": "*",
     "passport": "*",
-    "passport-facebook": "*",
-    "passport-github": "*",
-    "passport-google": "*",
     "passport-local": "*",
-    "passport-twitter": "*",
     "sort-keys": "*",
     "validator": "*"
   },
