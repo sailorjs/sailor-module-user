@@ -21,7 +21,7 @@
     "grunt-translate-compile": "git://github.com/Kikobeats/translate-compile",
     "load-grunt-tasks": "*",
     "mocha": "*",
-    "sailor-scripts": "git://github.com/sailorjs/sailor-scripts",
+    "sailorjs": "git://github.com/sailorjs/sailorjs",
     "should": "*",
     "superagent": "*"
   },

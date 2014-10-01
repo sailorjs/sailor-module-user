@@ -2,7 +2,8 @@
 
 fs        = require 'fs'
 pkg       = require '../package.json'
-scripts   = require 'sailor-scripts'
+sailorjs  = require 'sailorjs'
+scripts   = sailorjs.scripts
 
 ## -- Setup ------------------------------------------------------------------------------
 
