@@ -14,7 +14,6 @@
     "sort-keys": "*"
   },
   "devDependencies": {
-    "sailorjs": "git://github.com/sailorjs/sailorjs",
     "async": "*",
     "coffee-script": "*",
     "grunt": "*",
@@ -22,6 +21,7 @@
     "grunt-translate-compile": "git://github.com/Kikobeats/translate-compile",
     "load-grunt-tasks": "*",
     "mocha": "*",
+    "sailorjs": "git://github.com/sailorjs/sailorjs",
     "should": "*",
     "superagent": "*"
   },
