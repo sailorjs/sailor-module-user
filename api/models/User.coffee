@@ -52,18 +52,26 @@ module.exports =
     onLogout: (done) ->
       @setOffline(done)
 
-    toJSON: (done) ->
-      obj = @toObject()
-      obj.followers = @followersCount()
-      obj.following = @followingCount()
-      delete obj.passports
-      sort obj
+    getFollowers: ->
+      count: @getFollowersCount()
+      followers: @followers
 
-    followersCount: ->
+    getFollowing: ->
+      count: @getFollowingCount()
+      following: @Following
+
+    getFollowersCount: ->
       @followers.length
 
-    followingCount: ->
+    getFollowingCount: ->
       @following.length
 
     fullName:  ->
      "#{@firstName} #{@lastName}"
+
+    toJSON: (done) ->
+      obj = @toObject()
+      obj.followers = @getFollowersCount()
+      obj.following = @getFollowingCount()
+      delete obj.passports
+      sort obj

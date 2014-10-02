@@ -30,6 +30,8 @@ module.exports.routes =
   "GET /user/info"                 : "UserController.info"
   # followers
   "GET /user/followers"            : "UserController.getFollowers"
+  "POST /user/followers"           : "UserController.addFollower"
+
   "GET /user/followers/me"         : "UserController.isFollowerMe"
-  "POST /user/followers"           : "UserController.addFollowers"
+
   "DEL /user/followers"            : "UserController.removeFollowers"

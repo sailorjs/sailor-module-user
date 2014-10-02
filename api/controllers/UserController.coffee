@@ -1,3 +1,11 @@
+## -- Dependencies -------------------------------------------------------------
+
+sailor     = require 'sailorjs'
+validator  = sailor.validator
+actionUtil = sailor.actionUtil
+
+## -- Exports -------------------------------------------------------------
+
 ###
 Authentication Controller
 
@@ -39,6 +47,29 @@ module.exports =
   ###
   strategy: (req, res) ->
     passport.endpoint req, res
+
+  getFollowers: (req, res) ->
+    data = actionUtil.parseValues(req)
+    User.findOne(data).exec (err, user) ->
+      return res.badRequest(err)  if err
+      res.ok(do user.getFollowers)
+
+  ###*
+   * Add user in follow list and following in the friend user.
+   * @param {[type]} req [description]
+   * @param {[type]} res [description]
+  ###
+  addFollower: (req, res) ->
+    id     = req.param 'id'
+    friend = req.param 'friend'
+
+    User.findOne(id).exec (err, user) ->
+      return res.badRequest(err)  if err
+      User.findOne(friend).exec (err, friend) ->
+
+
+      res.ok()
+
 
   ###
   Disconnect a passport from a user
