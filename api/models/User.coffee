@@ -10,31 +10,31 @@ module.exports =
 
   attributes:
     # essential
-    username  : type: 'string', notNull: true
-    email     : type: 'email', unique: true, required: true
-    picture   : type: 'string'
-    rol       : type: 'string', enum: ['user', 'admin'], defaultsTo: 'user'
-    label     : type: 'string'
-    online    : type: 'boolean', defaultsTo: false
+    username   : type: 'string', notNull: true
+    email      : type: 'email', unique: true, required: true
+    picture    : type: 'string'
+    rol        : type: 'string', enum: ['user', 'admin'], defaultsTo: 'user'
+    label      : type: 'string'
+    online     : type: 'boolean', defaultsTo: false
 
     # complementary
-    firstName : type: 'string'
-    lastName  : type: 'string'
-    age       : type: 'string'
-    birthDate : type: 'date'
-    phone     : type: 'string'
-    website   : type: 'string'
-    summary   : type: 'string'
-    country   : type: 'string'
+    firstName  : type: 'string'
+    lastName   : type: 'string'
+    age        : type: 'string'
+    birthDate  : type: 'date'
+    phone      : type: 'string'
+    website    : type: 'string'
+    summary    : type: 'string'
+    country    : type: 'string'
 
-    website   : type: "string", url: true
-    facebook  : type: "string", url: true
-    twitter   : type: "string", url: true
-    linkedin  : type: "string", url: true
+    website    : type: "string", url: true
+    facebook   : type: "string", url: true
+    twitter    : type: "string", url: true
+    linkedin   : type: "string", url: true
 
-    passports : collection: 'Passport', via: 'user'
-    following : collection: 'User'
-    followers : collection: 'User'
+    passports  : collection: 'Passport', via: 'user'
+    following  : collection: 'User'
+    followers  : collection: 'User'
 
     setOnline: (done) ->
       @online = true
@@ -58,13 +58,24 @@ module.exports =
 
     getFollowing: ->
       count: @getFollowingCount()
-      following: @Following
+      following: @following
 
     getFollowersCount: ->
       @followers.length
 
     getFollowingCount: ->
       @following.length
+
+    addFollower: (user) ->
+      @followers.push user
+      @save
+
+    addFollowing: (user) ->
+      @following.push user
+      @save
+
+    # removeFollowing: (id) ->
+    # removeFollower: (id) ->
 
     fullName:  ->
      "#{@firstName} #{@lastName}"

@@ -3,6 +3,8 @@
 sailor     = require 'sailorjs'
 validator  = sailor.validator
 actionUtil = sailor.actionUtil
+translate  = sailor.translate
+errorify   = sailor.errorify
 
 ## -- Exports -------------------------------------------------------------
 
@@ -54,21 +56,38 @@ module.exports =
       return res.badRequest(err)  if err
       res.ok(do user.getFollowers)
 
-  ###*
-   * Add user in follow list and following in the friend user.
-   * @param {[type]} req [description]
-   * @param {[type]} res [description]
-  ###
-  addFollower: (req, res) ->
+  getFollowings: (req, res) ->
+    data = actionUtil.parseValues(req)
+    User.findOne(data).exec (err, user) ->
+      return res.badRequest(err)  if err
+      res.ok(do user.getFollowings)
+
+
+  addFollowing: (req, res) ->
     id     = req.param 'id'
     friend = req.param 'friend'
 
-    User.findOne(id).exec (err, user) ->
+    User.findOne(id: id).exec (err, user) ->
       return res.badRequest(err)  if err
+
       User.findOne(friend).exec (err, friend) ->
+        return res.badRequest(err)  if err
 
+        unless user or friend
+          errors = []
+          generateError = (param, msg) -> errors.push param: param, msg: msg
+          generateError('user', translate.get("Model.NotFound")) unless user
+          generateError('friend', translate.get("Model.NotFound")) unless friend
+          return res.notFound(errorify.serialize(errors))
 
-      res.ok()
+        user.following.add friend
+        friend.followers.add user
+
+        user.save()
+        friend.save()
+        # user.addFollowing friend
+        # friend.addFollower user
+        res.ok(user)
 
 
   ###
