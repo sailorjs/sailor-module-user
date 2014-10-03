@@ -13,6 +13,23 @@ User
 		1:User doesn't found.
 		2:Usuario no encontrado.
 
+	Is
+		Following
+			1:Following
+			2:Siguiendo
+		Follower
+			1:Follows you
+			2:Te sigue
+
+	Isnt
+		Following
+			1:Follow
+			2:Seguir
+		Follower
+			1:Doesn't follow you
+			2:No te sigue
+
+
 	ATTRIBUTES
 	==========
 	Username

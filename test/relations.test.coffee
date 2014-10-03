@@ -109,10 +109,11 @@ describe "Relationship :: ", ->
         .query
           id: '1'
           friend: '2'
+          lang: 'es'
         .end (res) ->
           res.status.should.equal 200
-          res.body.you.should.equal 'siguiendo'
-          res.body.friend.should.equal 'te sigue'
+          res.body.you.should.equal 'Siguiendo'
+          res.body.friend.should.equal 'No te sigue'
           done()
 
   describe "remove :: DELETE #{url.following}", ->

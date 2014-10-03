@@ -3,6 +3,14 @@ module.exports.translations =
     User:
       Name: "User"
       NotFound: "User doesn't found."
+      Is:
+        Following: "Following"
+        Follower: "Follows you"
+
+      Isnt:
+        Following: "Follow"
+        Follower: "Doesn't follow you"
+
       Username:
         Already: "Username already exist."
         NotFound: "Username doesn't found."
@@ -53,6 +61,14 @@ module.exports.translations =
     User:
       Name: "Usuario"
       NotFound: "Usuario no encontrado."
+      Is:
+        Following: "Siguiendo"
+        Follower: "Te sigue"
+
+      Isnt:
+        Following: "Seguir"
+        Follower: "No te sigue"
+
       Username:
         Already: "Nombre de usuario ya registrado."
         NotFound: "Nombre de usuario no encontrado."

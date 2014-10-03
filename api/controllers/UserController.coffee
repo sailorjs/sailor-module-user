@@ -62,13 +62,16 @@ module.exports =
 
         unless user and friend
           errors = []
-          errorify.addError(errors, 'user', translate.get("Model.NotFound")) unless user
+          errorify.addError(errors, 'id', translate.get("Model.NotFound")) unless user
           errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
           return res.notFound(errorify.serialize(errors))
 
-        # We have the users, now we need to search into the collections
+        res.ok
+          you: if user.isFollowing(friend.id) then translate.get("User.Is.Following") else translate.get("User.Isnt.Following")
+          friend: if friend.isFollowing(user.id) then translate.get("User.Is.Follower") else translate.get("User.Isnt.Follower")
 
 
+          translate.get("User.Is.Following")
 
   getFollowingOrFollowers: (req, res) ->
     data       = actionUtil.parseValues(req)
@@ -77,7 +80,7 @@ module.exports =
     User.findOne(data).populate(methodName).exec (err, user) ->
       return res.badRequest(err)  if err
       unless user
-        errors = errorify.addError([], 'user', translate.get("Model.NotFound"))
+        errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
         return res.notFound(errorify.serialize(errors))
 
       res.ok(if methodName is 'following' then user.getFollowing() else user.getFollowers())
@@ -95,7 +98,7 @@ module.exports =
 
         unless user and friend
           errors = []
-          errorify.addError(errors, 'user', translate.get("Model.NotFound")) unless user
+          errorify.addError(errors, 'id', translate.get("Model.NotFound")) unless user
           errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
           return res.notFound(errorify.serialize(errors))
 
