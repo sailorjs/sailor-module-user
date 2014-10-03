@@ -25,8 +25,8 @@ module.exports.routes =
   "GET /user/followers"            : "UserController.getFollowingOrFollowers"
   "GET /user/following"            : "UserController.getFollowingOrFollowers"
 
-  "POST /user/following"           : "UserController.addFollowing"
-  "DEL /user/followers"            : "UserController.removeFollowing"
+  "POST /user/following"           : "UserController.addOrRemoveFollowing"
+  "DELETE /user/following"         : "UserController.addOrRemoveFollowing"
 
   # create
   "POST /user/:action?/:strategy?" : "UserController.callback"

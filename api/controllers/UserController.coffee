@@ -62,14 +62,14 @@ module.exports =
       res.ok(if methodName is 'following' then user.getFollowing() else user.getFollowers())
 
 
-  addFollowing: (req, res) ->
+  addOrRemoveFollowing: (req, res) ->
     user   = req.param 'id'
     friend = req.param 'friend'
 
-    User.findOne(user).exec (err, user) ->
+    User.findOne(user).populate('following').exec (err, user) ->
       return res.badRequest(err)  if err
 
-      User.findOne(friend).exec (err, friend) ->
+      User.findOne(friend).populate('followers').exec (err, friend) ->
         return res.badRequest(err)  if err
 
         unless user and friend
@@ -78,11 +78,21 @@ module.exports =
           errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
           return res.notFound(errorify.serialize(errors))
 
-        user.addFollowing friend, (err, user) ->
-          return res.negotiate(err)  if err
-          friend.addFollower user, (err, friend) ->
+        if req.route.method is 'post'
+          user.addFollowing friend, (err, user) ->
             return res.negotiate(err)  if err
-            res.ok(user)
+            friend.addFollower user, (err, friend) ->
+              return res.negotiate(err)  if err
+              res.ok(user)
+
+        else if req.route.method is 'delete'
+          user.removeFollowing friend.id, (err, user) ->
+            return res.negotiate(err)  if err
+            friend.removeFollower user.id, (err, friend) ->
+              return res.negotiate(err)  if err
+              res.ok(user)
+        else
+          res.badRequest()
 
   ###
   Disconnect a passport from a user

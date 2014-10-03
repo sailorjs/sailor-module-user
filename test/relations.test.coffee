@@ -20,7 +20,7 @@ userHelper = require './helpers/userHelper'
 
 describe "Relationship :: ", ->
 
-  describe 'add', ->
+  describe 'add :: POST /user/following', ->
 
     describe '200 OK', ->
 
@@ -67,7 +67,7 @@ describe "Relationship :: ", ->
           res.status.should.equal 404
           done()
 
-  describe 'get', ->
+  describe 'get :: GET /user/following or /user/followers', ->
     describe '200 OK', ->
       it 'user2 is in the user1 following list', (done) ->
         request
@@ -99,4 +99,17 @@ describe "Relationship :: ", ->
           id: '99'
         .end (res) ->
           res.status.should.equal 404
+          done()
+
+  describe 'remove :: DELETE /user/following', ->
+    describe '200 OK', ->
+      it 'user1 stops follow user2', (done) ->
+        request
+        .del url.following
+        .send
+          id: '1'
+          friend: '2'
+        .end (res) ->
+          res.status.should.equal 200
+          res.body.following.should.eql 0
           done()

@@ -74,8 +74,14 @@ module.exports =
       @following.add user
       @save(cb)
 
-    # removeFollowing: (id) ->
-    # removeFollower: (id) ->
+    removeFollower: (user, cb) ->
+      @followers.remove user
+      @save(cb)
+
+    removeFollowing: (user, cb) ->
+      @following.remove user
+      @save(cb)
+
 
     fullName:  ->
      "#{@firstName} #{@lastName}"

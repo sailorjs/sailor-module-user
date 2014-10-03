@@ -10,7 +10,7 @@ paths =
   session   : path + "user/session"
   login     : path + "user/login"
   logout    : path + "user/logout"
-  following : path + "user/following/"
+  following : path + "user/following"
   followers : path + "user/followers"
 
 ## -- Exports -------------------------------------------------------------
