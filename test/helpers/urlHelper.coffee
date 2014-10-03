@@ -12,6 +12,7 @@ paths =
   logout    : path + "user/logout"
   following : path + "user/following"
   followers : path + "user/followers"
+  status    : path + "user/following/status"
 
 ## -- Exports -------------------------------------------------------------
 

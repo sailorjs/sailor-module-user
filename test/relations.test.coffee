@@ -20,7 +20,7 @@ userHelper = require './helpers/userHelper'
 
 describe "Relationship :: ", ->
 
-  describe 'add :: POST /user/following', ->
+  describe "add :: POST #{url.following}", ->
 
     describe '200 OK', ->
 
@@ -67,7 +67,7 @@ describe "Relationship :: ", ->
           res.status.should.equal 404
           done()
 
-  describe 'get :: GET /user/following or /user/followers', ->
+  describe "get :: GET #{url.following} or #{url.followers}", ->
     describe '200 OK', ->
       it 'user2 is in the user1 following list', (done) ->
         request
@@ -101,7 +101,21 @@ describe "Relationship :: ", ->
           res.status.should.equal 404
           done()
 
-  describe 'remove :: DELETE /user/following', ->
+  describe "status :: GET #{url.status}", ->
+    describe '200 OK', ->
+      it 'user1 status with user2', (done) ->
+        request
+        .get url.status
+        .query
+          id: '1'
+          friend: '2'
+        .end (res) ->
+          res.status.should.equal 200
+          res.body.you.should.equal 'siguiendo'
+          res.body.friend.should.equal 'te sigue'
+          done()
+
+  describe "remove :: DELETE #{url.following}", ->
     describe '200 OK', ->
       it 'user1 stops follow user2', (done) ->
         request
@@ -112,4 +126,26 @@ describe "Relationship :: ", ->
         .end (res) ->
           res.status.should.equal 200
           res.body.following.should.eql 0
+          done()
+
+      it 'user2 is not in the user1 following list', (done) ->
+        request
+        .get url.following
+        .query
+          id: '1'
+        .end (res) ->
+          res.status.should.equal 200
+          res.body.count.should.eql 0
+          res.body.following.length.should.eql 0
+          done()
+
+      it 'user1 is not in the user2 followers list', (done) ->
+        request
+        .get url.followers
+        .query
+          id: '2'
+        .end (res) ->
+          res.status.should.equal 200
+          res.body.count.should.eql 0
+          res.body.followers.length.should.eql 0
           done()

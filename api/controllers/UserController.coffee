@@ -50,15 +50,36 @@ module.exports =
   strategy: (req, res) ->
     passport.endpoint req, res
 
+  relationStatus: (req, res) ->
+    user   = req.param 'id'
+    friend = req.param 'friend'
+
+    User.findOne(user).populate('following').exec (err, user) ->
+      return res.badRequest(err)  if err
+
+      User.findOne(friend).populate('followers').exec (err, friend) ->
+        return res.badRequest(err)  if err
+
+        unless user and friend
+          errors = []
+          errorify.addError(errors, 'user', translate.get("Model.NotFound")) unless user
+          errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
+          return res.notFound(errorify.serialize(errors))
+
+        # We have the users, now we need to search into the collections
+
+
+
   getFollowingOrFollowers: (req, res) ->
-    data = actionUtil.parseValues(req)
-    User.findOne(data).populateAll().exec (err, user) ->
+    data       = actionUtil.parseValues(req)
+    methodName = req.route.path.split('/')[2]
+
+    User.findOne(data).populate(methodName).exec (err, user) ->
       return res.badRequest(err)  if err
       unless user
         errors = errorify.addError([], 'user', translate.get("Model.NotFound"))
         return res.notFound(errorify.serialize(errors))
 
-      methodName = req.route.path.split('/')[2]
       res.ok(if methodName is 'following' then user.getFollowing() else user.getFollowers())
 
 
