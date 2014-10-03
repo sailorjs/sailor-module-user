@@ -22,7 +22,9 @@ npm install sailor-module-user --save
 
 ## API
 
-### New User
+### Basic CRUD
+
+### Register new user
 
 ```
 POST /user
@@ -40,14 +42,13 @@ The minimum information to create a new user is:
 
 Check the User Model for know the required, optional and the restriction of each field.
 
-
-### Find all
+### Find all Users
 
 ```
 GET /user
 ```
 
-### Find One
+### Find One User
 
 ```
 GET /user/:id
@@ -56,23 +57,24 @@ GET /user/:id
 You can specified the user that you want to recover in the url by id:
 
 ```
-GET /lang/user/1
+GET /user/1
 ```
 
 or create a more specified query using url params:
 
 ```
-GET /lang/user/?username=user2&email=user2@sailor.com
+GET /user/?username=user2&email=user2@sailor.com
 ```
 
-### Destroy
+### Destroy an User
 
 ```
-DEL /user/:id
+DELETE /user/:id
 ```
 
+### Authentication
 
-### Login 
+#### Login 
 
 ```
 POST /user/login
@@ -104,11 +106,67 @@ or with the email:
 GET /user/logout
 ```
 
-### Session
 
-### Info
+### Relationship
 
-### Follow
 
-### Following
+### get following or followers users
 
+```
+GET /user/following
+```
+
+or
+
+```
+GET /user/followers
+```
+
+with:
+
+```json
+{
+	id: 'youruserID'}
+```
+
+### starts follow other User
+
+```
+POST /user/following
+```
+
+with:
+
+```json
+{
+	id: 'youruserID'
+	friend: 'yourfriendID'}
+```
+
+### status relationship
+
+```
+GET /user/following/status
+```
+
+with:
+
+```json
+{
+	id: 'youruserID'
+	friend: 'yourfriendID'}
+```
+
+### unfollow
+
+```
+DELETE /user/following
+```
+
+with:
+
+```json
+{
+	id: 'youruserID'
+	friend: 'yourfriendID'}
+```
