@@ -66,13 +66,13 @@ module.exports =
     getFollowingCount: ->
       @following.length
 
-    addFollower: (user) ->
-      @followers.push user
-      @save
+    addFollower: (user, cb) ->
+      @followers.add user
+      @save(cb)
 
-    addFollowing: (user) ->
-      @following.push user
-      @save
+    addFollowing: (user, cb) ->
+      @following.add user
+      @save(cb)
 
     # removeFollowing: (id) ->
     # removeFollower: (id) ->

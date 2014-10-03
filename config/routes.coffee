@@ -22,8 +22,8 @@ http://links.sailsjs.org/docs/config/routes
 module.exports.routes =
 
   # network
-  "GET /user/followers"            : "UserController.getFollowers"
-  "GET /user/following"            : "UserController.getFollowings"
+  "GET /user/followers"            : "UserController.getFollowingOrFollowers"
+  "GET /user/following"            : "UserController.getFollowingOrFollowers"
 
   "POST /user/following"           : "UserController.addFollowing"
   "DEL /user/followers"            : "UserController.removeFollowing"

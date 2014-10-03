@@ -50,45 +50,39 @@ module.exports =
   strategy: (req, res) ->
     passport.endpoint req, res
 
-  getFollowers: (req, res) ->
+  getFollowingOrFollowers: (req, res) ->
     data = actionUtil.parseValues(req)
-    User.findOne(data).exec (err, user) ->
+    User.findOne(data).populateAll().exec (err, user) ->
       return res.badRequest(err)  if err
-      res.ok(do user.getFollowers)
+      unless user
+        errors = errorify.addError([], 'user', translate.get("Model.NotFound"))
+        return res.notFound(errorify.serialize(errors))
 
-  getFollowings: (req, res) ->
-    data = actionUtil.parseValues(req)
-    User.findOne(data).exec (err, user) ->
-      return res.badRequest(err)  if err
-      res.ok(do user.getFollowings)
+      methodName = req.route.path.split('/')[2]
+      res.ok(if methodName is 'following' then user.getFollowing() else user.getFollowers())
 
 
   addFollowing: (req, res) ->
-    id     = req.param 'id'
+    user   = req.param 'id'
     friend = req.param 'friend'
 
-    User.findOne(id: id).exec (err, user) ->
+    User.findOne(user).exec (err, user) ->
       return res.badRequest(err)  if err
 
       User.findOne(friend).exec (err, friend) ->
         return res.badRequest(err)  if err
 
-        unless user or friend
+        unless user and friend
           errors = []
-          generateError = (param, msg) -> errors.push param: param, msg: msg
-          generateError('user', translate.get("Model.NotFound")) unless user
-          generateError('friend', translate.get("Model.NotFound")) unless friend
+          errorify.addError(errors, 'user', translate.get("Model.NotFound")) unless user
+          errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
           return res.notFound(errorify.serialize(errors))
 
-        user.following.add friend
-        friend.followers.add user
-
-        user.save()
-        friend.save()
-        # user.addFollowing friend
-        # friend.addFollower user
-        res.ok(user)
-
+        user.addFollowing friend, (err, user) ->
+          return res.negotiate(err)  if err
+          friend.addFollower user, (err, friend) ->
+            return res.negotiate(err)  if err
+            res.ok(user)
 
   ###
   Disconnect a passport from a user
