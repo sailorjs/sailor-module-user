@@ -140,7 +140,7 @@ with:
 ```json
 {
 	id: 'youruserID'
-	friend: 'yourfriendID'}
+	follower: 'yourfollowerID'}
 ```
 
 ### status relationship
@@ -154,7 +154,7 @@ with:
 ```json
 {
 	id: 'youruserID'
-	friend: 'yourfriendID'}
+	follower: 'yourfollowerID'}
 ```
 
 ### unfollow
@@ -168,5 +168,5 @@ with:
 ```json
 {
 	id: 'youruserID'
-	friend: 'yourfriendID'}
+	follower: 'yourfollowerID'}
 ```

@@ -29,7 +29,7 @@ describe "Relationship :: ", ->
         .post url.following
         .send
           id: '1'
-          friend: '2'
+          follower: '2'
         .end (res) ->
           res.status.should.equal 200
           res.body.following.should.eql 1
@@ -42,7 +42,7 @@ describe "Relationship :: ", ->
         .post url.following
         .send
           id: '1'
-          friend: '99'
+          follower: '99'
         .end (res) ->
           res.status.should.equal 404
           done()
@@ -52,7 +52,7 @@ describe "Relationship :: ", ->
         .post url.following
         .send
           id: '99'
-          friend: '1'
+          follower: '1'
         .end (res) ->
           res.status.should.equal 404
           done()
@@ -62,7 +62,7 @@ describe "Relationship :: ", ->
         .post url.following
         .send
           id: '99'
-          friend: '98'
+          follower: '98'
         .end (res) ->
           res.status.should.equal 404
           done()
@@ -108,12 +108,12 @@ describe "Relationship :: ", ->
         .get url.status
         .query
           id: '1'
-          friend: '2'
+          follower: '2'
           lang: 'es'
         .end (res) ->
           res.status.should.equal 200
           res.body.you.should.equal 'Siguiendo'
-          res.body.friend.should.equal 'No te sigue'
+          res.body.follower.should.equal 'No te sigue'
           done()
 
   describe "remove :: DELETE #{url.following}", ->
@@ -123,7 +123,7 @@ describe "Relationship :: ", ->
         .del url.following
         .send
           id: '1'
-          friend: '2'
+          follower: '2'
         .end (res) ->
           res.status.should.equal 200
           res.body.following.should.eql 0

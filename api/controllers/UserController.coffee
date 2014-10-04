@@ -51,27 +51,23 @@ module.exports =
     passport.endpoint req, res
 
   relationStatus: (req, res) ->
-    user   = req.param 'id'
-    friend = req.param 'friend'
+    user     = req.param 'id'
+    follower = req.param 'follower'
 
     User.findOne(user).populate('following').exec (err, user) ->
       return res.badRequest(err)  if err
 
-      User.findOne(friend).populate('followers').exec (err, friend) ->
+      User.findOne(follower).populate('followers').exec (err, follower) ->
         return res.badRequest(err)  if err
-
-        unless user and friend
+        unless user and follower
           errors = []
           errorify.addError(errors, 'id', translate.get("Model.NotFound")) unless user
-          errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
+          errorify.addError(errors, 'follower', translate.get("Model.NotFound")) unless follower
           return res.notFound(errorify.serialize(errors))
 
         res.ok
-          you: if user.isFollowing(friend.id) then translate.get("User.Is.Following") else translate.get("User.Isnt.Following")
-          friend: if friend.isFollowing(user.id) then translate.get("User.Is.Follower") else translate.get("User.Isnt.Follower")
-
-
-          translate.get("User.Is.Following")
+          you: if user.isFollowing(follower.id) then translate.get("User.Is.Following") else translate.get("User.Isnt.Following")
+          follower: if follower.isFollowing(user.id) then translate.get("User.Is.Follower") else translate.get("User.Isnt.Follower")
 
   getFollowingOrFollowers: (req, res) ->
     data       = actionUtil.parseValues(req)
@@ -87,32 +83,32 @@ module.exports =
 
 
   addOrRemoveFollowing: (req, res) ->
-    user   = req.param 'id'
-    friend = req.param 'friend'
+    user     = req.param 'id'
+    follower = req.param 'follower'
 
     User.findOne(user).populate('following').exec (err, user) ->
       return res.badRequest(err)  if err
 
-      User.findOne(friend).populate('followers').exec (err, friend) ->
+      User.findOne(follower).populate('followers').exec (err, follower) ->
         return res.badRequest(err)  if err
 
-        unless user and friend
+        unless user and follower
           errors = []
           errorify.addError(errors, 'id', translate.get("Model.NotFound")) unless user
-          errorify.addError(errors, 'friend', translate.get("Model.NotFound")) unless friend
+          errorify.addError(errors, 'follower', translate.get("Model.NotFound")) unless follower
           return res.notFound(errorify.serialize(errors))
 
         if req.route.method is 'post'
-          user.addFollowing friend, (err, user) ->
+          user.addFollowing follower, (err, user) ->
             return res.negotiate(err)  if err
-            friend.addFollower user, (err, friend) ->
+            follower.addFollower user, (err, follower) ->
               return res.negotiate(err)  if err
               res.ok(user)
 
         else if req.route.method is 'delete'
-          user.removeFollowing friend.id, (err, user) ->
+          user.removeFollowing follower.id, (err, user) ->
             return res.negotiate(err)  if err
-            friend.removeFollower user.id, (err, friend) ->
+            follower.removeFollower user.id, (err, follower) ->
               return res.negotiate(err)  if err
               res.ok(user)
         else
