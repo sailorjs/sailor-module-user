@@ -83,10 +83,8 @@ module.exports =
       @save(cb)
 
     isFollowing: (id) ->
-      index = _.findIndex @following, (user) ->
+      _.find @following, (user) ->
         user.id = id
-
-      if index is -1 then false else true
 
     fullName:  ->
      "#{@firstName} #{@lastName}"

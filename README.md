@@ -14,7 +14,7 @@
 
 Install as dependency in your sailor base application:
 
-```
+```bash
 npm install sailor-module-user --save
 ```
 
