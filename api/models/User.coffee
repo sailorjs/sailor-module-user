@@ -1,6 +1,7 @@
 ## -- Dependencies -------------------------------------------------------------
 
-sort = require 'sort-keys'
+sailor = require 'sailorjs'
+sort = sailor.util.sortKeys
 
 ## -- Exports -------------------------------------------------------------
 # Based on http://jsonresume.org/
