@@ -23,7 +23,6 @@ module.exports =
     age        : type: 'string'
     birthDate  : type: 'date'
     phone      : type: 'string'
-    website    : type: 'string'
     summary    : type: 'string'
     country    : type: 'string'
 
