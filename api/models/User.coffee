@@ -12,8 +12,8 @@ module.exports =
     # essential
     username   : type: 'string', notNull: true
     email      : type: 'email', unique: true, required: true
-    picture    : type: 'string'
-    rol        : type: 'string', enum: ['user', 'admin'], defaultsTo: 'user'
+    picture    : type: 'string', url: true
+    rol        : type: 'string', enum: ['user', 'moderator', 'admin'], defaultsTo: 'user'
     label      : type: 'string'
     online     : type: 'boolean', defaultsTo: false
 
@@ -26,10 +26,10 @@ module.exports =
     summary    : type: 'string'
     country    : type: 'string'
 
-    website    : type: "string", url: true
-    facebook   : type: "string", url: true
-    twitter    : type: "string", url: true
-    linkedin   : type: "string", url: true
+    website    : type: 'string', url: true
+    facebook   : type: 'string', url: true
+    twitter    : type: 'string', url: true
+    linkedin   : type: 'string', url: true
 
     passports  : collection: 'Passport', via: 'user'
     following  : collection: 'User'
