@@ -26,9 +26,8 @@ describe "Relationship :: ", ->
 
       it 'user1 starts follow user2', (done) ->
         request
-        .post url.following
+        .post url.find + '/1/following'
         .send
-          id: '1'
           follower: '2'
         .end (res) ->
           res.status.should.equal 200
@@ -39,9 +38,8 @@ describe "Relationship :: ", ->
 
       it 'user1 starts follow user2 that doesnt exist', (done) ->
         request
-        .post url.following
+        .post url.find + '/1/following'
         .send
-          id: '1'
           follower: '99'
         .end (res) ->
           res.status.should.equal 404
@@ -49,19 +47,17 @@ describe "Relationship :: ", ->
 
       it 'user1 that doesnt exists starts follow user2', (done) ->
         request
-        .post url.following
+        .post url.find + '/1/following'
         .send
-          id: '99'
-          follower: '1'
+          follower: '98'
         .end (res) ->
           res.status.should.equal 404
           done()
 
       it 'both doesnt exist', (done) ->
         request
-        .post url.following
+        .post url.find + '/99/following'
         .send
-          id: '99'
           follower: '98'
         .end (res) ->
           res.status.should.equal 404
@@ -71,10 +67,9 @@ describe "Relationship :: ", ->
     describe '200 OK', ->
       it 'user2 is in the user1 following list', (done) ->
         request
-        .get url.following
-        .query
-          id: '1'
+        .get url.find + '/1/following'
         .end (res) ->
+          console.log res.body
           res.status.should.equal 200
           res.body.count.should.eql 1
           res.body.following[0].id.should.eql 2
@@ -82,9 +77,7 @@ describe "Relationship :: ", ->
 
       it 'user1 is in the user2 followers list', (done) ->
         request
-        .get url.follower
-        .query
-          id: '2'
+        .get url.find + '/2/follower'
         .end (res) ->
           res.status.should.equal 200
           res.body.count.should.eql 1
@@ -94,9 +87,7 @@ describe "Relationship :: ", ->
     describe '400 NotFound', ->
       it 'user2 is in the user1 following list', (done) ->
         request
-        .get url.following
-        .query
-          id: '99'
+        .get url.find + '/99/following'
         .end (res) ->
           res.status.should.equal 404
           done()
@@ -105,9 +96,8 @@ describe "Relationship :: ", ->
     describe '200 OK', ->
       it 'user1 status with user2', (done) ->
         request
-        .get url.status
+        .get url.find + '/1/following/status'
         .query
-          id: '1'
           follower: '2'
           lang: 'es'
         .end (res) ->
@@ -120,9 +110,8 @@ describe "Relationship :: ", ->
     describe '200 OK', ->
       it 'user1 stops follow user2', (done) ->
         request
-        .del url.following
+        .del url.find + '/1/following'
         .send
-          id: '1'
           follower: '2'
         .end (res) ->
           res.status.should.equal 200
@@ -131,9 +120,7 @@ describe "Relationship :: ", ->
 
       it 'user2 is not in the user1 following list', (done) ->
         request
-        .get url.following
-        .query
-          id: '1'
+        .get url.find + '/1/following'
         .end (res) ->
           res.status.should.equal 200
           res.body.count.should.eql 0
@@ -142,9 +129,7 @@ describe "Relationship :: ", ->
 
       it 'user1 is not in the user2 followers list', (done) ->
         request
-        .get url.follower
-        .query
-          id: '2'
+        .get url.find + '/2/follower'
         .end (res) ->
           res.status.should.equal 200
           res.body.count.should.eql 0

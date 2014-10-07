@@ -70,10 +70,10 @@ module.exports =
           follower: if follower.isFollowing(user.id) then translate.get("User.Is.Follower") else translate.get("User.Isnt.Follower")
 
   getFollowingOrFollowers: (req, res) ->
-    data       = actionUtil.parseValues(req)
-    methodName = req.route.path.split('/')[2]
+    methodName = req.route.path.split('/')[3]
+    user       = id : req.param 'id'
 
-    User.findOne(data).populate(methodName).exec (err, user) ->
+    User.findOne(user).populate(methodName).exec (err, user) ->
       return res.badRequest(err)  if err
       unless user
         errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
@@ -140,6 +140,7 @@ module.exports =
   @param {Object} res
   ###
   callback: (req, res) ->
+    methodName = req.route.path.split('/')[3]
     passport.callback req, res, (err, user) ->
       return res.badRequest(err) if err
       req.login user, (err) ->

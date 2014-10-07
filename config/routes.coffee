@@ -22,11 +22,11 @@ http://links.sailsjs.org/docs/config/routes
 module.exports.routes =
 
   # relations
-  "GET /user/follower"             : "UserController.getFollowingOrFollowers"
-  "GET /user/following"            : "UserController.getFollowingOrFollowers"
-  "GET /user/following/status"     : "userController.relationStatus"
-  "POST /user/following"           : "UserController.addOrRemoveFollowing"
-  "DELETE /user/following"         : "UserController.addOrRemoveFollowing"
+  "GET /user/:id/follower"         : "UserController.getFollowingOrFollowers"
+  "GET /user/:id/following"        : "UserController.getFollowingOrFollowers"
+  "GET /user/:id/following/status" : "userController.relationStatus"
+  "DELETE /user/:id/following"     : "UserController.addOrRemoveFollowing"
+  "POST /user/:id/r|following"     : "UserController.addOrRemoveFollowing"
 
   # create
   "POST /user/:action?/:strategy?" : "UserController.callback"

@@ -17,3 +17,5 @@ paths =
 ## -- Exports -------------------------------------------------------------
 
 module.exports = paths
+
+# http://localhost:1337/user/following/1

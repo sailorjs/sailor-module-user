@@ -157,12 +157,14 @@ passport.callback = (req, res, next) ->
   # having it tied into everything else.
 
   if strategy is 'local'
-    if action is "create"
+    if action is 'create'
       return @protocols.local.register req, res, next
     else if action is 'connect'
       return @protocols.local.register req, res, next
-    else if action is "login"
+    else if action is 'login'
       return @protocols.local.login req, res, next
+    else if action is 'following'
+      console.log 'lol here LOL'
     else
       next new Error("Invalid action")
 

@@ -113,60 +113,50 @@ GET /user/logout
 ### get following or followers users
 
 ```
-GET /user/following
+GET /user/:id/following
 ```
 
 or
 
 ```
-GET /user/followers
-```
-
-with:
-
-```json
-{
-	id: 'youruserID'}
+GET /user/:id/followers
 ```
 
 ### starts follow other User
 
 ```
-POST /user/following
+POST /user/:id/following
 ```
 
 with:
 
 ```json
 {
-	id: 'youruserID'
 	follower: 'yourfollowerID'}
 ```
 
 ### status relationship
 
 ```
-GET /user/following/status
+GET /user/:id/following/status
 ```
 
 with:
 
 ```json
 {
-	id: 'youruserID'
 	follower: 'yourfollowerID'}
 ```
 
 ### unfollow
 
 ```
-DELETE /user/following
+DELETE /user/:id/following
 ```
 
 with:
 
 ```json
 {
-	id: 'youruserID'
 	follower: 'yourfollowerID'}
 ```
