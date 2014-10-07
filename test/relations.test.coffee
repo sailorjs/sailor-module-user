@@ -67,7 +67,7 @@ describe "Relationship :: ", ->
           res.status.should.equal 404
           done()
 
-  describe "get :: GET #{url.following} or #{url.followers}", ->
+  describe "get :: GET #{url.following} or #{url.follower}", ->
     describe '200 OK', ->
       it 'user2 is in the user1 following list', (done) ->
         request
@@ -82,7 +82,7 @@ describe "Relationship :: ", ->
 
       it 'user1 is in the user2 followers list', (done) ->
         request
-        .get url.followers
+        .get url.follower
         .query
           id: '2'
         .end (res) ->
@@ -142,7 +142,7 @@ describe "Relationship :: ", ->
 
       it 'user1 is not in the user2 followers list', (done) ->
         request
-        .get url.followers
+        .get url.follower
         .query
           id: '2'
         .end (res) ->

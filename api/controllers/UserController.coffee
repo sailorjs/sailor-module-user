@@ -57,7 +57,7 @@ module.exports =
     User.findOne(user).populate('following').exec (err, user) ->
       return res.badRequest(err)  if err
 
-      User.findOne(follower).populate('followers').exec (err, follower) ->
+      User.findOne(follower).populate('follower').exec (err, follower) ->
         return res.badRequest(err)  if err
         unless user and follower
           errors = []
@@ -89,7 +89,7 @@ module.exports =
     User.findOne(user).populate('following').exec (err, user) ->
       return res.badRequest(err)  if err
 
-      User.findOne(follower).populate('followers').exec (err, follower) ->
+      User.findOne(follower).populate('follower').exec (err, follower) ->
         return res.badRequest(err)  if err
 
         unless user and follower

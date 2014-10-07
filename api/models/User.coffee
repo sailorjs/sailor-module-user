@@ -34,7 +34,7 @@ module.exports =
 
     passports  : collection: 'Passport', via: 'user'
     following  : collection: 'User'
-    followers  : collection: 'User'
+    follower  : collection: 'User'
 
     setOnline: (done) ->
       @online = true
@@ -54,20 +54,20 @@ module.exports =
 
     getFollowers: ->
       count: @getFollowersCount()
-      followers: @followers
+      followers: @follower
 
     getFollowing: ->
       count: @getFollowingCount()
       following: @following
 
     getFollowersCount: ->
-      @followers.length
+      @follower.length
 
     getFollowingCount: ->
       @following.length
 
     addFollower: (user, cb) ->
-      @followers.add user
+      @follower.add user
       @save(cb)
 
     addFollowing: (user, cb) ->
@@ -75,7 +75,7 @@ module.exports =
       @save(cb)
 
     removeFollower: (user, cb) ->
-      @followers.remove user
+      @follower.remove user
       @save(cb)
 
     removeFollowing: (id, cb) ->
@@ -91,7 +91,8 @@ module.exports =
 
     toJSON: (done) ->
       obj = @toObject()
-      obj.followers = @getFollowersCount()
-      obj.following = @getFollowingCount()
       delete obj.passports
+      delete obj.follower
+      obj.follower = @getFollowersCount()
+      obj.following = @getFollowingCount()
       sort obj
