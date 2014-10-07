@@ -93,6 +93,6 @@ module.exports =
       obj = @toObject()
       delete obj.passports
       delete obj.follower
-      obj.follower = @getFollowersCount()
+      obj.followers = @getFollowersCount()
       obj.following = @getFollowingCount()
       sort obj
