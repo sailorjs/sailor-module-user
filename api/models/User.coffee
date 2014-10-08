@@ -34,7 +34,7 @@ module.exports =
 
     passports  : collection: 'Passport', via: 'user'
     following  : collection: 'User'
-    follower  : collection: 'User'
+    follower   : collection: 'User'
 
     setOnline: (done) ->
       @online = true
