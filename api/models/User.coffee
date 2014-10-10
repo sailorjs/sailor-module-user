@@ -7,6 +7,7 @@ sort = sailor.util.sortKeys
 # Based on http://jsonresume.org/
 
 module.exports =
+
   schema: true
 
   attributes:
@@ -32,9 +33,9 @@ module.exports =
     twitter    : type: 'string', url: true
     linkedin   : type: 'string', url: true
 
-    passports  : collection: 'Passport', via: 'user'
-    following  : collection: 'User'
-    follower   : collection: 'User'
+    passports  : collection: 'passport', via: 'user'
+    following  : collection: 'user'
+    follower   : collection: 'user'
 
     setOnline: (done) ->
       @online = true
@@ -96,3 +97,9 @@ module.exports =
       obj.followers = @getFollowersCount()
       obj.following = @getFollowingCount()
       sort obj
+
+  conditionals:
+    Message:
+      attributes:
+        inbox: collection: 'Message'
+        outbox: collection: 'Message'

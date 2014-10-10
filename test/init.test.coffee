@@ -12,7 +12,7 @@ SCOPE =
   TMP  : '.tmp'
 
 sailsOptions =
-  log: level: "silly"
+  log: level: "silent"
 
 before (done) ->
   unless (scripts.exist(SCOPE.NAME))
