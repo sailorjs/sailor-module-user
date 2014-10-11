@@ -87,7 +87,7 @@ module.exports =
         user.id = id
 
     fullName:  ->
-     "#{@firstName} #{@lastName}"
+      "#{@firstName} #{@lastName}"
 
     toJSON: (done) ->
       obj = @toObject()
