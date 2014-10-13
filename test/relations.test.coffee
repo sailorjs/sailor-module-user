@@ -69,7 +69,6 @@ describe "Relationship :: ", ->
         request
         .get url.find + '/1/following'
         .end (res) ->
-          console.log res.body
           res.status.should.equal 200
           res.body.count.should.eql 1
           res.body.following[0].id.should.eql 2

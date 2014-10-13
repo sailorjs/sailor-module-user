@@ -95,6 +95,8 @@ module.exports =
       delete obj.follower
       obj.followers = @getFollowersCount()
       obj.following = @getFollowingCount()
+      obj.inbox = @getInboxCount() if @inbox?
+      obj.outbox = @getOutboxCount() if @outbox?
       sort obj
 
   conditionals:
@@ -103,3 +105,32 @@ module.exports =
         inbox: collection: 'Message'
         outbox: collection: 'Message'
 
+        getInbox: ->
+          count: @getInboxCount()
+          inbox: @inbox
+
+        getOutbox: ->
+          count: @getOutboxCount()
+          outbox: @outbox
+
+        getInboxCount: ->
+          @inbox.length
+
+        getOutboxCount: ->
+          @outbox.length
+
+        addInbox: (message, cb) ->
+          @inbox.add message
+          @save(cb)
+
+        addOutbox: (message, cb) ->
+          @outbox.add message
+          @save(cb)
+
+        removeInbox: (message, cb) ->
+          @inbox.remove message
+          @save(cb)
+
+        removeOutbox: (id, cb) ->
+          @outbox.remove id
+          @save(cb)

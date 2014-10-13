@@ -82,6 +82,20 @@ module.exports =
       res.ok(if methodName is 'following' then user.getFollowing() else user.getFollowers())
 
 
+  getOutboxOrInbox: (req, res) ->
+    methodName = req.route.path.split('/')[3]
+    user       = id: req.param 'id'
+
+    try
+      User.findOne(user).populate(methodName).exec (err, user) ->
+        return res.badRequest(err)  if err
+        unless user
+          errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
+          return res.notFound(errorify.serialize(errors))
+        res.ok(if methodName is 'inbox' then user.getInbox() else user.getOutbox())
+    catch
+      res.notSupported()
+
   addOrRemoveFollowing: (req, res) ->
     user     = req.param 'id'
     follower = req.param 'follower'
