@@ -51,83 +51,81 @@ module.exports =
     passport.endpoint req, res
 
   relationStatus: (req, res) ->
-    user     = req.param 'id'
-    follower = req.param 'follower'
+    validator
+      .begin(req, res)
+      .add 'id', translate.get('Model.NotFound'), 'notEmpty'
+      .add 'follower', translate.get('Model.NotFound'), 'notEmpty'
+      .end (params) ->
 
-    User.findOne(user).populate('following').exec (err, user) ->
-      return res.badRequest(err)  if err
+        User.findOne(params.id).populate('following').exec (err, user) ->
+          return res.serverError(err)  if err
 
-      User.findOne(follower).populate('follower').exec (err, follower) ->
-        return res.badRequest(err)  if err
-        unless user and follower
-          errors = []
-          errorify.addError(errors, 'id', translate.get("Model.NotFound")) unless user
-          errorify.addError(errors, 'follower', translate.get("Model.NotFound")) unless follower
-          return res.notFound(errorify.serialize(errors))
+          User.findOne(params.follower).populate('follower').exec (err, follower) ->
+            return res.serverError(err)  if err
 
-        res.ok
-          you: if user.isFollowing(follower.id) then translate.get("User.Is.Following") else translate.get("User.Isnt.Following")
-          follower: if follower.isFollowing(user.id) then translate.get("User.Is.Follower") else translate.get("User.Isnt.Follower")
+            unless (user or follower)
+              return errorify
+              .add 'id', translate.get 'Model.NotFound', user
+              .add 'follower', translate.get 'Model.NotFound', follower
+              .end res, 'notFound'
+
+            res.ok
+              you: if user.isFollowing(follower.id) then translate.get('User.Is.Following') else translate.get('User.Isnt.Following')
+              follower: if follower.isFollowing(user.id) then translate.get('User.Is.Follower') else translate.get('User.Isnt.Follower')
 
   getFollowingOrFollowers: (req, res) ->
     methodName = req.route.path.split('/')[3]
-    user       = id : req.param 'id'
+    validator
+      .begin(req, res)
+      .add 'id', translate.get('Model.NotFound'), 'notEmpty'
+      .end (params) ->
 
-    User.findOne(user).populate(methodName).exec (err, user) ->
-      return res.badRequest(err)  if err
-      unless user
-        errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
-        return res.notFound(errorify.serialize(errors))
-      data = user[methodName]
-      if data.length is 0 then res.noContent() else res.ok(data)
+        User.findOne(params.id).populate(methodName).exec (err, user) ->
+          return res.serverError(err)  if err
 
-  getOutboxOrInbox: (req, res) ->
-    methodName = req.route.path.split('/')[3]
-    user       = id: req.param 'id'
+          unless user
+            return errorify
+            .add 'id', translate.get 'Model.NotFound', user
+            .end res, 'notFound'
 
-    try
-      User.findOne(user).populate(methodName).exec (err, user) ->
-        return res.badRequest(err)  if err
-        unless user
-          errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
-          return res.notFound(errorify.serialize(errors))
-
-        data = if methodName is 'inbox' then user.getInbox() else user.getOutbox()
-        if data.count is 0 then res.noContent() else res.ok(data)
-    catch
-      res.notSupported()
+          data = user[methodName]
+          if data.length is 0 then res.noContent() else res.ok(data)
 
   addOrRemoveFollowing: (req, res) ->
-    user     = req.param 'id'
-    follower = req.param 'follower'
 
-    User.findOne(user).populate('following').exec (err, user) ->
-      return res.badRequest(err)  if err
+    validator
+      .begin(req, res)
+      .add 'id', translate.get('Model.NotFound'), 'notEmpty'
+      .add 'follower', translate.get('Model.NotFound'), 'notEmpty'
+      .end (params) ->
 
-      User.findOne(follower).populate('follower').exec (err, follower) ->
-        return res.badRequest(err)  if err
+        User.findOne().populate('following').exec (err, user) ->
+          return res.serverError(err)  if err
 
-        unless user and follower
-          errors = []
-          errorify.addError(errors, 'id', translate.get("Model.NotFound")) unless user
-          errorify.addError(errors, 'follower', translate.get("Model.NotFound")) unless follower
-          return res.notFound(errorify.serialize(errors))
+          User.findOne(params.follower).populate('follower').exec (err, follower) ->
+            return res.serverError(err)  if err
 
-        if req.route.method is 'post'
-          user.addFollowing follower, (err, user) ->
-            return res.negotiate(err)  if err
-            follower.addFollower user, (err, follower) ->
-              return res.negotiate(err)  if err
-              res.ok(user)
+            unless user and follower
+              return errorify
+              .add 'id', translate.get 'Model.NotFound', user
+              .add 'follower', translate.get 'Model.NotFound', follower
+              .end res, 'notFound'
 
-        else if req.route.method is 'delete'
-          user.removeFollowing follower.id, (err, user) ->
-            return res.negotiate(err)  if err
-            follower.removeFollower user.id, (err, follower) ->
-              return res.negotiate(err)  if err
-              res.ok(user)
-        else
-          res.badRequest()
+            if req.route.method is 'post'
+              user.addFollowing follower, (err, user) ->
+                return res.negotiate(err)  if err
+                follower.addFollower user, (err, follower) ->
+                  return res.negotiate(err)  if err
+                  res.ok(user)
+
+            else if req.route.method is 'delete'
+              user.removeFollowing follower.id, (err, user) ->
+                return res.negotiate(err)  if err
+                follower.removeFollower user.id, (err, follower) ->
+                  return res.negotiate(err)  if err
+                  res.ok(user)
+            else
+              res.badRequest()
 
   ###
   Disconnect a passport from a user
@@ -159,7 +157,7 @@ module.exports =
     passport.callback req, res, (err, user) ->
       return res.badRequest(err) if err
       req.login user, (err) ->
-        return res.badRequest(err) if err
+        return res.notFound(err) if err
         User.findOne(user.id).populateAll().exec (err, user) ->
-          return res.badRequest(err) if err
+          return res.serverError(err) if err
           res.ok(user)

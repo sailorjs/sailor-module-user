@@ -163,8 +163,6 @@ passport.callback = (req, res, next) ->
       return @protocols.local.register req, res, next
     else if action is 'login'
       return @protocols.local.login req, res, next
-    else if action is 'following'
-      console.log 'lol here LOL'
     else
       next new Error("Invalid action")
 

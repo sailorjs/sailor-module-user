@@ -26,7 +26,7 @@ module.exports.routes =
   "GET /user/:id/following"        : "UserController.getFollowingOrFollowers"
   "GET /user/:id/following/status" : "userController.relationStatus"
   "DELETE /user/:id/following"     : "UserController.addOrRemoveFollowing"
-  "POST /user/:id/r|following"     : "UserController.addOrRemoveFollowing"
+  "POST /user/:id/:following"     : "UserController.addOrRemoveFollowing"
 
   # messages
   # "GET /user/:id/inbox"            : "UserController.getOutboxOrInbox"

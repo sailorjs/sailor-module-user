@@ -82,36 +82,3 @@ module.exports =
       obj.followers = @follower.length
       obj.following = @following.length
       sort obj
-
-  conditionals:
-    Message:
-      attributes:
-        inbox: collection: 'Message'
-        outbox: collection: 'Message'
-
-        addInbox: (message, cb) ->
-          @inbox.add message
-          @save(cb)
-
-        addOutbox: (message, cb) ->
-          @outbox.add message
-          @save(cb)
-
-        removeInbox: (message, cb) ->
-          @inbox.remove message
-          @save(cb)
-
-        removeOutbox: (id, cb) ->
-          @outbox.remove id
-          @save(cb)
-    Group:
-      attributes:
-        group: collection: 'Group'
-
-        addGroup: (group, cb) ->
-          @group.add group
-          @save(cb)
-
-        removeGroup: (id, cb) ->
-          @group.remove id
-          @save(cb)

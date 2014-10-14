@@ -34,7 +34,6 @@ describe "Login :: /GET user/login", ->
         done()
 
   describe '400 BadRequest', ->
-
     it "without parameters", (done) ->
       request
       .post url.login
@@ -71,6 +70,7 @@ describe "Login :: /GET user/login", ->
         res.status.should.equal 400
         done()
 
+  describe '404 notFound', ->
     it "username as wrong identifier and password", (done) ->
       request
       .post url.login
@@ -78,5 +78,5 @@ describe "Login :: /GET user/login", ->
         identifier: 'user9890890'
         password: 'password'
       .end (res) ->
-        res.status.should.equal 400
+        res.status.should.equal 404
         done()

@@ -32,33 +32,30 @@ and assign the newly created user a local Passport.
 exports.register = (req, res, next) ->
 
   passwordLength = Passport._attributes.password.minLength
-  req.assert('email', translate.get "User.Email.NotFound").notEmpty()
-  req.assert('password', translate.get "User.Password.NotFound").notEmpty()
-  req.assert('password', translate.get "User.Password.Invalid").isAlphanumeric()
-  req.assert('password', translate.get "User.Password.MinLength").isLength(passwordLength)
-  return next(errorify.serialize(req)) if req.validationErrors()
+  validator
+    .begin(req, res)
+    .add 'email', translate.get('User.Email.NotFound'), 'notEmpty'
+    .add 'password', translate.get('User.Password.NotFound'), 'notEmpty'
+    .add 'password', translate.get('User.Password.Invalid'), 'isAlphanumeric'
+    .add 'password', translate.get('User.Password.MinLength'), 'isLength', passwordLength
+    .end (params) ->
+      user =
+        email: params.email
+        username: req.param 'username'
 
-  password = req.param("password")
-  username = req.param("username")
-  email    = req.param("email")
+      User.create(user).exec (err, user) ->
+        return next(err, user) if err
 
-  user =
-    email: email
-    username: username
+        strategy =
+          protocol: "local"
+          password: params.password
+          user:     user.id
 
-  User.create(user).exec (err, user) ->
-    return next(err, user) if err
-
-    strategy =
-      protocol: "local"
-      password: password
-      user:     user.id
-
-    Passport.create(strategy).exec (err, passport) ->
-      if err
-        user.destroy (destroyErr) ->
-          next destroyErr or err
-      next null, user
+        Passport.create(strategy).exec (err, passport) ->
+          if err
+            user.destroy (destroyErr) ->
+              next destroyErr or err
+          next null, user
 
 ###
 Assign local Passport to user
@@ -83,7 +80,6 @@ exports.connect = (req, res, next) ->
     return next(err) if err
 
     unless passport
-
       passport =
         protocol: "local"
         password: password
@@ -108,46 +104,45 @@ found, its password is checked against the password supplied in the form.
 @param {Function} next
 ###
 exports.login = (req, res, next) ->
+  validator
+    .begin(req, res)
+    .add 'identifier', translate.get('User.Identifier.NotFound'), 'notEmpty'
+    .add 'password', translate.get('User.Password.NotFound'), 'notEmpty'
+    .end (params) ->
+      user    = {}
+      isEmail = validator.isEmail(params.identifier)
+      if isEmail then user.email = params.identifier else user.username = params.identifier
 
-  req.assert('identifier', translate.get "User.Identifier.NotFound").notEmpty()
-  req.assert('password', translate.get "User.Password.NotFound").notEmpty()
-  return next(errorify.serialize(req)) if req.validationErrors()
+      User.findOne(user).exec (err, user) ->
+        return serverError(err)  if err
 
-  user       = {}
-  password   = req.param("password")
-  identifier = req.param("identifier")
+        unless user
+          return errorify
+          .add 'identifier', translate.get 'User.NotFound', user
+          .end res, 'notFound'
 
-  if validator.isEmail(identifier)
-    user.email = identifier
-  else
-    user.username = identifier
+        passport =
+          protocol: "local"
+          user: user.id
 
-  User.findOne(user).exec (err, user) ->
-    return next(err)  if err
+        Passport.findOne(passport).exec (err, passport) ->
+          return serverError(err)  if err
 
-    unless user
-      err = msg: translate.get("User.NotFound")
-      return next(errorify.serialize(err))
+          unless passport
+            return errorify
+            .add 'strategy', translate.get 'User.Strategy.NotSet', user
+            .end res, 'notFound'
 
-    passport =
-      protocol: "local"
-      user: user.id
+          passport.validatePassword params.password, (err, valid) ->
+            return next(err)  if err
 
-    Passport.findOne(passport).exec (err, passport) ->
-      return next(err) if err
+            unless valid
+              return errorify
+              .add 'password', translate.get 'User.Password.DontMatch', user
+              .end res, 'notFound'
 
-      unless password
-        err = msg: translate.get("User.Strategy.NotSet")
-        return next(errorify.serialize(err))
-
-      passport.validatePassword password, (err, valid) ->
-        return next(err)  if err
-        unless valid
-          err = msg: translate.get("User.Password.DontMatch")
-          return next(errorify.serialize(err))
-
-        # NOTE
-        # in pure REST, only transfer the token and the client need to do another
-        # findOne request to get the user, but provide both in the same request.
-        # _.assign(user, JWTService.encode(id: user.id))
-        next null, user
+            # NOTE
+            # in pure REST, only transfer the token and the client need to do another
+            # findOne request to get the user, but provide both in the same request.
+            # _.assign(user, JWTService.encode(id: user.id))
+            next null, user
