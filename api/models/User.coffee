@@ -1,7 +1,7 @@
 ## -- Dependencies -------------------------------------------------------------
 
 sailor = require 'sailorjs'
-sort = sailor.util.sortKeys
+sort   = sailor.util.sortKeys
 
 ## -- Exports -------------------------------------------------------------
 # Based on http://jsonresume.org/
@@ -81,8 +81,6 @@ module.exports =
       delete obj.follower
       obj.followers = @follower.length
       obj.following = @following.length
-      obj.inbox = @inbox.length if @inbox?
-      obj.outbox = @outbox.length if @outbox?
       sort obj
 
   conditionals:
@@ -105,4 +103,15 @@ module.exports =
 
         removeOutbox: (id, cb) ->
           @outbox.remove id
+          @save(cb)
+    Group:
+      attributes:
+        group: collection: 'Group'
+
+        addGroup: (group, cb) ->
+          @group.add group
+          @save(cb)
+
+        removeGroup: (id, cb) ->
+          @group.remove id
           @save(cb)
