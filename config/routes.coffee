@@ -29,8 +29,8 @@ module.exports.routes =
   "POST /user/:id/r|following"     : "UserController.addOrRemoveFollowing"
 
   # messages
-  "GET /user/:id/inbox"         : "UserController.getOutboxOrInbox"
-  "GET /user/:id/outbox"        : "UserController.getOutboxOrInbox"
+  # "GET /user/:id/inbox"            : "UserController.getOutboxOrInbox"
+  # "GET /user/:id/outbox"           : "UserController.getOutboxOrInbox"
 
   # create
   "POST /user/:action?/:strategy?" : "UserController.callback"

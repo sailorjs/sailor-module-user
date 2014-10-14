@@ -52,20 +52,6 @@ module.exports =
     onLogout: (done) ->
       @setOffline(done)
 
-    getFollowers: ->
-      count: @getFollowersCount()
-      followers: @follower
-
-    getFollowing: ->
-      count: @getFollowingCount()
-      following: @following
-
-    getFollowersCount: ->
-      @follower.length
-
-    getFollowingCount: ->
-      @following.length
-
     addFollower: (user, cb) ->
       @follower.add user
       @save(cb)
@@ -93,10 +79,10 @@ module.exports =
       obj = @toObject()
       delete obj.passports
       delete obj.follower
-      obj.followers = @getFollowersCount()
-      obj.following = @getFollowingCount()
-      obj.inbox = @getInboxCount() if @inbox?
-      obj.outbox = @getOutboxCount() if @outbox?
+      obj.followers = @follower.length
+      obj.following = @following.length
+      obj.inbox = @inbox.length if @inbox?
+      obj.outbox = @outbox.length if @outbox?
       sort obj
 
   conditionals:
@@ -104,20 +90,6 @@ module.exports =
       attributes:
         inbox: collection: 'Message'
         outbox: collection: 'Message'
-
-        getInbox: ->
-          count: @getInboxCount()
-          inbox: @inbox
-
-        getOutbox: ->
-          count: @getOutboxCount()
-          outbox: @outbox
-
-        getInboxCount: ->
-          @inbox.length
-
-        getOutboxCount: ->
-          @outbox.length
 
         addInbox: (message, cb) ->
           @inbox.add message

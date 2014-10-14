@@ -7,20 +7,9 @@ userHelper = require './helpers/userHelper'
 
 ## -- Test ------------------------------------------------------------------------------
 
-# we have user1 and user, need 3 more users
-# before (done) ->
-#   userHelper.setCounter(2)
-#   userHelper.register(2, url.create, done)
-
-# xit 'all users', (done) ->
-#   request
-#   .get(url.find).end (res) ->
-#     console.log res.body
-#     done()
-
 describe "Relationship :: ", ->
 
-  describe "add :: POST #{url.following}", ->
+  describe "add :: POST /user/following", ->
 
     describe '200 OK', ->
 
@@ -63,15 +52,14 @@ describe "Relationship :: ", ->
           res.status.should.equal 404
           done()
 
-  describe "get :: GET #{url.following} or #{url.follower}", ->
+  describe "GET :: /user/following or /user/follower", ->
     describe '200 OK', ->
       it 'user2 is in the user1 following list', (done) ->
         request
         .get url.find + '/1/following'
         .end (res) ->
           res.status.should.equal 200
-          res.body.count.should.eql 1
-          res.body.following[0].id.should.eql 2
+          res.body[0].id.should.eql 2
           done()
 
       it 'user1 is in the user2 followers list', (done) ->
@@ -79,8 +67,7 @@ describe "Relationship :: ", ->
         .get url.find + '/2/follower'
         .end (res) ->
           res.status.should.equal 200
-          res.body.count.should.eql 1
-          res.body.followers[0].id.should.eql 1
+          res.body[0].id.should.eql 1
           done()
 
     describe '400 NotFound', ->
@@ -91,7 +78,7 @@ describe "Relationship :: ", ->
           res.status.should.equal 404
           done()
 
-  describe "status :: GET #{url.status}", ->
+  describe "status :: GET user/following/status", ->
     describe '200 OK', ->
       it 'user1 status with user2', (done) ->
         request
@@ -105,7 +92,7 @@ describe "Relationship :: ", ->
           res.body.follower.should.equal 'No te sigue'
           done()
 
-  describe "remove :: DELETE #{url.following}", ->
+  describe "destroy :: DELETE user/:id/following", ->
     describe '200 OK', ->
       it 'user1 stops follow user2', (done) ->
         request
@@ -121,16 +108,20 @@ describe "Relationship :: ", ->
         request
         .get url.find + '/1/following'
         .end (res) ->
-          res.status.should.equal 200
-          res.body.count.should.eql 0
-          res.body.following.length.should.eql 0
-          done()
+          res.status.should.equal 204
+          request
+          .get url.find + '/1'
+          .end (res) ->
+            res.body.followers.should.eql 0
+            done()
 
       it 'user1 is not in the user2 followers list', (done) ->
         request
         .get url.find + '/2/follower'
         .end (res) ->
-          res.status.should.equal 200
-          res.body.count.should.eql 0
-          res.body.followers.length.should.eql 0
-          done()
+          res.status.should.equal 204
+          request
+          .get url.find + '/2'
+          .end (res) ->
+            res.body.following.should.eql 0
+            done()

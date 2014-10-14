@@ -119,7 +119,7 @@ GET /user/:id/following
 or
 
 ```
-GET /user/:id/followers
+GET /user/:id/follower
 ```
 
 ### starts follow other User

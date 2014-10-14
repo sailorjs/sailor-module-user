@@ -78,9 +78,8 @@ module.exports =
       unless user
         errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
         return res.notFound(errorify.serialize(errors))
-
-      res.ok(if methodName is 'following' then user.getFollowing() else user.getFollowers())
-
+      data = user[methodName]
+      if data.length is 0 then res.noContent() else res.ok(data)
 
   getOutboxOrInbox: (req, res) ->
     methodName = req.route.path.split('/')[3]
@@ -92,7 +91,9 @@ module.exports =
         unless user
           errors = errorify.addError([], 'id', translate.get("Model.NotFound"))
           return res.notFound(errorify.serialize(errors))
-        res.ok(if methodName is 'inbox' then user.getInbox() else user.getOutbox())
+
+        data = if methodName is 'inbox' then user.getInbox() else user.getOutbox()
+        if data.count is 0 then res.noContent() else res.ok(data)
     catch
       res.notSupported()
 
