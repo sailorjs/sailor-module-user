@@ -118,7 +118,7 @@ exports.login = (req, res, next) ->
 
         unless user
           return errorify
-          .add 'identifier', translate.get 'User.NotFound', user
+          .add 'identifier', translate.get('User.NotFound'), user
           .end res, 'notFound'
 
         passport =
@@ -130,7 +130,7 @@ exports.login = (req, res, next) ->
 
           unless passport
             return errorify
-            .add 'strategy', translate.get 'User.Strategy.NotSet', user
+            .add 'strategy', translate.get('User.Strategy.NotSet'), user
             .end res, 'notFound'
 
           passport.validatePassword params.password, (err, valid) ->
@@ -138,7 +138,7 @@ exports.login = (req, res, next) ->
 
             unless valid
               return errorify
-              .add 'password', translate.get 'User.Password.DontMatch', user
+              .add 'password', translate.get('User.Password.DontMatch'), user
               .end res, 'notFound'
 
             # NOTE

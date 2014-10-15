@@ -65,8 +65,8 @@ module.exports =
 
             unless (user or follower)
               return errorify
-              .add 'id', translate.get 'User.NotFound', user
-              .add 'follower', translate.get 'User.NotFound', follower
+              .add 'id', translate.get('User.NotFound'), user
+              .add 'follower', translate.get('User.NotFound'), follower
               .end res, 'notFound'
 
             res.ok
@@ -85,7 +85,7 @@ module.exports =
 
           unless user
             return errorify
-            .add 'id', translate.get 'User.NotFound', user
+            .add 'id', translate.get('User.NotFound'), user
             .end res, 'notFound'
 
           data = user[methodName]
@@ -107,8 +107,8 @@ module.exports =
 
             unless user and follower
               return errorify
-              .add 'id', translate.get 'User.NotFound', user
-              .add 'follower', translate.get 'User.NotFound', follower
+              .add 'id', translate.get('User.NotFound'), user
+              .add 'follower', translate.get('User.NotFound'), follower
               .end res, 'notFound'
 
             if req.route.method is 'post'
