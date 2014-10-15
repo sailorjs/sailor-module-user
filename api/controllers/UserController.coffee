@@ -53,8 +53,8 @@ module.exports =
   relationStatus: (req, res) ->
     validator
       .begin(req, res)
-      .add 'id', translate.get('Model.NotFound'), 'notEmpty'
-      .add 'follower', translate.get('Model.NotFound'), 'notEmpty'
+      .add 'id', translate.get('User.NotFound'), 'notEmpty'
+      .add 'follower', translate.get('User.NotFound'), 'notEmpty'
       .end (params) ->
 
         User.findOne(params.id).populate('following').exec (err, user) ->
@@ -65,8 +65,8 @@ module.exports =
 
             unless (user or follower)
               return errorify
-              .add 'id', translate.get 'Model.NotFound', user
-              .add 'follower', translate.get 'Model.NotFound', follower
+              .add 'id', translate.get 'User.NotFound', user
+              .add 'follower', translate.get 'User.NotFound', follower
               .end res, 'notFound'
 
             res.ok
@@ -77,7 +77,7 @@ module.exports =
     methodName = req.route.path.split('/')[3]
     validator
       .begin(req, res)
-      .add 'id', translate.get('Model.NotFound'), 'notEmpty'
+      .add 'id', translate.get('User.NotFound'), 'notEmpty'
       .end (params) ->
 
         User.findOne(params.id).populate(methodName).exec (err, user) ->
@@ -85,7 +85,7 @@ module.exports =
 
           unless user
             return errorify
-            .add 'id', translate.get 'Model.NotFound', user
+            .add 'id', translate.get 'User.NotFound', user
             .end res, 'notFound'
 
           data = user[methodName]
@@ -95,8 +95,8 @@ module.exports =
 
     validator
       .begin(req, res)
-      .add 'id', translate.get('Model.NotFound'), 'notEmpty'
-      .add 'follower', translate.get('Model.NotFound'), 'notEmpty'
+      .add 'id', translate.get('User.NotFound'), 'notEmpty'
+      .add 'follower', translate.get('User.NotFound'), 'notEmpty'
       .end (params) ->
 
         User.findOne().populate('following').exec (err, user) ->
@@ -107,8 +107,8 @@ module.exports =
 
             unless user and follower
               return errorify
-              .add 'id', translate.get 'Model.NotFound', user
-              .add 'follower', translate.get 'Model.NotFound', follower
+              .add 'id', translate.get 'User.NotFound', user
+              .add 'follower', translate.get 'User.NotFound', follower
               .end res, 'notFound'
 
             if req.route.method is 'post'
