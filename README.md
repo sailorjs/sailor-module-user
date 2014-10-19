@@ -15,10 +15,8 @@
 Install as dependency in your sailor base application:
 
 ```bash
-npm install sailor-module-user --save
+sailor install sailor-module-user [--save or --save-dev]
 ```
-
-
 
 ## API
 
