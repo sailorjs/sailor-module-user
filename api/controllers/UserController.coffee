@@ -159,5 +159,7 @@ module.exports =
       req.login user, (err) ->
         return res.notFound(err) if err
         User.findOne(user.id).populateAll().exec (err, user) ->
-          return res.serverError(err) if err
-          res.ok(user)
+          method = req.method
+          action = req.param 'action'
+          status = if method is 'POST' and not action then 'created' else 'ok'
+          res[status](user)

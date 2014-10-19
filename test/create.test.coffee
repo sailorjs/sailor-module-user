@@ -10,8 +10,7 @@ describe "Create :: /POST user", ->
 
   describe "Local Strategy ", ->
 
-    describe '200 OK', ->
-
+    describe '201 Created', ->
       it "register user without username and return the user", (done) ->
         request
         .post(url.create)
@@ -19,7 +18,7 @@ describe "Create :: /POST user", ->
           email: "user1@sailor.com"
           password: "password"
         .end (res) ->
-          res.status.should.equal 200
+          res.status.should.equal 201
           res.body.email.should.equal 'user1@sailor.com'
           res.body.online.should.equal true
           done()
@@ -32,7 +31,7 @@ describe "Create :: /POST user", ->
           email: "user2@sailor.com"
           password: "password"
         .end (res) ->
-          res.status.should.equal 200
+          res.status.should.equal 201
           res.body.email.should.equal 'user2@sailor.com'
           res.body.online.should.equal true
           done()
