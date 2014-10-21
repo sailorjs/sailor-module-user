@@ -153,7 +153,6 @@ module.exports =
   @param {Object} res
   ###
   callback: (req, res) ->
-    methodName = req.route.path.split('/')[3]
     passport.callback req, res, (err, user) ->
       return res.badRequest(err) if err
       req.login user, (err) ->

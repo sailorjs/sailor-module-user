@@ -1,9 +1,11 @@
 ###
 Dependencies
 ###
-path     = require 'path'
-url      = require 'url'
-passport = require 'passport'
+path      = require 'path'
+url       = require 'url'
+passport  = require 'passport'
+sailor    = require 'sailorjs'
+validator = sailor.validator
 
 #
 # Passport Service
@@ -148,29 +150,30 @@ passport.endpoint = (req, res) ->
 #
 passport.callback = (req, res, next) ->
   method   = req.method
-  strategy = if req.param 'strategy' then req.param 'strategy' else 'local'
-  action   = if req.param 'action' then req.param 'action' else 'create'
+  strategy = req.param('strategy','local')
+  action   = req.param('action','register')
 
   sails.log.debug "Passport.callback :: Method [#{method}] Action [#{action}], Strategy [#{strategy}]"
 
   # Passport.js wasn't really built for local user registration, but it's nice
   # having it tied into everything else.
 
-  if strategy is 'local'
-    if action is 'create'
-      return @protocols.local.register req, res, next
-    else if action is 'connect'
-      return @protocols.local.register req, res, next
-    else if action is 'login'
+  if strategy is 'local' and action?
+    if action is 'login'
       return @protocols.local.login req, res, next
+    if action is 'register' and not req.user
+      return @protocols.local.register req, res, next
+    else if action is 'connect' and req.user
+      return @protocols.local.connect req, res, next
+    else if action is 'disconnect' and req.user
+      return @protocols.local.disconnect req, res, next
     else
       next new Error("Invalid action")
-
+  else
     # The strategy will redirect the user to this URL after approval. Finish
     # the authentication process by attempting to obtain an access token. If
     # access was granted, the user will be logged in. Otherwise, authentication
     # has failed.
-  else
     @authenticate(strategy, next) req, res, req.next
 
 #

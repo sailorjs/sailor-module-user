@@ -22,21 +22,23 @@ http://links.sailsjs.org/docs/config/routes
 module.exports.routes =
 
   # relations
-  "GET /user/:id/follower"         : "UserController.getFollowingOrFollowers"
-  "GET /user/:id/following"        : "UserController.getFollowingOrFollowers"
-  "GET /user/:id/following/status" : "userController.relationStatus"
-  "DELETE /user/:id/following"     : "UserController.addOrRemoveFollowing"
-  "POST /user/:id/:following"     : "UserController.addOrRemoveFollowing"
-
-  # messages
-  # "GET /user/:id/inbox"            : "UserController.getOutboxOrInbox"
-  # "GET /user/:id/outbox"           : "UserController.getOutboxOrInbox"
+  'GET /user/:id/follower'             : 'UserController.getFollowingOrFollowers'
+  'GET /user/:id/following'            : 'UserController.getFollowingOrFollowers'
+  'GET /user/:id/following/status'     : 'UserController.relationStatus'
+  'DELETE /user/:id/following'         : 'UserController.addOrRemoveFollowing'
+  'POST /user/:id/following'           : 'UserController.addOrRemoveFollowing'
 
   # create
-  "POST /user/:action?/:strategy?" : "UserController.callback"
-  # logout
-  "GET /user/logout"               : "UserController.logout"
+  'POST /user'                         : 'UserController.callback'
+
+  # login (local)
+  'POST /user/:action?'                : 'UserController.callback'
+
+  # login (third party)
+  # TODO
+
   # session
-  "GET /user/session"              : "UserController.session"
-  # info
-  # "GET /user/info"                 : "UserController.info"
+  'GET /user/session'                  : 'UserController.session'
+
+  # logout
+  'GET /user/logout'                   : 'UserController.logout'
