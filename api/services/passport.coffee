@@ -161,7 +161,7 @@ passport.callback = (req, res, next) ->
   if strategy is 'local' and action?
     if action is 'login'
       return @protocols.local.login req, res, next
-    if action is 'register'
+    if action is 'register' and not req.user
       return @protocols.local.register req, res, next
     else if action is 'connect' and req.user
       return @protocols.local.connect req, res, next
