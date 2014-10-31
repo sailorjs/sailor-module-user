@@ -153,7 +153,7 @@ passport.callback = (req, res, next) ->
   strategy = req.param('strategy','local')
   action   = req.param('action','register')
 
-  sails.log.debug "Passport.callback :: Method [#{method}] Action [#{action}], Strategy [#{strategy}]"
+  sails.log.debug "Passport.callback :: Method [#{method}], Action [#{action}], Strategy [#{strategy}]"
 
   # Passport.js wasn't really built for local user registration, but it's nice
   # having it tied into everything else.

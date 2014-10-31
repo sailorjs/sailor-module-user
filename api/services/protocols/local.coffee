@@ -55,6 +55,7 @@ exports.register = (req, res, next) ->
           if err
             user.destroy (destroyErr) ->
               next destroyErr or err
+          user.context = 'register'
           next null, user
 
 ###
@@ -145,4 +146,5 @@ exports.login = (req, res, next) ->
             # in pure REST, only transfer the token and the client need to do another
             # findOne request to get the user, but provide both in the same request.
             # _.assign(user, JWTService.encode(id: user.id))
+            user.context = 'login'
             next null, user

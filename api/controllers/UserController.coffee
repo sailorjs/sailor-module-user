@@ -155,10 +155,17 @@ module.exports =
   callback: (req, res) ->
     passport.callback req, res, (err, user) ->
       return res.badRequest(err) if err
+      context = user.context
       req.login user, (err) ->
         return res.notFound(err) if err
+
         User.findOne(user.id).populateAll().exec (err, user) ->
           method = req.method
           action = req.param 'action'
           status = if method is 'POST' and not action then 'created' else 'ok'
+
+          if sails.modules.isAvailable('sailor-module-jwt')
+            if context is 'register' or context is 'login'
+              token = JWTService.encode(id: user.id)
+              return res[status](user: user, token: token)
           res[status](user)
