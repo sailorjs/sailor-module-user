@@ -13,7 +13,7 @@ module.exports =
     # essential
     username   : type: 'string', notNull: true
     email      : type: 'email', unique: true, required: true
-    picture    : type: 'string', url: true
+    picture    : type: 'string' #, url: true
     rol        : type: 'string', enum: ['user', 'moderator', 'admin'], defaultsTo: 'user'
     label      : type: 'string'
     online     : type: 'boolean', defaultsTo: false

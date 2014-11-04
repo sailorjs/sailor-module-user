@@ -164,7 +164,7 @@ module.exports =
           action = req.param 'action'
           status = if method is 'POST' and not action then 'created' else 'ok'
 
-          if sails.modules.isAvailable('sailor-module-jwt')
+          if sails.modules.isAvailable 'sailor-module-authentication'
             if context is 'register' or context is 'login'
               token = JWTService.encode(id: user.id)
               return res[status](user: user, token: token)
