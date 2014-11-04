@@ -166,6 +166,6 @@ module.exports =
 
           if sails.modules.isAvailable 'sailor-module-authentication'
             if context is 'register' or context is 'login'
-              token = JWTService.encode(id: user.id)
+              token = JWTService.encode(user: id: user.id)
               return res[status](user: user, token: token)
           res[status](user)
