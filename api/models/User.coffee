@@ -38,13 +38,11 @@ module.exports =
 
     setOnline: (done) ->
       @online = true
-      @save (err, user) ->
-        done(err, user)
+      @save(done)
 
     setOffline: (done) ->
       @online = false
-      @save (err, user) ->
-        done(err, user)
+      @save(done)
 
     onLogin: (done) ->
       @setOnline(done)
