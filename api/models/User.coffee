@@ -58,8 +58,8 @@ module.exports =
       @following.add user
       @save(cb)
 
-    removeFollower: (user, cb) ->
-      @follower.remove user
+    removeFollower: (id, cb) ->
+      @follower.remove id
       @save(cb)
 
     removeFollowing: (id, cb) ->
