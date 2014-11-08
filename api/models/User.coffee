@@ -73,7 +73,7 @@ module.exports =
     fullName:  ->
       "#{@firstName} #{@lastName}"
 
-    toJSON: (done) ->
+    toJSON: ->
       obj = @toObject()
       delete obj.passports
       delete obj.follower
