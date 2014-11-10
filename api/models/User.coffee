@@ -4,7 +4,7 @@ sailor = require 'sailorjs'
 sort   = sailor.util.sortKeys
 
 ## -- Exports -------------------------------------------------------------
-# Based on http://jsonresume.org/
+# Inspired in http://jsonresume.org and https://represent.io
 
 module.exports =
   schema: true
@@ -14,6 +14,7 @@ module.exports =
     username   : type: 'string', notNull: true
     email      : type: 'email', unique: true, required: true
     picture    : type: 'string' #, url: true
+    cover      : type: 'string' #, url: true
     rol        : type: 'string', enum: ['user', 'moderator', 'admin'], defaultsTo: 'user'
     label      : type: 'string'
     online     : type: 'boolean', defaultsTo: false
